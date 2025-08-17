@@ -1,8 +1,23 @@
+"use client";
+
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
+    const router = useRouter();
+    const goToRegistration = () => {
+        router.push("/register");
+    }
+    const goToLogin = () => {
+        router.push("/login");
+    }
+    const goToHome = () => {
+        router.push("/");
+    }
+
+
     return (
         <nav className="bg-white border border-gray-100 dark:bg-gray-900 dark:border-gray-800">
-            <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-2">
+            <div className="max-w-[1536px] flex flex-wrap items-center justify-between mx-auto p-2 px-5">
                 <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse">
                     <img src="/Logo.png" className="w-10 h-10 rounded-full bg-gray-500" alt="Logo" />
                     <span className="self-center text-2xl font-semibold whitespace-nowrap text-slate-800 dark:text-white">Project Pulse</span>
@@ -16,19 +31,13 @@ const Navbar = () => {
                 <div className="hidden w-full md:block md:w-auto" id="navbar-default">
                     <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-900">
                         <li>
-                            <a href="#" className="block py-2 px-3 text-orange-600 md:bg-transparent md:p-0" aria-current="page">Home</a>
+                            <button onClick={goToHome} className="block py-2 px-3 text-orange-600 md:bg-transparent md:p-0" aria-current="page">Home</button>
                         </li>
                         <li>
-                            <a href="#" className="block py-2 px-3 text-slate-800 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-orange-600 md:p-0 dark:text-white md:dark:hover:text-orange-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">About</a>
+                            <button onClick={goToLogin} className="block py-2 px-3 text-slate-800 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-orange-600 md:p-0 dark:text-white md:dark:hover:text-orange-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Iniciar sesión</button>
                         </li>
                         <li>
-                            <a href="#" className="block py-2 px-3 text-slate-800 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-orange-600 md:p-0 dark:text-white md:dark:hover:text-orange-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Services</a>
-                        </li>
-                        <li>
-                            <a href="#" className="block py-2 px-3 text-slate-800 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-orange-600 md:p-0 dark:text-white md:dark:hover:text-orange-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Pricing</a>
-                        </li>
-                        <li>
-                            <a href="#" className="block py-2 px-3 text-slate-800 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-orange-600 md:p-0 dark:text-white md:dark:hover:text-orange-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contact</a>
+                            <button onClick={goToRegistration} className="block py-2 px-3 text-slate-800 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-orange-600 md:p-0 dark:text-white md:dark:hover:text-orange-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Registrarse</button>
                         </li>
                     </ul>
                 </div>
