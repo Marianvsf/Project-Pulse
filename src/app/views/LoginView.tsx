@@ -13,6 +13,9 @@ export default function LoginView() {
     const goToHome = () => {
         router.push("/");
     }
+    const goToRegistration = () => {
+        router.push("/register");
+    }
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const response = await signIn("credentials", {
@@ -73,6 +76,15 @@ export default function LoginView() {
                                 className="h-[45px] w-[400px] p-2 border rounded-md mb-2"
                             />
                         </div>
+                        <p className="text-center text-sm">
+                            ¿No tienes cuenta?{" "}
+                            <button
+                                onClick={goToRegistration}
+                                className="text-secondary-500 hover:underline"
+                            >
+                                Regístrate
+                            </button>
+                        </p>
                         <button type="submit"
                             className="h-[54px] w-[247px] text-xl rounded-full mt-4 ml-[85px] text-white md:hover:text-orange-600 transition-colors duration-200 flex justify-center items-center shadow-md bg-white border border-gray-100 dark:bg-gray-900 dark:border-gray-800">
                             Entrar
