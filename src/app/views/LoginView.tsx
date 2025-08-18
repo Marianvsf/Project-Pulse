@@ -49,7 +49,7 @@ export default function LoginView() {
                     </button>
                 </div>
             </nav>
-            <form onSubmit={handleSubmit} className="flex items-center justify-center min-h-screen p-4">
+            <form onSubmit={handleSubmit} className="flex flex-col md:flex-row items-center justify-center min-h-screen p-4 md:space-x-12">
                 <div className="flex-shrink-0">
                     <img src="/Logo.png" className="mx-20 my-0 w-100 h-100 rounded-full" alt="Logo" />
                 </div>
