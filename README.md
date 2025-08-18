@@ -1,40 +1,68 @@
-<<<<<<< HEAD
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# Project-Pulse - Frontend
+## Descripción General
+Project-Pulse es una web diseñada para la gestión de proyectos, permitiendo a los usuarios gestionar proyectos. Este proyecto fue desarrollado con el objetivo de demostrar habilidades en Next.js, TypeScript y Tailwind CSS, así como el diseño, la estructura del código, la responsividad y la reutilización de componentes.
 
-First, run the development server:
+Proporciona una interfaz intuitiva para tener un control claro sobre el progreso y los detalles de cada proyecto, utilizando datos simulados a través de un archivo JSON para su funcionamiento.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Este enfoque es ideal para el desarrollo y las demostraciones del frontend, ya que permite trabajar sin la necesidad de una base de datos real o un backend complejo, simulando las operaciones de una API REST de forma local.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ✨ Características
+Interfaz de Usuario (UI): Una interfaz intuitiva y fácil de usar para la gestión de proyectos.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Datos simulados: La aplicación carga los datos de los proyectos desde un archivo JSON, lo que simplifica el entorno de desarrollo y elimina la necesidad de una base de datos real.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Operaciones CRUD: Los usuarios pueden realizar las siguientes operaciones sobre los proyectos:
 
-## Learn More
+Visualizar: Ver los detalles de cada proyecto.
 
-To learn more about Next.js, take a look at the following resources:
+Seguimiento del Progreso: Un sistema de estados permite actualizar el progreso de los proyectos (por ejemplo, Por hacer, En curso, Terminado).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Tecnologías clave:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Frontend: Desarrollado con React para una experiencia de usuario dinámica.
 
-## Deploy on Vercel
+Mock API: Utiliza un archivo JSON como "base de datos" para simular las peticiones del backend.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🛠️ Tecnologías Utilizadas
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-=======
-# Project-Pulse
->>>>>>> 4899496af8eed456bdfabcbef1d68581aa6e1967
+Next.js (v15.4.6)  - Framework de React para el desarrollo de aplicaciones web full-stack.
+
+React (v19.1.0)  - Librería de JavaScript para construir interfaces de usuario.
+
+Chart.js (v5.3.0) - Libreriá de Gráficos de JavaScript.
+
+TypeScript - Lenguaje de programación que añade tipado estático a JavaScript, mejorando la robustez y el mantenimiento del código.
+
+Tailwind CSS (v4) - Framework CSS utility-first para un diseño rápido y flexible.
+Mock Data:
+
+JSON (para la simulación de datos)
+
+### Configuración y Ejecución del Proyecto
+Requisitos Previos
+Asegúrate de tener instalado Node.js en tu sistema.
+
+Instalación
+Clona el repositorio:
+
+
+git clone https://github.com/Marianvsf/Project-Pulse.git
+Navega al directorio del proyecto:
+
+
+
+cd Project-Pulse
+Instala las dependencias:
+
+
+
+npm install
+Ejecución de la Aplicación
+Para iniciar la aplicación, simplemente ejecuta el siguiente comando:
+
+npm start
+La aplicación se iniciará en tu navegador por defecto en http://localhost:3000.
+
+Estructura de Datos
+Los datos de los proyectos se encuentran en el archivo db.json. Puedes modificar este archivo para añadir, eliminar o cambiar los proyectos existentes y ver cómo se reflejan los cambios en la interfaz de la aplicación.
