@@ -8,8 +8,8 @@ import Image from "next/image";
 
 export default function HomePage() {
     const router = useRouter();
-    const goToRegistration = () => {
-        router.push("/register");
+    const goToLogin = () => {
+        router.push("/login");
     }
 
     return (
@@ -21,12 +21,9 @@ export default function HomePage() {
                         <h1 className="m-5 font-poppins text-[74px] leading-[117%] font-normal">¡Bienvenido a Project Pulse!</h1>
                         <h6 className="rounded-xl font-poppins text-[20px] leading-[175%] max-w-md p-5 mt-4 tracking-wide">
                             Sigue el pulso de tu proyecto, siente el progreso.</h6>
-                        <button onClick={goToRegistration}
+                        <button onClick={goToLogin}
                             className="h-[54px] w-[247px] text-xl rounded-full mt-4 ml-[85px] text-white md:hover:text-orange-600 transition-colors duration-200 flex justify-center items-center shadow-md bg-white border border-gray-100 dark:bg-gray-900 dark:border-gray-800">
-                            Crear cuenta</button>
-                        {/* <button onClick={goToLogin}
-                            className="h-[54px] w-[247px] text-xl rounded-full mt-4 ml-[85px] text-white hover:bg-[#262162] transition-colors duration-200 flex justify-center items-center shadow-md bg-white border border-gray-100 dark:bg-gray-900 dark:border-gray-800">
-                            Iniciar Sesión</button> */}
+                            Iniciar Sesión</button>
                     </div>
                     <div className="mt-2 md:mt-0">
                         <Image

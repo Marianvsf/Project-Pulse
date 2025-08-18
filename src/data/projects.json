@@ -1,0 +1,316 @@
+[
+  {
+    "id": "1",
+    "nombre": "Campaña de Marketing Digital",
+    "descripcion": "Lanzamiento de una nueva estrategia de marketing digital para redes sociales y correo electrónico.",
+    "estado": "En progreso",
+    "prioridad": "Alta",
+    "progreso": 75,
+    "tareas": [
+      {
+        "id": 1,
+        "nombre": "Crear contenido para redes",
+        "completado": true
+      },
+      {
+        "id": 2,
+        "nombre": "Diseñar banners",
+        "completado": true
+      },
+      {
+        "id": 3,
+        "nombre": "Programar correos",
+        "completado": false
+      }
+    ],
+    "equipo": [
+      "Ana",
+      "Carlos",
+      "María"
+    ],
+    "fechaInicio": "2024-05-01",
+    "fechaFin": "2024-06-30"
+  },
+  {
+    "id": "2",
+    "nombre": "Rediseño de la Web Corporativa",
+    "descripcion": "Actualización completa del sitio web para mejorar la experiencia de usuario y la velocidad.",
+    "estado": "Completado",
+    "prioridad": "Alta",
+    "progreso": 100,
+    "tareas": [
+      {
+        "id": 1,
+        "nombre": "Planificar estructura",
+        "completado": true
+      },
+      {
+        "id": 2,
+        "nombre": "Desarrollar frontend",
+        "completado": true
+      },
+      {
+        "id": 3,
+        "nombre": "Integrar backend",
+        "completado": true
+      }
+    ],
+    "equipo": [
+      "Pedro",
+      "Laura",
+      "Javier"
+    ],
+    "fechaInicio": "2024-03-15",
+    "fechaFin": "2024-05-15"
+  },
+  {
+    "id": "3",
+    "nombre": "Desarrollo de App Móvil",
+    "descripcion": "Creación de una aplicación móvil para iOS y Android.",
+    "estado": "Pendiente",
+    "prioridad": "Media",
+    "progreso": 20,
+    "tareas": [
+      {
+        "id": 1,
+        "nombre": "Definir funcionalidades",
+        "completado": true
+      },
+      {
+        "id": 2,
+        "nombre": "Diseñar interfaz",
+        "completado": false
+      },
+      {
+        "id": 3,
+        "nombre": "Configurar entorno",
+        "completado": false
+      }
+    ],
+    "equipo": [
+      "Sofía",
+      "Pablo"
+    ],
+    "fechaInicio": "2024-07-01",
+    "fechaFin": "2024-12-31"
+  },
+  {
+    "id": "4",
+    "nombre": "Análisis de Datos de Mercado",
+    "descripcion": "Estudio detallado de las tendencias del mercado y el comportamiento del consumidor.",
+    "estado": "En progreso",
+    "prioridad": "Media",
+    "progreso": 60,
+    "tareas": [
+      {
+        "id": 1,
+        "nombre": "Recopilar datos",
+        "completado": true
+      },
+      {
+        "id": 2,
+        "nombre": "Analizar métricas",
+        "completado": false
+      },
+      {
+        "id": 3,
+        "nombre": "Generar informe",
+        "completado": false
+      }
+    ],
+    "equipo": [
+      "Luis",
+      "Elena"
+    ],
+    "fechaInicio": "2024-06-01",
+    "fechaFin": "2024-08-31"
+  },
+  {
+    "id": "5",
+    "nombre": "Actualización de Infraestructura de Servidores",
+    "descripcion": "Migración de servidores a una nueva plataforma en la nube para mejorar el rendimiento.",
+    "estado": "En progreso",
+    "prioridad": "Alta",
+    "progreso": 90,
+    "tareas": [
+      {
+        "id": 1,
+        "nombre": "Preparar entorno",
+        "completado": true
+      },
+      {
+        "id": 2,
+        "nombre": "Migrar bases de datos",
+        "completado": true
+      },
+      {
+        "id": 3,
+        "nombre": "Pruebas de rendimiento",
+        "completado": false
+      }
+    ],
+    "equipo": [
+      "David",
+      "Ricardo",
+      "Marta"
+    ],
+    "fechaInicio": "2024-04-10",
+    "fechaFin": "2024-07-20"
+  },
+  {
+    "id": "6",
+    "nombre": "Lanzamiento de Nuevo Producto",
+    "descripcion": "Introducción de un producto innovador en el mercado, incluyendo estrategia de precio y distribución.",
+    "estado": "Pendiente",
+    "prioridad": "Alta",
+    "progreso": 15,
+    "tareas": [
+      {
+        "id": 1,
+        "nombre": "Estudio de viabilidad",
+        "completado": true
+      },
+      {
+        "id": 2,
+        "nombre": "Desarrollo de prototipo",
+        "completado": false
+      },
+      {
+        "id": 3,
+        "nombre": "Plan de lanzamiento",
+        "completado": false
+      }
+    ],
+    "equipo": [
+      "Carla",
+      "Hugo",
+      "Eva"
+    ],
+    "fechaInicio": "2024-09-01",
+    "fechaFin": "2025-03-31"
+  },
+  {
+    "id": "7",
+    "nombre": "Mejora del Proceso de Ventas",
+    "descripcion": "Optimización del flujo de trabajo de ventas para aumentar la eficiencia del equipo.",
+    "estado": "En progreso",
+    "prioridad": "Media",
+    "progreso": 50,
+    "tareas": [
+      {
+        "id": 1,
+        "nombre": "Auditoría de procesos",
+        "completado": true
+      },
+      {
+        "id": 2,
+        "nombre": "Capacitación del equipo",
+        "completado": true
+      },
+      {
+        "id": 3,
+        "nombre": "Implementar nuevo CRM",
+        "completado": false
+      }
+    ],
+    "equipo": [
+      "Jorge",
+      "Silvia"
+    ],
+    "fechaInicio": "2024-06-15",
+    "fechaFin": "2024-10-15"
+  },
+  {
+    "id": "8",
+    "nombre": "Creación de Contenido para Blog",
+    "descripcion": "Planificación y redacción de artículos para el blog corporativo con enfoque SEO.",
+    "estado": "Completado",
+    "prioridad": "Baja",
+    "progreso": 100,
+    "tareas": [
+      {
+        "id": 1,
+        "nombre": "Definir temas",
+        "completado": true
+      },
+      {
+        "id": 2,
+        "nombre": "Redactar artículos",
+        "completado": true
+      },
+      {
+        "id": 3,
+        "nombre": "Publicar en blog",
+        "completado": true
+      }
+    ],
+    "equipo": [
+      "Isabel"
+    ],
+    "fechaInicio": "2024-01-01",
+    "fechaFin": "2024-03-01"
+  },
+  {
+    "id": "9",
+    "nombre": "Implementación de Sistema de Gestión",
+    "descripcion": "Integración de un nuevo software ERP para automatizar los procesos internos de la empresa.",
+    "estado": "En progreso",
+    "prioridad": "Alta",
+    "progreso": 40,
+    "tareas": [
+      {
+        "id": 1,
+        "nombre": "Seleccionar software",
+        "completado": true
+      },
+      {
+        "id": 2,
+        "nombre": "Configurar módulos",
+        "completado": false
+      },
+      {
+        "id": 3,
+        "nombre": "Capacitar al personal",
+        "completado": false
+      }
+    ],
+    "equipo": [
+      "Fernando",
+      "Beatriz",
+      "Diego"
+    ],
+    "fechaInicio": "2024-05-20",
+    "fechaFin": "2024-11-30"
+  },
+  {
+    "id": "10",
+    "nombre": "Desarrollo de API para Clientes",
+    "descripcion": "Creación de una interfaz de programación de aplicaciones para que los clientes integren sus sistemas.",
+    "estado": "Pendiente",
+    "prioridad": "Media",
+    "progreso": 0,
+    "tareas": [
+      {
+        "id": 1,
+        "nombre": "Definir especificaciones",
+        "completado": false
+      },
+      {
+        "id": 2,
+        "nombre": "Escribir código",
+        "completado": false
+      },
+      {
+        "id": 3,
+        "nombre": "Documentar API",
+        "completado": false
+      }
+    ],
+    "equipo": [
+      "Roberto",
+      "Verónica"
+    ],
+    "fechaInicio": "2024-08-01",
+    "fechaFin": "2024-12-01"
+  }
+]

@@ -27,14 +27,14 @@ export default function LoginView() {
             console.log("Login successful");
             router.push("/dashboard");
         } else {
-            console.error("Login failed", response?.error);
+            alert("Error al iniciar sesión. Por favor, verifica tus datos.");
         }
     };
 
     return (
         <>
             <nav className="bg-white border-b border-gray-100 dark:bg-gray-900 dark:border-gray-800">
-                <div className="max-w-[1536px] flex flex-wrap items-center mx-auto p-4">
+                <div className="max-w-[1536px] flex flex-wrap items-center mx-auto p-2">
                     {/* Botón "Volver a atrás"*/}
                     <div className="flex items-center space-x-3">
                         <button
