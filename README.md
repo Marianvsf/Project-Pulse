@@ -64,5 +64,6 @@ Para iniciar la aplicación, simplemente ejecuta el siguiente comando:
 npm start
 La aplicación se iniciará en tu navegador por defecto en http://localhost:3000.
 
-Estructura de Datos
-Los datos de los proyectos se encuentran en el archivo db.json. Puedes modificar este archivo para añadir, eliminar o cambiar los proyectos existentes y ver cómo se reflejan los cambios en la interfaz de la aplicación.
+### Estructura de Datos
+Los datos de usuarios simulados se encuentran en el archivo users.json
+Los datos de los proyectos se encuentran en el archivo projects.json. Puedes modificar este archivo para añadir, eliminar o cambiar los proyectos existentes y ver cómo se reflejan los cambios en la interfaz de la aplicación.
