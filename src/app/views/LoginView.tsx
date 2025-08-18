@@ -13,6 +13,9 @@ export default function LoginView() {
     const goToHome = () => {
         router.push("/");
     }
+    const goToRegistration = () => {
+        router.push("/register");
+    }
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const response = await signIn("credentials", {
@@ -24,14 +27,14 @@ export default function LoginView() {
             console.log("Login successful");
             router.push("/dashboard");
         } else {
-            console.error("Login failed", response?.error);
+            alert("Error al iniciar sesión. Por favor, verifica tus datos.");
         }
     };
 
     return (
         <>
             <nav className="bg-white border-b border-gray-100 dark:bg-gray-900 dark:border-gray-800">
-                <div className="max-w-[1536px] flex flex-wrap items-center mx-auto p-4">
+                <div className="max-w-[1536px] flex flex-wrap items-center mx-auto p-2">
                     {/* Botón "Volver a atrás"*/}
                     <div className="flex items-center space-x-3">
                         <button
@@ -46,7 +49,7 @@ export default function LoginView() {
                     </button>
                 </div>
             </nav>
-            <form onSubmit={handleSubmit} className="flex items-center justify-center min-h-screen p-4">
+            <form onSubmit={handleSubmit} className="flex flex-col md:flex-row items-center justify-center min-h-screen p-4 md:space-x-12">
                 <div className="flex-shrink-0">
                     <img src="/Logo.png" className="mx-20 my-0 w-100 h-100 rounded-full" alt="Logo" />
                 </div>
@@ -73,6 +76,15 @@ export default function LoginView() {
                                 className="h-[45px] w-[400px] p-2 border rounded-md mb-2"
                             />
                         </div>
+                        <p className="text-center text-sm">
+                            ¿No tienes cuenta?{" "}
+                            <button
+                                onClick={goToRegistration}
+                                className="text-secondary-500 hover:underline"
+                            >
+                                Regístrate
+                            </button>
+                        </p>
                         <button type="submit"
                             className="h-[54px] w-[247px] text-xl rounded-full mt-4 ml-[85px] text-white md:hover:text-orange-600 transition-colors duration-200 flex justify-center items-center shadow-md bg-white border border-gray-100 dark:bg-gray-900 dark:border-gray-800">
                             Entrar
