@@ -44,23 +44,24 @@ Asegúrate de tener instalado Node.js en tu sistema.
 Instalación
 Clona el repositorio:
 
-
 git clone https://github.com/Marianvsf/Project-Pulse.git
 Navega al directorio del proyecto:
-
-
 
 cd Project-Pulse
 Instala las dependencias:
 
-
-
 npm install
-Ejecución de la Aplicación
-Para iniciar la aplicación, simplemente ejecuta el siguiente comando:
 
-npm start
-La aplicación se iniciará en tu navegador por defecto en http://localhost:3000.
+## Comandos de Ejecución
+El proyecto utiliza scripts de npm definidos en el archivo package.json para las siguientes tareas:
+
+-npm run dev: Para iniciar la aplicación en modo de desarrollo. Este es el comando que debes usar para trabajar en el proyecto. La aplicación se iniciará en tu navegador por defecto en http://localhost:3000.
+
+-npm run build: Para compilar y optimizar la aplicación para producción.
+
+-npm start: Para iniciar el servidor de la aplicación en modo de producción, después de haberla compilado con npm run build.
+
+-npm run lint: Para analizar el código en busca de errores y seguir las buenas prácticas con ESLint.
 
 ## 🎨 Diseño y Responsividad
 El diseño de Project-Pulse se centra en una experiencia de usuario limpia y directa. Gracias al uso de Tailwind CSS, el proyecto es totalmente responsive, garantizando que la interfaz se adapte y funcione de manera óptima en una variedad de dispositivos y tamaños de pantalla, desde móviles hasta grandes monitores.
