@@ -1,22 +1,20 @@
 
 # Project-Pulse - Frontend
-## Descripción General
-Project-Pulse es una web diseñada para la gestión de proyectos, permitiendo a los usuarios gestionar proyectos. Este proyecto fue desarrollado con el objetivo de demostrar habilidades en Next.js, TypeScript y Tailwind CSS, así como el diseño, la estructura del código, la responsividad y la reutilización de componentes.
+## 🚀 Descripción General
+Project-Pulse es una aplicación web diseñada para la gestión de proyectos, con una interfaz intuitiva y minimalista que permite a los usuarios visualizar y actualizar el progreso de sus proyectos. Este proyecto fue desarrollado como una prueba técnica para demostrar habilidades en Next.js, TypeScript, y Tailwind CSS, enfocándose en la arquitectura del código, la reutilización de componentes y la responsividad.
 
-Proporciona una interfaz intuitiva para tener un control claro sobre el progreso y los detalles de cada proyecto, utilizando datos simulados a través de un archivo JSON para su funcionamiento.
+Para su funcionamiento, la aplicación utiliza datos simulados (mock data) a través de archivos JSON, lo que elimina la necesidad de una base de datos real o un backend complejo. Este enfoque es ideal para demostraciones y para un desarrollo ágil del frontend, permitiendo simular operaciones de una API REST de manera local.
 
-Este enfoque es ideal para el desarrollo y las demostraciones del frontend, ya que permite trabajar sin la necesidad de una base de datos real o un backend complejo, simulando las operaciones de una API REST de forma local.
+## ✨ Características Principales
+-Interfaz de Usuario (UI): Una interfaz intuitiva y fácil de usar para la gestión de proyectos.
 
-## ✨ Características
-Interfaz de Usuario (UI): Una interfaz intuitiva y fácil de usar para la gestión de proyectos.
+-Datos simulados: La aplicación carga los datos de los proyectos desde un archivo JSON, lo que simplifica el entorno de desarrollo y elimina la necesidad de una base de datos real.
 
-Datos simulados: La aplicación carga los datos de los proyectos desde un archivo JSON, lo que simplifica el entorno de desarrollo y elimina la necesidad de una base de datos real.
+-Operaciones CRUD: Los usuarios pueden realizar las siguientes operaciones sobre los proyectos:
 
-Operaciones CRUD: Los usuarios pueden realizar las siguientes operaciones sobre los proyectos:
+-Visualizar: Ver los detalles de cada proyecto.
 
-Visualizar: Ver los detalles de cada proyecto.
-
-Seguimiento del Progreso: Un sistema de estados permite actualizar el progreso de los proyectos (por ejemplo, Por hacer, En curso, Terminado).
+-Seguimiento del Progreso: Un sistema de estados permite actualizar el progreso de los proyectos (por ejemplo, Por hacer, En curso, Terminado).
 
 Tecnologías clave:
 
@@ -64,6 +62,8 @@ Para iniciar la aplicación, simplemente ejecuta el siguiente comando:
 npm start
 La aplicación se iniciará en tu navegador por defecto en http://localhost:3000.
 
-### Estructura de Datos
-Los datos de usuarios simulados se encuentran en el archivo users.json
-Los datos de los proyectos se encuentran en el archivo projects.json. Puedes modificar este archivo para añadir, eliminar o cambiar los proyectos existentes y ver cómo se reflejan los cambios en la interfaz de la aplicación.
+## 🎨 Diseño y Responsividad
+El diseño de Project-Pulse se centra en una experiencia de usuario limpia y directa. Gracias al uso de Tailwind CSS, el proyecto es totalmente responsive, garantizando que la interfaz se adapte y funcione de manera óptima en una variedad de dispositivos y tamaños de pantalla, desde móviles hasta grandes monitores.
+
+## ♻️ Reutilización de Componentes
+Se ha priorizado la creación de componentes reutilizables para mantener un código limpio y eficiente, siguiendo la filosofía DRY (Don't Repeat Yourself)
