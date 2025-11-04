@@ -62,12 +62,12 @@ export default function DashboardUser() {
         <>
             <UserNavbar onSearch={handleSearch} />
             <div className="container mx-auto p-8">
-                <h1 className="text-4xl font-bold mb-4 text-center">Dashboard de Gestión de Proyectos</h1>
-                <p className="text-lg text-center mb-8">
+                <h1 className="text-4xl font-semibold mb-4 text-center">Dashboard de Gestión de Proyectos</h1>
+                <p className="text-md text-center mb-8">
                     Bienvenido, {session.user?.name}. Aquí puedes ver un resumen de todos tus proyectos, monitorear su estado y revisar el progreso de cada uno.
                 </p>
                 <h2 className="text-2xl font-semibold mb-4 text-center mt-8">Análisis General</h2>
-                <p className="text-lg text-center mb-6">
+                <p className="text-md text-center mb-6">
                     Observa el estado de tus proyectos en un vistazo. Utiliza estos gráficos para tomar decisiones rápidas.
                 </p>
 
@@ -80,7 +80,7 @@ export default function DashboardUser() {
                         Total de proyectos activos: <span className="font-bold">{Allprojects.length}</span>
                     </p>
                 </div>
-                <p className="text-lg mb-6">
+                <p className="text-md mb-6">
                     Explora y gestiona todos los proyectos asignados a tu cuenta. Haz clic en cualquier tarjeta para ver los detalles completos.
                 </p>
 
