@@ -53,7 +53,6 @@ export default function DashboardUser() {
     }
 
     if (!session) {
-        // Redirige al usuario si no está autenticado
         router.push('/login');
         return null;
     }
@@ -70,10 +69,7 @@ export default function DashboardUser() {
                 <p className="text-md text-center mb-6">
                     Observa el estado de tus proyectos en un vistazo. Utiliza estos gráficos para tomar decisiones rápidas.
                 </p>
-
-                {/* Sección de gráficos (ejemplo conceptual) */}
                 <Charts projects={Allprojects} />
-
                 <div className="flex justify-between items-center mt-12 mb-6">
                     <h2 className="text-2xl font-semibold">Tus Proyectos</h2>
                     <p className="text-md">
@@ -83,8 +79,6 @@ export default function DashboardUser() {
                 <p className="text-md mb-6">
                     Explora y gestiona todos los proyectos asignados a tu cuenta. Haz clic en cualquier tarjeta para ver los detalles completos.
                 </p>
-
-                {/* Grid para las tarjetas de proyectos */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {Allprojects.map((project) => (
                         <ProjectCard
