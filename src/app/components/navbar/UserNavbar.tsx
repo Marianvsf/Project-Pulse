@@ -123,7 +123,7 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
                 )}
             </div>
             <div className="flex items-center gap-4 relative">
-                <p className="text-lg text-end text-white">
+                <p className="text-md text-end text-white">
                     Bienvenido, {session?.user?.name || "Invitado"}
                 </p>
             {/* Sección Derecha: Iconos de Notificación y Perfil */}
