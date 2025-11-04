@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import React, { useState, useRef, useEffect } from "react";
 import { ChevronLeftIcon } from "@heroicons/react/20/solid";
+import Image from "next/image";
 
 interface Filters {
     status?: string;
@@ -73,12 +74,12 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
                     className="inline-flex items-center text-gray-400 rounded-xl hover:bg-gray-500 dark:hover:bg-gray-500"
                 ><ChevronLeftIcon className="h-8 w-8 mr-1" aria-hidden="true" />
                 </button>
-                <img src="/Logo.png" className="w-10 h-10 rounded-full bg-gray-500" alt="Logo" />
+                <Image width={10} height={10} src="/Logo.png" className="w-10 h-10 rounded-full bg-gray-500" alt="Logo" />
                 {/* Buscador + Filtro */}
                 {showSearchAndFilter && (
                     <div className="flex items-center gap-2">
                         <div className="flex items-center gap-2 bg-white border border-gray-700 dark:bg-gray-900 dark:border-gray-800] px-4 py-2 rounded-[8px] w-[320px]">
-                            <img src="/search.svg" alt="Buscar" className="w-4 h-4" />
+                            <Image width={4} height={4} src="/search.svg" alt="Buscar" className="w-4 h-4" />
                             <input
                                 type="text"
                                 placeholder="Buscar proyectos..."
@@ -91,7 +92,7 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
                         <button
                             onClick={() => setShowFilterMenu(!showFilterMenu)}
                             className="w-8 h-8 flex items-center gap-2 bg-white border border-gray-700 dark:bg-gray-900 dark:border-gray-800] rounded-md justify-center">
-                            <img src="/filter.svg" alt="Filtrar" className="w-4 h-4" />
+                            <Image width={4} height={4} src="/filter.svg" alt="Filtrar" />
                         </button>
                         {/* Menú de filtros */}
                         {showFilterMenu && (
@@ -127,7 +128,7 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
                     className="w-8 h-8 bg-white border border-gray-700 dark:bg-gray-900 dark:border-gray-800] rounded-full flex items-center justify-center"
                     onClick={() => setShowProfileMenu(!showProfileMenu)}
                 >
-                    <img src="/user.svg" alt="Perfil" className="w-4 h-4" />
+                    <Image width={4} height={4} src="/user.svg" alt="Perfil" />
                 </button>
 
                 {/* Dropdown de perfil */}
@@ -141,7 +142,7 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
                                 onClick={handleLogout}
                                 className="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-700 transition"
                             >
-                                <img src="/log-out.png" alt="Salir" className="w-5 h-5" />
+                                <Image width={5} height={5} src="/log-out.png" alt="Salir" />
                                 Cerrar sesión
                             </button>
                         </div>
