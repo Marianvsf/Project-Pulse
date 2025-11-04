@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { ChevronLeftIcon } from '@heroicons/react/20/solid';
 import { useState } from "react";
 import { signIn } from "next-auth/react";
+import Image from "next/image";
 
 export default function LoginView() {
     const [email, setEmail] = useState("");
@@ -44,14 +45,14 @@ export default function LoginView() {
                         </button>
                     </div>
                     <button onClick={goToHome} className="flex items-center space-x-3 rtl:space-x-reverse">
-                        <img src="/Logo.png" className="w-10 h-10 rounded-full bg-gray-500" alt="Logo" />
+                        <Image width={10} height={10} src="/Logo.png" className="w-10 h-10 rounded-full bg-gray-500" alt="Logo" />
                         <span className="self-center text-2xl font-semibold whitespace-nowrap text-slate-800 dark:text-white">Project Pulse</span>
                     </button>
                 </div>
             </nav>
             <form onSubmit={handleSubmit} className="flex flex-col md:flex-row items-center justify-center min-h-screen p-4 md:space-x-12">
                 <div className="flex-shrink-0">
-                    <img src="/Logo.png" className="mx-20 my-0 w-100 h-100 rounded-full" alt="Logo" />
+                    <Image width={100} height={100} src="/Logo.png" className="mx-20 my-0 w-100 h-100 rounded-full" alt="Logo" />
                 </div>
                 <div className="w-full max-w-md backdrop-blur-sm p-6 rounded-lg">
                     <h1 className="text-3xl font-semibold text-center mb-6">Iniciar Sesión</h1>
