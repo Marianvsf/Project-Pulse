@@ -55,6 +55,10 @@ export default function HomePage() {
                                 />
                             </div>
                         ))}
+                        <video
+                            width={1920}
+                            height={400}
+                            src={"/assets/video.mp4"}></video>
                     </div>
                     <div className="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
                         {images.map((_, index) => (
