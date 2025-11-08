@@ -103,13 +103,10 @@ export default function HomePage() {
                 height={400}
                 src={"/assets/video.mp4"}
                 className="absolute block w-full h-full object-cover"
-
-                // Atributos de reproducción típicos de HTML5
                 loop
                 autoPlay
                 muted
                 playsInline
-                // La propiedad 'preload' puede ser 'auto', 'metadata', o 'none'
                 preload="auto"
             ></video>
             <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-1 pb-10 sm:p-20">
