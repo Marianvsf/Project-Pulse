@@ -13,11 +13,9 @@ export default function HomePage() {
     }
     const [currentSlide, setCurrentSlide] = useState<number>(0);
     const images = [
-        "/assets/foto (1).jpg",
-        "/assets/foto (2).jpg",
-        "/assets/foto (3).jpg",
-        "/assets/foto (4).jpg",
-        "/assets/foto (5).jpg",
+        "/assets/fot1.jpg",
+        "/assets/fot2.jpg",
+        "/assets/fot3.jpg",
     ];
 
     useEffect(() => {
