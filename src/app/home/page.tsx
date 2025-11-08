@@ -55,10 +55,6 @@ export default function HomePage() {
                                 />
                             </div>
                         ))}
-                        <video
-                            width={1920}
-                            height={400}
-                            src={"/assets/video.mp4"}></video>
                     </div>
                     <div className="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
                         {images.map((_, index) => (
@@ -102,6 +98,20 @@ export default function HomePage() {
                     Te damos la bienvenida a una mejor forma de planificar tu viaje, todo comienza justo aquí.</small>
                 </h1>
             </header>
+            <video
+                width={1920}
+                height={400}
+                src={"/assets/video.mp4"}
+                className="absolute block w-full h-full object-cover"
+
+                // Atributos de reproducción típicos de HTML5
+                loop
+                autoPlay
+                muted
+                playsInline
+                // La propiedad 'preload' puede ser 'auto', 'metadata', o 'none'
+                preload="auto"
+            ></video>
             <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-1 pb-10 sm:p-20">
                 <main className="flex flex-col md:flex-row items-center justify-center row-start-2 w-full">
                     <div className="flex flex-col items-start m-5 mr-1">
