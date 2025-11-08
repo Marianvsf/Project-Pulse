@@ -6,20 +6,18 @@ import Navbar from "../components/navbar/Navbar";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-
 export default function HomePage() {
     const router = useRouter();
     const goToLogin = () => {
         router.push("/login");
     }
     const [currentSlide, setCurrentSlide] = useState<number>(0);
-    const images: string[] = [
-        "https://images.pexels.com/photos/670261/pexels-photo-670261.jpeg",
-        "https://images.pexels.com/photos/534757/pexels-photo-534757.jpeg",
-        "https://images.pexels.com/photos/930595/pexels-photo-930595.jpeg",
-        "https://images.pexels.com/photos/1060803/pexels-photo-1060803.jpeg",
-        "https://images.pexels.com/photos/2438323/pexels-photo-2438323.jpeg",
-        "https://www.rionegro.com.ar/wp-content/uploads/2023/08/mar-del-plata-playas-mar-del-plata-3-1.jpg"
+    const images = [
+        "/assets/foto (1).jpg",
+        "/assets/foto (2).jpg",
+        "/assets/foto (3).jpg",
+        "/assets/foto (4).jpg",
+        "/assets/foto (5).jpg",
     ];
 
     useEffect(() => {
@@ -50,7 +48,9 @@ export default function HomePage() {
                                 className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${index === currentSlide ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
                                 style={{ pointerEvents: index === currentSlide ? 'auto' : 'none' }}
                             >
-                                <img
+                                <Image
+                                    width={1000}
+                                    height={1000}
                                     src={image}
                                     className="absolute block w-full h-full object-cover"
                                     alt={`Slide ${index + 1}`}
