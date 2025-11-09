@@ -102,7 +102,7 @@ export default function HomePage() {
                     className="h-[54px] w-[247px] text-xl rounded-full mt-7 text-white md:hover:text-orange-600 transition-colors duration-200 flex justify-center items-center shadow-md bg-white border border-gray-100 dark:bg-gray-900 dark:border-gray-800">
                     Iniciar Sesión</button>
                 <Image
-                    className="w-[488px] h-[375px] mb-5"
+                    className="w-[400px] h-[375px] mb-5"
                     src="/IconLogo.png"
                     alt="symbol"
                     width={488}
