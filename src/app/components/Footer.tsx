@@ -1,3 +1,5 @@
+import Image from "next/image"
+
 export const Footer = () => { 
 return (
 <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center text-white p-4 bg-gray-900 font-mono">
@@ -6,7 +8,16 @@ return (
     href="https://github.com/Marianvsf"
     target="_blank"
     rel="noopener noreferrer"
-  >Made by →  Marian Suárez
+  >Made by →  
+  <Image 
+  className="logo w-9 h-9 rounded-full border border-white"
+  src="/github.png"
+  alt="logo"
+  width={35} 
+  height={35}
+  priority
+  />
+  Marian Suárez
   </a>
 </footer>
 )
