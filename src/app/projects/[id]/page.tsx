@@ -3,7 +3,6 @@
 import UserNavbar from "@/app/components/navbar/UserNavbar";
 import projects from "../../../data/projects.json";
 
-
 interface Project {
   id: string;
   nombre: string;
@@ -16,17 +15,21 @@ interface Project {
   fechaInicio: string;
   fechaFin: string;
 }
-const typedProjects: Project[] = projects;
 
-export default function ProjectDetailsPage({ params }: { params: { id: string } }) {
+export default function ProjectDetailsPage({ params }: { params: { id: string }}) {
+  return <ProjectDetailsClient projectId={params.id} />;
+}
+
+  function ProjectDetailsClient({ projectId }: { projectId: string }) {
   // Busca el proyecto con el ID de la URL
-  const project: Project | undefined = projects.find((p) => p.id === params.id);
+  const project: Project | undefined = (projects as Project[]).find((p) => p.id === projectId);
+
   if (!project) {
     return <div>Proyecto no encontrado.</div>;
-  };
+  }
 
   const handleSearch = () => {
-    // Esta función no se usará, pero es una prop obligatoria
+    // Esta función no se usará, pero es una prop obligatoria para UserNavbar
   };
 
   return (
