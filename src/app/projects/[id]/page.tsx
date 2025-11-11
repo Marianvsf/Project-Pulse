@@ -16,8 +16,10 @@ interface Project {
   fechaFin: string;
 }
 
-export default function ProjectDetailsPage({ params }: { params: { id: string }}) {
-  return <ProjectDetailsClient projectId={params.id} />;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function ProjectDetailsPage({params}:any) {
+  const projectId = params?.id || '';
+  return <ProjectDetailsClient projectId={projectId} />;
 }
 
   function ProjectDetailsClient({ projectId }: { projectId: string }) {
