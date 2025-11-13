@@ -1,36 +1,56 @@
-import NextAuth from "next-auth";
+import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import users from "../../../../data/users.json";
+import { PrismaClient } from "@prisma/client/extension";
+
+const prisma = new PrismaClient();
 
 // Lógica de autenticación
-const authOptions = {
-    providers: [
-        CredentialsProvider({
-            name: "Credentials",
-            credentials: {
-                email: { label: "Email", type: "email" },
-                password: { label: "Password", type: "password" }
-            },
-            async authorize(credentials, req) {
-                // 1. Encuentra al usuario por su email
-                const user = users.find(u => u.email === credentials?.email);
+export const authOptions: AuthOptions = {
+  providers: [
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials, req) {
+        if (!credentials?.email || !credentials?.password) {
+          throw new Error("Credenciales inválidas");
+        }
+        const user = await prisma.user.findUnique({
+          where: {
+            email: credentials.email,
+          },
+        });
+        if (!user || !user.hashedPassword) {
+          throw new Error("Usuario no encontrado");
+        }
 
-                // 2. Si el usuario existe, verifica la contraseña (simulada)
-                if (user && user.password === credentials?.password) {
-                    // Si las credenciales son correctas, devuelve el objeto de usuario
-                    return { id: user.id, name: user.nombre, email: user.email };
-                }
-                
-                // 3. Si no hay coincidencia, devuelve null
-                return null;
-            }
-        })
-    ],
-    pages: {
-        signIn: "/login",
-    }
+        const isPasswordCorrect = await bcrypt.compare(
+          credentials.password,
+          user.hashedPassword
+        );
+
+        if (!isPasswordCorrect) {
+          throw new Error("Contraseña incorrecta");
+        }
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+        };
+      },
+    }),
+  ],
+  pages: {
+    signIn: "/login",
+  },
+  session: {
+    strategy: "jwt",
+  },
+  secret: process.env.NEXTAUTH_SECRET,
 };
 
-const handler = NextAuth(authOptions);
+const handler = NextAuth(AuthOptions);
 
 export { handler as GET, handler as POST };
