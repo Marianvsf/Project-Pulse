@@ -99,15 +99,16 @@ export default function HomePage() {
                     </button>
                 </div>
             </header>
-            <Header />*/}
+            */}
+
             <main className="flex flex-col items-center text-center justify-center m-auto max-w-[980px]">
                 <h1 className="m-auto mt-15 text-[50px] font-extrabold text-center tracking-tighter">La gestión de tus proyectos, simplificada y centralizada.</h1>
                 <div className="max-w-[750px]">
-                    <small className="text-center text-[25px] text-gray-500 dark:text-gray-400">
+                    <small className="text-center text-[25px] text-gray-500 dark:text-gray-400 font-extrabold">
                         Project-Pulse ayuda a los equipos organizar tareas, seguir el progreso y colaborar eficazmente, todo en un solo lugar.
                     </small>
                 </div>
-                <div className="flex items-center text-center justify-center m-auto space-x-3">
+                <div className="flex items-center text-center justify-center m-auto mb-10 space-x-3">
                     <button onClick={goToRegistration}
                         className="h-[54px] w-[247px] text-xl rounded-full mt-7 text-white md:hover:text-orange-600 transition-colors duration-200 justify-center items-center shadow-md bg-white border border-gray-100 dark:bg-gray-900 dark:border-gray-800">
                         Registrarse Gratis</button>
@@ -115,6 +116,7 @@ export default function HomePage() {
                         className="h-[54px] w-[247px] text-xl rounded-full mt-7 text-white md:hover:text-orange-600 transition-colors duration-200 justify-center items-center shadow-md bg-white border border-gray-100 dark:bg-gray-900 dark:border-gray-800">
                         Iniciar Sesión</button>
                 </div>
+                <Header />
                 <Image
                     className="w-[380px] h-[375px] mb-5"
                     src="/IconLogo.png"
