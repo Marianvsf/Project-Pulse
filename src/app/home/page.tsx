@@ -105,24 +105,24 @@ export default function HomePage() {
                 <h1 className="m-auto mt-15 text-[50px] font-extrabold text-center tracking-tighter">La gestión de tus proyectos, simplificada y centralizada.</h1>
                 <div className="max-w-[750px]">
                     <small className="text-center text-[25px] text-gray-500 dark:text-gray-400 font-extrabold">
-                        Project-Pulse ayuda a los equipos organizar tareas, seguir el progreso y colaborar eficazmente, todo en un solo lugar.
+                        Project-Pulse ayuda a los equipos a organizar tareas, seguir el progreso y colaborar eficazmente, todo en un solo lugar.
                     </small>
                 </div>
                 <div className="flex items-center text-center justify-center m-auto mb-10 space-x-3">
                     <button onClick={goToRegistration}
-                        className="h-[54px] w-[247px] text-xl rounded-full mt-7 text-white md:hover:text-orange-600 transition-colors duration-200 justify-center items-center shadow-md bg-white border border-gray-100 dark:bg-gray-900 dark:border-gray-800">
+                        className="h-[44px] w-[237px] text-lg rounded-xl mt-7 text-white md:hover:text-orange-600 transition-colors duration-200 justify-center items-center shadow-md bg-white border border-gray-100 dark:bg-gray-900 dark:border-gray-800">
                         Registrarse Gratis</button>
                     <button onClick={goToLogin}
-                        className="h-[54px] w-[247px] text-xl rounded-full mt-7 text-white md:hover:text-orange-600 transition-colors duration-200 justify-center items-center shadow-md bg-white border border-gray-100 dark:bg-gray-900 dark:border-gray-800">
-                        Iniciar Sesión</button>
+                        className="h-[44px] w-[237px] text-lg rounded-xl mt-7 text-white md:hover:text-blue-400 transition-colors duration-200 justify-center items-center bg-white border border-blue-600 dark:bg-blue-600">
+                        Ver Demo</button>
                 </div>
                 <Header />
                 <Image
-                    className="w-[380px] h-[375px] mb-5"
+                    className="w-[180px] h-[175px] mb-5"
                     src="/IconLogo.png"
                     alt="symbol"
-                    width={488}
-                    height={375}
+                    width={188}
+                    height={75}
                 />
             </main >
         </>
