@@ -95,9 +95,15 @@ export default function HomePage() {
                         </span>
                     </button>
                 </div>
-            </header>*/}
-            <Header />
-            <main className="flex flex-col items-center text-center justify-center m-auto w-full">
+            </header>
+            <Header />*/}
+            <main className="flex flex-col items-center text-center justify-center m-auto max-w-[1010px]">
+                <h1 className="m-auto mt-15 text-[50px] font-extrabold text-center tracking-tight">La gestión de tus proyectos, simplificada y centralizada.</h1>
+                <div className="max-w-[750px]">
+                    <small className="text-center text-[25px] text-gray-500 dark:text-gray-400">
+                        Project-Pulse ayuda a los equipos organizar tareas, seguir el progreso y colaborar eficazmente, todo en un solo lugar.
+                    </small>
+                </div>
                 <button onClick={goToLogin}
                     className="h-[54px] w-[247px] text-xl rounded-full mt-7 text-white md:hover:text-orange-600 transition-colors duration-200 flex justify-center items-center shadow-md bg-white border border-gray-100 dark:bg-gray-900 dark:border-gray-800">
                     Iniciar Sesión</button>
