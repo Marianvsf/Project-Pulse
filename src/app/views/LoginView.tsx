@@ -52,9 +52,9 @@ export default function LoginView() {
             </nav>
             <form onSubmit={handleSubmit} className="flex flex-col md:flex-row items-center justify-center min-h-screen p-4 md:space-x-12">
                 <div className="flex-shrink-0">
-                    <Image width={100} height={100} src="/Logo.png" className="mx-20 my-0 w-100 h-100 rounded-full" alt="Logo" />
                 </div>
-                <div className="w-full max-w-md backdrop-blur-sm p-6 rounded-lg">
+                <div className="w-full m-auto max-w-md backdrop-blur-sm p-6 rounded-lg">
+                    <Image className="m-auto w-[180px] h-[175px] mb-5" src="/IconLogo.png" alt="symbol" width={188} height={75} />
                     <h1 className="text-3xl font-semibold text-center mb-6">Iniciar Sesión</h1>
                     <div className="">
                         <div>
@@ -87,7 +87,7 @@ export default function LoginView() {
                             </button>
                         </p>
                         <button type="submit"
-                            className="h-[54px] w-[247px] text-xl rounded-full mt-4 ml-[85px] text-white md:hover:text-orange-600 transition-colors duration-200 flex justify-center items-center shadow-md bg-white border border-gray-100 dark:bg-gray-900 dark:border-gray-800">
+                            className="h-[44px] w-[237px] text-xl rounded-xl mt-4 ml-[85px] text-white md:hover:text-orange-600 transition-colors duration-200 flex justify-center items-center shadow-md bg-white border border-gray-100 dark:bg-gray-900 dark:border-gray-800">
                             Entrar
                         </button>
                         {error && (
