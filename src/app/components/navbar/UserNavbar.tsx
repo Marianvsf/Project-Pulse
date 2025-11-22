@@ -76,7 +76,7 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
                     className="inline-flex items-center text-gray-400 rounded-xl hover:bg-gray-500 dark:hover:bg-gray-500"
                 ><ChevronLeftIcon className="h-8 w-8 mr-1" aria-hidden="true" />
                 </button>
-                <Image width={10} height={10} src="/Logo.png" className="w-10 h-10 rounded-full bg-gray-500" alt="Logo" />
+                <Image width={40} height={40} src="/Logo.png" className="rounded-full bg-gray-500" alt="Logo" />
                 {/* Buscador + Filtro */}
                 {showSearchAndFilter && (
                     <div className="flex items-center gap-2">
@@ -126,7 +126,7 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
                 <p className="text-md text-end text-white">
                     Bienvenido, {session?.user?.name || "Invitado"}
                 </p>
-            {/* Sección Derecha: Iconos de Notificación y Perfil */}
+                {/* Sección Derecha: Iconos de Notificación y Perfil */}
                 {/* Botón de perfil */}
                 <button
                     className="w-8 h-8 bg-white border border-gray-700 dark:bg-gray-900 dark:border-gray-800] rounded-full flex items-center justify-center"

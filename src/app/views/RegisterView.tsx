@@ -61,7 +61,7 @@ export default function RegisterView() {
             </div>
             <div className="w-full max-w-md backdrop-blur-sm p-6 rounded-lg">
                 <h1 className="text-2xl font-semibold text-center mb-6">Crear Cuenta</h1>
-                <div className="">
+                <div>
                     <div>
                         <label className="block text-left text-md font-poppins mb-2">Nombre</label>
                         <input
