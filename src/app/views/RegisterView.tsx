@@ -116,7 +116,7 @@ export default function RegisterView() {
                         </button>
                     </p>
                     <button type="submit"
-                        className="h-[54px] w-[247px] text-xl rounded-full mt-4 ml-[85px] text-white md:hover:text-orange-600 transition-colors duration-200 flex justify-center items-center shadow-md bg-white border border-gray-100 dark:bg-gray-900 dark:border-gray-800">
+                        className="h-[44px] w-[237px] text-xl rounded-xl mt-4 ml-[85px] text-white md:hover:text-orange-600 transition-colors duration-200 flex justify-center items-center shadow-md bg-white border border-gray-100 dark:bg-gray-900 dark:border-gray-800">
                         Registrarse
                     </button>
                     {error && (
