@@ -57,6 +57,7 @@ export default function RegisterView() {
         <form onSubmit={handleSubmit} className="flex flex-col md:flex-row items-center justify-center min-h-screen p-4 md:space-x-12">
             <div className="flex-shrink-0">
                 <Image className="m-auto w-[180px] h-[175px] mb-5" src="/IconLogo.png" alt="symbol" width={188} height={75} />
+                <Image className="m-auto w-[180px] h-[175px] mb-5" src="/grafico.png" alt="symbol" width={188} height={75} />
             </div>
             <div className="w-full max-w-md backdrop-blur-sm p-6 rounded-lg">
                 <h1 className="text-3xl font-semibold text-center mb-6">Crear Cuenta</h1>
