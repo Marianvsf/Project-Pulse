@@ -63,7 +63,7 @@ export default function RegisterView() {
                 <h1 className="text-3xl font-semibold text-center mb-6">Crear Cuenta</h1>
                 <div className="">
                     <div>
-                        <label className="block text-left text-xl font-poppins mb-2">Nombre</label>
+                        <label className="block text-left text-md font-poppins mb-2">Nombre</label>
                         <input
                             type="text"
                             placeholder="Escribe tu nombre"
@@ -74,7 +74,7 @@ export default function RegisterView() {
                         />
                     </div>
                     <div>
-                        <label className="block text-left text-xl font-poppins mb-2">Correo electrónico</label>
+                        <label className="block text-left text-md font-poppins mb-2">Correo electrónico</label>
                         <input
                             type="email"
                             placeholder="Escribe tu correo electrónico"
@@ -85,7 +85,7 @@ export default function RegisterView() {
                         />
                     </div>
                     <div>
-                        <label className="block text-left text-xl font-poppins mb-2">Contraseña</label>
+                        <label className="block text-left text-md font-poppins mb-2">Contraseña</label>
                         <input
                             type="password"
                             placeholder="Escribe tu contraseña"
@@ -96,7 +96,7 @@ export default function RegisterView() {
                         />
                     </div>
                     <div>
-                        <label className="block text-left text-xl font-poppins mb-2">Confirmar Contraseña</label>
+                        <label className="block text-left text-md font-poppins mb-2">Confirmar Contraseña</label>
                         <input
                             type="password"
                             placeholder="Confirma tu contraseña"
@@ -117,7 +117,7 @@ export default function RegisterView() {
                         </button>
                     </p>
                     <button type="submit"
-                        className="h-[44px] w-[237px] text-xl rounded-xl mt-4 ml-[85px] text-white md:hover:text-orange-600 transition-colors duration-200 flex justify-center items-center shadow-md bg-white border border-gray-100 dark:bg-gray-900 dark:border-gray-800">
+                        className="h-[44px] w-[237px] text-md rounded-xl mt-4 ml-[85px] text-white md:hover:text-orange-600 transition-colors duration-200 flex justify-center items-center shadow-md bg-white border border-gray-100 dark:bg-gray-900 dark:border-gray-800">
                         Registrarse
                     </button>
                     {error && (
