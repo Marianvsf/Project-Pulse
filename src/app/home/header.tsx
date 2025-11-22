@@ -12,7 +12,7 @@ export const Header = () => {
                 playsInline
                 preload="auto"
             ></video>
-            <h1 className="m-auto mt-5 text-[44px] font-extrabold text-center">¡Bienvenido a Project Pulse! <br /><small className="text-[34px] text-gray-500 dark:text-gray-400">
+            <h1 className="m-auto mt-5 text-[44px] font-extrabold text-center tracking-tighter">¡Bienvenido a Project Pulse! <br /><small className="text-[34px] text-gray-500 dark:text-gray-400 tracking-tighter">
                 Sigue el pulso de tu proyecto, siente el progreso.
             </small>
             </h1>
