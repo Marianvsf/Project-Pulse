@@ -34,14 +34,14 @@ const ProjectCard = ({ id, nombre, estado, progreso }: ProjectCardProps) => {
 
     return (
         <Link href={`/projects/${id}`}>
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow duration-300 cursor-pointer">
-                <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{nombre}</h3>
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow duration-300 cursor-pointer w-80 h-56 flex flex-col justify-between overflow-hidden">
+                <div className="flex justify-between items-start mb-2">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white truncate max-w-[70%]">{nombre}</h3>
                     <span className={`px-3 py-1 text-sm font-medium rounded-full text-white ${getStatusColor(estado)}`}>
                         {estado}
                     </span>
                 </div>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">Progreso:</p>
+                <p className="text-gray-600 dark:text-gray-400 mb-2 text-sm">Progreso:</p>
                 <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
                     <div
                         className={`h-2.5 rounded-full ${getProgressColorClass(progreso)}`}
