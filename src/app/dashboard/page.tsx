@@ -61,11 +61,11 @@ export default function DashboardUser() {
         <>
             <UserNavbar onSearch={handleSearch} />
             <div className="container mx-auto p-[105px]">
-                <h1 className="text-4xl font-semibold mb-4 text-center">Dashboard de Gestión de Proyectos</h1>
+                <h1 className="text-4xl font-semibold m-auto mt-15 tracking-tighter mb-4 text-center">Dashboard de Gestión de Proyectos</h1>
                 <p className="text-md text-center mb-8">
                     Bienvenido, {session.user?.name}. Aquí puedes ver un resumen de todos tus proyectos, monitorear su estado y revisar el progreso de cada uno.
                 </p>
-                <h2 className="text-2xl font-semibold mb-4 text-center mt-8">Análisis General</h2>
+                <h2 className="text-2xl font-semibold mb-4 text-center mt-8 tracking-tighter">Análisis General</h2>
                 <p className="text-md text-center mb-6">
                     Observa el estado de tus proyectos en un vistazo. Utiliza estos gráficos para tomar decisiones rápidas.
                 </p>
