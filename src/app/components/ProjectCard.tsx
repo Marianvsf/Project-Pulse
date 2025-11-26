@@ -34,7 +34,7 @@ const ProjectCard = ({ id, nombre, estado, progreso }: ProjectCardProps) => {
 
     return (
         <Link href={`/projects/${id}`}>
-            <div className="relative bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow duration-300 cursor-pointer w-80 min-h-[14rem] h-auto flex flex-col justify-between overflow-visible">
+            <div className="relative bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow duration-300 cursor-pointer min-h-[14rem] min-w-[100px] flex flex-col justify-between overflow-visible">
                 <span className={`absolute top-4 right-4 px-3 py-1 text-sm font-medium rounded-full text-white ${getStatusColor(estado)}`}>
                     {estado}
                 </span>
