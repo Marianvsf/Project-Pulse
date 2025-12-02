@@ -17,12 +17,12 @@ interface Project {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function ProjectDetailsPage({params}:any) {
+export default function ProjectDetailsPage({ params }: any) {
   const projectId = params?.id || '';
   return <ProjectDetailsClient projectId={projectId} />;
 }
 
-  function ProjectDetailsClient({ projectId }: { projectId: string }) {
+function ProjectDetailsClient({ projectId }: { projectId: string }) {
   // Busca el proyecto con el ID de la URL
   const project: Project | undefined = (projects as Project[]).find((p) => p.id === projectId);
 
@@ -37,7 +37,7 @@ export default function ProjectDetailsPage({params}:any) {
   return (
     <>
       <UserNavbar onSearch={handleSearch} showSearchAndFilter={false} />
-      <div className="container mx-auto p-8">
+      <div className="container mx-auto p-8 max-w-[1200px]">
         <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md p-6">
           <div className="flex justify-between items-start mb-6">
             <h1 className="text-4xl font-bold text-gray-900 dark:text-white">{project.nombre}</h1>
