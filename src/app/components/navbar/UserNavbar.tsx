@@ -31,6 +31,11 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
         onSearch(searchTerm, filters);
     }, [searchTerm, filters, onSearch]);
 
+    const capitalize = (name?: string | null) => {
+        if (!name) return undefined;
+        return name.charAt(0).toUpperCase() + name.slice(1);
+    };
+    const [showMobileSearch, setShowMobileSearch] = useState(false);
 
     const handleLogout = async () => {
         // await logout(); 
@@ -123,8 +128,11 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
                 )}
             </div>
             <div className="flex items-center gap-4 relative">
-                <p className="text-md text-end text-white">
-                    Bienvenido, {session?.user?.name || "Invitado"}
+                <p className="text-md text-end text-white hidden sm:hidden md:block">
+                    Bienvenido, {capitalize(session?.user?.name) ?? "Invitado"}
+                </p>
+                <p className="text-sm text-end text-white sm:hidden">
+                    {capitalize(session?.user?.name) ?? "Invitado"}
                 </p>
                 {/* Sección Derecha: Iconos de Notificación y Perfil */}
                 {/* Botón de perfil */}
@@ -153,6 +161,22 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
                     </div>
                 )}
             </div>
+            {/* Mobile search overlay */}
+            {showMobileSearch && (
+                <div className="absolute inset-x-0 top-[64px] z-50 p-4 bg-gray-900/95 backdrop-blur-sm sm:hidden">
+                    <div className="flex items-center gap-2 bg-white border border-gray-700 dark:bg-gray-900 dark:border-gray-800] px-4 py-2 rounded-[8px]">
+                        <Image width={16} height={16} src="/search.svg" alt="Buscar" className="w-4 h-4" />
+                        <input
+                            type="text"
+                            placeholder="Buscar proyectos..."
+                            value={searchTerm}
+                            onChange={handleSearchChange}
+                            className="bg-transparent outline-none text-white text-sm placeholder:text-[#999] w-full"
+                        />
+                        <button onClick={() => setShowMobileSearch(false)} className="ml-2 text-sm text-gray-300">Cerrar</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
