@@ -34,15 +34,15 @@ const ProjectCard = ({ id, nombre, estado, progreso }: ProjectCardProps) => {
 
     return (
         <Link href={`/projects/${id}`}>
-            <div className="relative bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow duration-300 cursor-pointer min-h-[14rem] min-w-[100px] flex flex-col justify-between overflow-visible">
+            <div className="relative bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow duration-300 cursor-pointer min-h-[14rem] min-w-[100px] flex flex-col justify-between overflow-visible">
                 <div className="mb-3 flex items-start justify-between gap-4">
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white whitespace-normal break-words flex-1 pr-4">{nombre}</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 whitespace-normal break-words flex-1 pr-4">{nombre}</h3>
                     <span className={`px-3 py-1 text-sm font-medium rounded-full text-white flex-shrink-0 ${getStatusColor(estado)}`}>
                         {estado}
                     </span>
                 </div>
-                <p className="text-gray-600 dark:text-gray-400 mb-2 text-sm">Progreso:</p>
-                <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                <p className="text-gray-600 mb-2 text-sm">Progreso:</p>
+                <div className="w-full bg-gray-200 rounded-full h-2.5">
                     <div
                         className={`h-2.5 rounded-full ${getProgressColorClass(progreso)}`}
                         style={{ width: `${progreso}%` }}
