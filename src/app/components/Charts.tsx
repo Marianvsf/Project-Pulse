@@ -77,20 +77,20 @@ const Charts = ({ projects }: ChartsProps) => {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
             <div>
-                <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md mb-9">
-                    <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Proyectos por Estado</h3>
+                <div className="bg-white rounded-lg p-6 shadow-md mb-9">
+                    <h3 className="text-lg font-semibold mb-4 text-gray-900">Proyectos por Estado</h3>
                     <Bar data={barChartData} />
                 </div>
                 {/* Gráfico de Líneas */}
-                <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md flex flex-col justify-center items-center">
-                    <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Evolución de Proyectos</h3>
+                <div className="bg-white rounded-lg p-6 shadow-md flex flex-col justify-center items-center">
+                    <h3 className="text-lg font-semibold mb-4 text-gray-900">Evolución de Proyectos</h3>
                     <Line data={lineChartData} />
                 </div>
             </div>
             {/* Gráfico de Pastel por Prioridad */}
             <div>
-                <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md flex flex-col justify-center items-center">
-                    <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Proyectos por Prioridad</h3>
+                <div className="bg-white rounded-lg p-6 shadow-md flex flex-col justify-center items-center">
+                    <h3 className="text-lg font-semibold mb-4 text-gray-900">Proyectos por Prioridad</h3>
                     <Pie data={pieChartData} />
                 </div>
             </div>
