@@ -63,7 +63,7 @@ export default function DashboardUser() {
     }
 
     return (
-        <>
+        <div className="min-h-screen bg-gray-100">
             <UserNavbar onSearch={handleSearch} />
             <div className="container mx-auto pb-6">
                 <h1 className="text-4xl font-semibold m-auto mt-15 tracking-tighter mb-4 text-center">Dashboard de Gestión de Proyectos</h1>
@@ -96,6 +96,6 @@ export default function DashboardUser() {
                     ))}
                 </div>
             </div>
-        </>
+        </div>
     );
 }
