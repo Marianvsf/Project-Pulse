@@ -26,6 +26,11 @@ export default function DashboardUser() {
     const router = useRouter();
     const [Allprojects, setAllProjects] = useState(projects as Project[]);
 
+    const capitalize = (name?: string | null) => {
+        if (!name) return undefined;
+        return name.charAt(0).toUpperCase() + name.slice(1);
+    };
+
     const handleSearch = useCallback((searchTerm: string, filters: { status?: string }) => {
         let filteredProjects = projects as Project[];
         if (filters.status) {
@@ -63,7 +68,7 @@ export default function DashboardUser() {
             <div className="container mx-auto pb-6">
                 <h1 className="text-4xl font-semibold m-auto mt-15 tracking-tighter mb-4 text-center">Dashboard de Gestión de Proyectos</h1>
                 <p className="text-md text-center mb-8">
-                    Bienvenido, {session.user?.name}. Aquí puedes ver un resumen de todos tus proyectos, monitorear su estado y revisar el progreso de cada uno.
+                    Bienvenido, {capitalize(session.user?.name)}. Aquí puedes ver un resumen de todos tus proyectos, monitorear su estado y revisar el progreso de cada uno.
                 </p>
                 <h2 className="text-2xl font-semibold mb-4 text-center mt-8 tracking-tighter">Análisis General</h2>
                 <p className="text-md text-center mb-6">
