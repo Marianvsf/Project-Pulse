@@ -117,13 +117,13 @@ export default function HomePage() {
                         Ver Demo</button>
                 </div>
                 <Header />
-                <Image
+                {/* <Image
                     className="w-[180px] h-[175px] mb-5"
                     src="/IconLogo.png"
                     alt="symbol"
                     width={188}
                     height={75}
-                />
+                />*/}
             </main >
         </>
     );
