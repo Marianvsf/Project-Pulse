@@ -2,29 +2,22 @@
 
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import projects from "../../data/projects.json";
 import ProjectCard from "../components/ProjectCard";
 import UserNavbar from "../components/navbar/UserNavbar";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo } from "react";
 import Charts from "../components/Charts";
+import { useProjectStore, Project } from "../../../store/useProjectStore";
 
-interface Project {
-    id: string;
-    nombre: string;
-    descripcion: string;
-    estado: string;
-    prioridad: string;
-    progreso: number;
-    tareas: { id: number; nombre: string; completado: boolean }[];
-    equipo: string[];
-    fechaInicio: string;
-    fechaFin: string;
-}
 
 export default function DashboardUser() {
     const { data: session, status } = useSession();
     const router = useRouter();
-    const [Allprojects, setAllProjects] = useState(projects as Project[]);
+
+    const projects = useProjectStore((s) => s.projects);
+    const searchTerm = useProjectStore((s) => s.searchTerm);
+    const statusFilter = useProjectStore((s) => s.statusFilter);
+    const setSearchTerm = useProjectStore((s) => s.setSearchTerm);
+    const setStatusFilter = useProjectStore((s) => s.setStatusFilter);
 
     const capitalize = (name?: string | null) => {
         if (!name) return undefined;
@@ -32,17 +25,22 @@ export default function DashboardUser() {
     };
 
     const handleSearch = useCallback((searchTerm: string, filters: { status?: string }) => {
-        let filteredProjects = projects as Project[];
-        if (filters.status) {
-            filteredProjects = filteredProjects.filter(project => project.estado === filters.status);
+        setSearchTerm(searchTerm);
+        setStatusFilter(filters.status);
+    }, [setSearchTerm, setStatusFilter]);
+
+    const Allprojects = useMemo(() => {
+        let filtered = projects as Project[];
+        if (statusFilter) {
+            filtered = filtered.filter((project) => project.estado === statusFilter);
         }
         if (searchTerm) {
-            filteredProjects = filteredProjects.filter((project: Project) =>
+            filtered = filtered.filter((project: Project) =>
                 project.nombre.toLowerCase().includes(searchTerm.toLowerCase())
             );
         }
-        setAllProjects(filteredProjects);
-    }, []);
+        return filtered;
+    }, [projects, searchTerm, statusFilter]);
 
     if (status === 'loading') {
 
