@@ -6,7 +6,7 @@ import ProjectCard from "../components/ProjectCard";
 import UserNavbar from "../components/navbar/UserNavbar";
 import { useCallback, useMemo } from "react";
 import Charts from "../components/Charts";
-import { useProjectStore, Project } from "../../../store/useProjectStore";
+import useProjectStore, { Project } from "../../../store/useProjectStore";
 
 
 export default function DashboardUser() {
