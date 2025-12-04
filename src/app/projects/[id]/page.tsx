@@ -40,7 +40,11 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
       <div className="container mx-auto p-8 max-w-[1200px]">
         <div className="bg-white rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-200 p-6">
           <div className="flex justify-between items-start mb-6">
-            <h1 className="text-4xl font-bold text-gray-900 ">{project.nombre}</h1>
+            <div>
+              <h1 className="text-4xl font-bold text-gray-900 ">{project.nombre}</h1>
+              <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">Fecha de inicio: {project.fechaInicio}</div>
+              <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">Fecha de fin: {project.fechaFin}</div>
+            </div>
             <span className="px-3 py-1 text-sm font-medium rounded-full text-white bg-blue-500">
               {project.estado}
             </span>
