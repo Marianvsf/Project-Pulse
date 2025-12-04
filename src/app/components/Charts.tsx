@@ -89,32 +89,27 @@ const Charts = ({ projects }: ChartsProps) => {
     };
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            <div>
-                <div className="bg-white rounded-lg p-6 shadow-md mb-9">
-                    <h3 className="text-lg font-semibold mb-4 text-gray-900">Proyectos por Estado</h3>
-                    <div className="w-full h-64">
-                        <Bar data={barChartData} options={chartOptions} />
-                    </div>
-                </div>
-                {/* Gráfico de Líneas */}
-                <div className="bg-white rounded-lg p-6 shadow-md flex flex-col justify-center items-center">
-                    <h3 className="text-lg font-semibold mb-4 text-gray-900">Evolución de Proyectos</h3>
-                    <div className="w-full h-64">
-                        <Line data={lineChartData} options={chartOptions} />
-                    </div>
-                </div>
-            </div>
-            {/* Gráfico de Pastel por Prioridad */}
-            <div>
-                <div className="bg-white rounded-lg p-6 shadow-md flex flex-col justify-center items-center">
-                    <h3 className="text-lg font-semibold mb-4 text-gray-900">Proyectos por Prioridad</h3>
-                    <div className="w-full h-64">
-                        <Pie data={pieChartData} options={chartOptions} />
-                    </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            <div className="bg-white rounded-lg p-6 shadow-md">
+                <h3 className="text-lg font-semibold mb-4 text-gray-900">Proyectos por Estado</h3>
+                <div className="w-full h-64">
+                    <Bar data={barChartData} options={chartOptions} />
                 </div>
             </div>
 
+            <div className="bg-white rounded-lg p-6 shadow-md">
+                <h3 className="text-lg font-semibold mb-4 text-gray-900">Evolución de Proyectos</h3>
+                <div className="w-full h-64">
+                    <Line data={lineChartData} options={chartOptions} />
+                </div>
+            </div>
+
+            <div className="bg-white rounded-lg p-6 shadow-md">
+                <h3 className="text-lg font-semibold mb-4 text-gray-900">Proyectos por Prioridad</h3>
+                <div className="w-full h-64">
+                    <Pie data={pieChartData} options={chartOptions} />
+                </div>
+            </div>
         </div>
     );
 };
