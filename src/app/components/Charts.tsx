@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { Bar, Pie, Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement, PointElement, LineElement } from 'chart.js';
@@ -74,24 +74,44 @@ const Charts = ({ projects }: ChartsProps) => {
         ],
     };
 
+    // Opciones compartidas para que todos los charts ocupen el mismo tamaño
+    const chartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'top' as const,
+            },
+            title: {
+                display: false,
+            },
+        },
+    };
+
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
             <div>
                 <div className="bg-white rounded-lg p-6 shadow-md mb-9">
                     <h3 className="text-lg font-semibold mb-4 text-gray-900">Proyectos por Estado</h3>
-                    <Bar data={barChartData} />
+                    <div className="w-full h-64">
+                        <Bar data={barChartData} options={chartOptions} />
+                    </div>
                 </div>
                 {/* Gráfico de Líneas */}
                 <div className="bg-white rounded-lg p-6 shadow-md flex flex-col justify-center items-center">
                     <h3 className="text-lg font-semibold mb-4 text-gray-900">Evolución de Proyectos</h3>
-                    <Line data={lineChartData} />
+                    <div className="w-full h-64">
+                        <Line data={lineChartData} options={chartOptions} />
+                    </div>
                 </div>
             </div>
             {/* Gráfico de Pastel por Prioridad */}
             <div>
                 <div className="bg-white rounded-lg p-6 shadow-md flex flex-col justify-center items-center">
                     <h3 className="text-lg font-semibold mb-4 text-gray-900">Proyectos por Prioridad</h3>
-                    <Pie data={pieChartData} />
+                    <div className="w-full h-64">
+                        <Pie data={pieChartData} options={chartOptions} />
+                    </div>
                 </div>
             </div>
 
