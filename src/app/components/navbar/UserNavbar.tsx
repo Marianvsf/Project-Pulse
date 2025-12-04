@@ -71,8 +71,7 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
     }, [showFilterMenu]);
 
     return (
-        <div className="flex justify-between items-center w-full bg-white border-gray-100 dark:bg-gray-900 dark:border-gray-800] px-6 py-4">
-
+        <div className="flex justify-between items-center w-full bg-gray-900 border-gray-800 px-6 py-4">
             {/* Sección Izquierda: Botón de Volver y Buscador */}
             <div className="flex items-center gap-2">
                 {/* Botón de Volver */}
