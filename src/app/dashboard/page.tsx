@@ -90,6 +90,8 @@ export default function DashboardUser() {
                             nombre={project.nombre}
                             estado={project.estado}
                             progreso={project.progreso}
+                            descripcion={project.descripcion}
+                            fechaFin={project.fechaFin}
                         />
                     ))}
                 </div>
