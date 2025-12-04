@@ -23,6 +23,15 @@ export default function ProjectDetailsPage({ params }: any) {
 }
 
 function ProjectDetailsClient({ projectId }: { projectId: string }) {
+  const formatDate = (s?: string) => {
+    if (!s) return '';
+    const d = new Date(s);
+    if (isNaN(d.getTime())) return s;
+    const parts = d.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' }).split(' ');
+    parts[1] = parts[1].replace('.', '');
+    parts[1] = parts[1].charAt(0).toUpperCase() + parts[1].slice(1);
+    return `${parts[0]} ${parts[1]} ${parts[2]}`;
+  };
   // Busca el proyecto con el ID de la URL
   const project: Project | undefined = (projects as Project[]).find((p) => p.id === projectId);
 
@@ -42,8 +51,8 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
           <div className="flex justify-between items-start mb-6">
             <div>
               <h1 className="text-4xl font-bold text-gray-900 ">{project.nombre}</h1>
-              <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">Fecha de inicio: {project.fechaInicio}</div>
-              <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">Fecha de fin: {project.fechaFin}</div>
+              <div className="text-sm text-gray-900 mt-1">Fecha de inicio: {formatDate(project.fechaInicio)}</div>
+              <div className="text-sm text-gray-900 mt-1">Fecha de fin: {formatDate(project.fechaFin)}</div>
             </div>
             <span className="px-3 py-1 text-sm font-medium rounded-full text-white bg-blue-500">
               {project.estado}
