@@ -5,6 +5,7 @@ import { ChevronLeftIcon } from '@heroicons/react/20/solid';
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
+import Swal from "sweetalert2";
 
 export default function LoginView() {
     const [email, setEmail] = useState("");
@@ -28,7 +29,12 @@ export default function LoginView() {
             console.log("Login successful");
             router.push("/dashboard");
         } else {
-            alert("Error al iniciar sesión. Por favor, verifica tus datos.");
+            Swal.fire({
+                icon: "error",
+                title: "Algo salió mal",
+                text: "¡Verifica tus credenciales!",
+                //footer: '<a href="#">Why do I have this issue?</a>'
+            });
         }
     };
 
