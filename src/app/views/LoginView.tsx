@@ -63,6 +63,7 @@ export default function LoginView() {
                     <p className="text-center text-sm">
                         ¿No tienes cuenta?{" "}
                         <button
+                            type="button"
                             onClick={goToRegistration}
                             className="text-secondary-500 hover:underline"
                         >
