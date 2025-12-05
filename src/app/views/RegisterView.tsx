@@ -66,7 +66,7 @@ export default function RegisterView() {
                     <h1 className="text-2xl font-semibold text-center mb-6">Crear Cuenta</h1>
                     <div>
                         <div>
-                            <label className="block text-left text-md font-poppins mb-2">Nombre</label>
+                            <label className="block text-left text-md font-poppins mb-2">Nombre y Apellido</label>
                             <input
                                 type="text"
                                 placeholder="Escribe tu nombre"
