@@ -41,7 +41,7 @@ const Navbar = () => {
                     )}
 
                     {pathname !== '/register' && (
-                        <button onClick={goToRegistration} className="block py-2 px-3 text-slate-800 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-orange-600 md:p-0 dark:text-white md:dark:hover-load-text-orange-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Registrarse</button>
+                        <button onClick={goToRegistration} className="block py-2 px-3 text-slate-800 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-orange-600 md:p-0 dark:text-white md:dark:hover:text-orange-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Registrarse</button>
                     )}
                 </div>
             </div>
