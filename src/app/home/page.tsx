@@ -100,9 +100,9 @@ export default function HomePage() {
                 </div>
             </header>
             */}
-
+            <Header />
             <main className="flex flex-col items-center text-center justify-center m-auto max-w-[980px]">
-                <h1 className="m-auto mt-15 text-[50px] font-extrabold text-center tracking-tighter">La gestión de tus proyectos, simplificada y centralizada.</h1>
+                <h1 className="m-auto mt-5 text-[50px] font-extrabold text-center tracking-tighter">La gestión de tus proyectos, simplificada y centralizada.</h1>
                 <div className="max-w-[750px]">
                     <small className="text-center text-[25px] text-gray-500 dark:text-gray-400 font-extrabold">
                         Project-Pulse ayuda a los equipos a organizar tareas, seguir el progreso y colaborar eficazmente, todo en un solo lugar.
@@ -116,7 +116,6 @@ export default function HomePage() {
                         className="h-[44px] w-[237px] text-lg rounded-xl mt-7 text-white md:hover:text-blue-400 transition-colors duration-200 justify-center items-center bg-white border border-blue-600 dark:bg-blue-600">
                         Ver Demo</button>
                 </div>
-                <Header />
                 {/* <Image
                     className="w-[180px] h-[175px] mb-5"
                     src="/IconLogo.png"

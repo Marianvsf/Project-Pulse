@@ -5,7 +5,7 @@ export const Header = () => {
                 width={1920}
                 height={400}
                 src={"/assets/video.mp4"}
-                className="block w-full h-[600px] object-cover"
+                className="block w-full h-[500px] object-cover"
                 loop
                 autoPlay
                 muted
