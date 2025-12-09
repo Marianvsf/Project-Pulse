@@ -61,7 +61,7 @@ export default function DashboardUser() {
     }
 
     return (
-        <div className="min-h-screen mx-auto bg-gray-100">
+        <div className="min-h-screen pt-15 mx-auto bg-gray-100">
             <UserNavbar onSearch={handleSearch} />
             <div className="container mx-auto px-[50px] pb-[50px]">
                 <h1 className="text-4xl font-semibold m-auto mt-15 tracking-tighter mb-4 text-center">Gestión de Proyectos</h1>
