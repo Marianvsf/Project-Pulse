@@ -32,10 +32,8 @@ const Navbar = () => {
               - mx-auto max-w-5xl: Centrado y ancho máximo para que parezca una "isla".
               - backdrop-blur-md + bg-black/40: El efecto cristal.
             */}
-            <nav className="fixed top-4 inset-x-0 z-50 mx-4 lg:mx-auto max-w-6xl h-[72px] rounded-[16px] border border-white/10 bg-blue-950/70 backdrop-blur-md shadow-lg transition-all duration-300">
+            <nav className="fixed top-4 inset-x-0 z-50 mx-4 lg:mx-auto max-w-7xl h-[72px] rounded-[16px] border border-white/10 bg-blue-950/50 backdrop-blur-md shadow-lg transition-all duration-300">
                 <div className="flex items-center justify-between h-full px-4 lg:px-6">
-
-                    {/* LOGO */}
                     <button onClick={goToHome} className="flex items-center gap-3 group">
                         <div className="relative overflow-hidden rounded-full border border-white/10">
                             <Image
@@ -50,8 +48,6 @@ const Navbar = () => {
                             Project Pulse
                         </span>
                     </button>
-
-                    {/* MENU DESKTOP (Botones de acción) */}
                     <div className="hidden md:flex items-center gap-6">
                         {pathname !== '/login' && (
                             <button
@@ -77,7 +73,7 @@ const Navbar = () => {
                     {/* BOTÓN HAMBURGUESA (Móvil) */}
                     <button
                         onClick={toggleMenu}
-                        className="inline-flex items-center justify-center p-2 text-white/80 rounded-lg md:hidden hover:bg-white/10 focus:outline-none"
+                        className="inline-flex items-center justify-center p-2 text-white/80 rounded-lg md:hidden hover:bg-white/20 focus:outline-none"
                     >
                         <span className="sr-only">Open main menu</span>
                         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -91,12 +87,12 @@ const Navbar = () => {
                 Se renderiza fuera del nav para no romper el layout flexible del nav
             */}
             {isMenuOpen && (
-                <div className="fixed top-24 inset-x-4 z-40 md:hidden animate-in fade-in slide-in-from-top-5 duration-200">
-                    <div className="flex flex-col p-4 rounded-2xl bg-[#1f2023] border border-white/10 shadow-2xl space-y-3">
+                <div className="fixed top-24 right-4 w-64 z-40 md:hidden animate-in fade-in slide-in-from-top-5 duration-200">
+                    <div className="flex flex-col p-4 rounded-2xl bg-blue-950/50 border border-white/10 shadow-2xl space-y-3">
                         {pathname !== '/login' && (
                             <button
                                 onClick={goToLogin}
-                                className="w-full text-left px-4 py-3 text-white rounded-xl hover:bg-white/5 transition-colors"
+                                className="w-full text-left px-4 py-3 text-white rounded-xl hover:bg-white/20 transition-colors"
                             >
                                 Iniciar sesión
                             </button>
