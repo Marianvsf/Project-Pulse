@@ -44,7 +44,7 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
   };
 
   return (
-    <>
+    <div className="pt-25">
       <UserNavbar onSearch={handleSearch} showSearchAndFilter={false} />
       <div className="container mx-auto p-8 max-w-[1200px]">
         <div className="bg-white rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-200 p-6">
@@ -94,6 +94,6 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
