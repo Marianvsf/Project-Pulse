@@ -99,9 +99,9 @@ export default function HomePage() {
                     </button>
                 </div>
             </header>
-            */}
             <Header />
-            <main className="flex flex-col items-center text-center justify-center m-auto max-w-[980px]">
+            */}
+            <main className="flex flex-col items-center text-center justify-center pt-24 m-auto max-w-[980px]">
                 <h1 className="m-auto mt-5 text-[50px] font-extrabold text-center tracking-tighter">La gestión de tus proyectos, simplificada y centralizada.</h1>
                 <div className="max-w-[750px]">
                     <small className="text-center text-[25px] text-gray-500 dark:text-gray-400 font-extrabold">
