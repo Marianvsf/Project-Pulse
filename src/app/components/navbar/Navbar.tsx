@@ -32,7 +32,7 @@ const Navbar = () => {
               - mx-auto max-w-5xl: Centrado y ancho máximo para que parezca una "isla".
               - backdrop-blur-md + bg-black/40: El efecto cristal.
             */}
-            <nav className="fixed top-4 inset-x-0 z-50 mx-4 lg:mx-auto max-w-6xl h-[72px] rounded-[16px] border border-white/10 bg-black/60 backdrop-blur-md shadow-lg transition-all duration-300">
+            <nav className="fixed top-4 inset-x-0 z-50 mx-4 lg:mx-auto max-w-6xl h-[72px] rounded-[16px] border border-white/10 bg-blue-950/70 backdrop-blur-md shadow-lg transition-all duration-300">
                 <div className="flex items-center justify-between h-full px-4 lg:px-6">
 
                     {/* LOGO */}
