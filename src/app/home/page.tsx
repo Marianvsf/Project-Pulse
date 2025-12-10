@@ -113,7 +113,7 @@ export default function HomePage() {
                         className="h-[44px] w-[237px] text-lg rounded-xl mt-7 text-white md:hover:text-orange-600 transition-colors duration-200 justify-center items-center shadow-md bg-white border border-gray-100 dark:bg-gray-900 dark:border-gray-800">
                         Registrarse Gratis</button>
                     <button onClick={goToLogin}
-                        className="h-[44px] w-[237px] text-lg rounded-xl mt-7 text-white md:hover:text-blue-400 transition-colors duration-200 justify-center items-center bg-white border border-blue-600 dark:bg-blue-600">
+                        className="h-[44px] w-[237px] text-lg rounded-xl mt-7 text-white  md:hover:text-orange-600 transition-colors duration-200 justify-center items-center bg-[#FF7400]">
                         Ver Demo</button>
                 </div>
                 {/* <Image
