@@ -136,7 +136,7 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
                                                     key={status}
                                                     onClick={() => handleFilterChange('status', status)}
                                                     className={`px-3 py-2 rounded-md text-sm text-left transition-colors ${filters.status === status
-                                                        ? 'bg-blue-600 text-white'
+                                                        ? 'bg-blue-950/70 text-white'
                                                         : 'text-gray-300 hover:bg-white/20'
                                                         }`}
                                                 >
@@ -216,7 +216,7 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
             {/* BARRA DE BÚSQUEDA MÓVIL (Fuera del nav para no romper el layout) */}
             {showMobileSearch && showSearchAndFilter && (
                 <div className="fixed top-[90px] inset-x-4 z-40 md:hidden animate-in fade-in slide-in-from-top-2">
-                    <div className="bg-[#0B1120]/90 backdrop-blur-md border border-white/10 p-3 rounded-xl shadow-2xl flex gap-2">
+                    <div className="bg-blue-950/50 backdrop-blur-md border border-white/10 p-3 rounded-xl shadow-2xl flex gap-2">
                         <div className="flex-1 flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-2 rounded-lg">
                             <Image width={16} height={16} src="/search.svg" alt="Buscar" className="opacity-50" />
                             <input
