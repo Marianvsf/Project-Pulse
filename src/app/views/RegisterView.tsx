@@ -57,7 +57,7 @@ export default function RegisterView() {
     return (
         <>
             <Navbar />
-            <form onSubmit={handleSubmit} className="flex flex-col md:flex-row items-center justify-center min-h-screen p-4 md:space-x-12">
+            <form onSubmit={handleSubmit} className="bg-gray-100 flex flex-col md:flex-row items-center justify-center min-h-screen p-4 md:space-x-12">
                 <div className="flex-shrink-0">
                     <Image className="m-auto w-[180px] h-[175px] mb-5" src="/IconLogo.png" alt="symbol" width={188} height={75} />
                     <Image className="m-auto w-[180px] h-[175px] mb-5" src="/grafico.png" alt="symbol" width={188} height={75} />
