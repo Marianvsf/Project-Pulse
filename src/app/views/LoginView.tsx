@@ -39,7 +39,7 @@ export default function LoginView() {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="flex flex-col md:flex-row items-center justify-center min-h-screen p-4 md:space-x-12">
+        <form onSubmit={handleSubmit} className="bg-gray-100 flex flex-col md:flex-row items-center justify-center min-h-screen p-4 md:space-x-12">
             <div className="flex-shrink-0">
             </div>
             <div className="w-full m-auto max-w-md backdrop-blur-sm p-6 rounded-lg">
