@@ -3,7 +3,7 @@ import Image from "next/image"
 export const Footer = () => {
   return (
     <footer className="
-      relative 
+      relative bg-gradient-to-t from-white-200 via-white to-gray-100
       mt-auto w-full flex-shrink-0 flex gap-3 flex-wrap items-center justify-center 
       text-blue-950 p-4 font-mono
       /* --- CONFIGURACIÓN DE LA LÍNEA BRILLANTE --- */
