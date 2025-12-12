@@ -62,11 +62,11 @@ const ProjectCard = ({ id, nombre, estado, progreso, descripcion, fechaFin }: Pr
 
                     {/* Descripción con límite de líneas (line-clamp) */}
                     {descripcion ? (
-                        <p className="text-slate-500 text-sm leading-relaxed line-clamp-3">
+                        <p className="text-slate-500 text-md leading-relaxed line-clamp-3">
                             {descripcion}
                         </p>
                     ) : (
-                        <p className="text-slate-300 text-sm italic">
+                        <p className="text-slate-300 text-md italic">
                             Sin descripción disponible.
                         </p>
                     )}
