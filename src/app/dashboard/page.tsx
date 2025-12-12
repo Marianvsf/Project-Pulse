@@ -4,20 +4,28 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import ProjectCard from "../components/ProjectCard";
 import UserNavbar from "../components/navbar/UserNavbar";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState, useEffect } from "react";
 import Charts from "../components/Charts";
 import useProjectStore, { Project } from "../../../store/useProjectStore";
-
 
 export default function DashboardUser() {
     const { data: session, status } = useSession();
     const router = useRouter();
+    const [greeting, setGreeting] = useState("Hola");
 
     const projects = useProjectStore((s) => s.projects);
     const searchTerm = useProjectStore((s) => s.searchTerm);
     const statusFilter = useProjectStore((s) => s.statusFilter);
     const setSearchTerm = useProjectStore((s) => s.setSearchTerm);
     const setStatusFilter = useProjectStore((s) => s.setStatusFilter);
+
+    // Efecto para el saludo dinámico
+    useEffect(() => {
+        const hour = new Date().getHours();
+        if (hour < 12) setGreeting("Buenos días");
+        else if (hour < 18) setGreeting("Buenas tardes");
+        else setGreeting("Buenas noches");
+    }, []);
 
     const capitalize = (name?: string | null) => {
         if (!name) return undefined;
@@ -42,17 +50,25 @@ export default function DashboardUser() {
         return filtered;
     }, [projects, searchTerm, statusFilter]);
 
-    if (status === 'loading') {
+    // Cálculo rápido de estadísticas para las tarjetas amigables
+    const stats = useMemo(() => {
+        const total = projects.length;
+        const completados = projects.filter((p: any) => p.estado === 'Completado').length;
+        const enProgreso = projects.filter((p: any) => p.estado === 'En Progreso').length;
+        return { total, completados, enProgreso };
+    }, [projects]);
 
-        return <div className="text-center">
-            <div role="status">
-                <svg aria-hidden="true" className="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
-                    <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
-                </svg>
-                <span className="sr-only">Loading...</span>
+    if (status === 'loading') {
+        return (
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+                <div className="flex flex-col items-center gap-3">
+                    <svg aria-hidden="true" className="w-10 h-10 text-gray-200 animate-spin fill-blue-950" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
+                    </svg>
+                    <span className="text-slate-500 text-sm font-medium">Preparando tu espacio de trabajo...</span>
+                </div>
             </div>
-        </div>
+        );
     }
 
     if (!session) {
@@ -61,41 +77,122 @@ export default function DashboardUser() {
     }
 
     return (
-        <div className="min-h-screen pt-15 mx-auto bg-gray-100">
+        <div className="min-h-screen bg-gray-50 pt-28 pb-12 selection:bg-orange-100 selection:text-orange-600">
             <UserNavbar onSearch={handleSearch} />
-            <div className="container mx-auto px-[50px] pb-[50px]">
-                <h1 className="text-4xl font-semibold m-auto mt-15 tracking-tighter mb-4 text-center">Gestión de Proyectos</h1>
-                <p className="text-md text-center mb-8">
-                    Bienvenido, {capitalize(session.user?.name)}. Aquí puedes ver un resumen de todos tus proyectos, monitorear su estado y revisar el progreso de cada uno.
-                </p>
-                <h2 className="text-2xl font-semibold mb-4 text-center mt-8 tracking-tighter">Análisis General</h2>
-                <p className="text-md text-center mb-6">
-                    Observa el estado de tus proyectos en un vistazo. Utiliza estos gráficos para tomar decisiones rápidas.
-                </p>
-                <Charts projects={Allprojects} />
-                <div className="flex justify-between items-center mt-12 mb-6">
-                    <h2 className="text-2xl font-semibold">Tus Proyectos</h2>
-                    <p className="text-md">
-                        Total de proyectos activos: <span className="font-bold">{Allprojects.length}</span>
+
+            <main className="container mx-auto px-4 lg:px-8 max-w-7xl">
+
+                {/* --- SECCIÓN 1: BIENVENIDA CÁLIDA --- */}
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
+                    <div>
+                        <h1 className="text-3xl md:text-4xl font-bold text-blue-950 mb-2 tracking-tight">
+                            {greeting}, <span className="text-[#FF7400]">{capitalize(session.user?.name)}</span>
+                        </h1>
+                        <p className="text-slate-600 max-w-2xl text-lg">
+                            Bienvenido a tu panel de control. Aquí tienes un resumen de lo que está ocurriendo en tus proyectos hoy.
+                        </p>
+                    </div>
+                    {/* Botón de acción rápida (Opcional, decorativo por ahora) */}
+                    <div className="hidden md:block">
+                        <span className="text-sm text-slate-400 font-medium">Hoy es un buen día para avanzar.</span>
+                    </div>
+                </div>
+
+                {/* --- SECCIÓN 2: RESUMEN RÁPIDO (Tarjetas Informativas) --- */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                    <div className="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4 hover:shadow-md transition-shadow">
+                        <div className="p-3 bg-blue-50 text-blue-600 rounded-lg">
+                            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+                        </div>
+                        <div>
+                            <p className="text-slate-500 text-sm font-medium">Total Proyectos</p>
+                            <h3 className="text-2xl font-bold text-blue-950">{stats.total}</h3>
+                        </div>
+                    </div>
+                    <div className="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4 hover:shadow-md transition-shadow">
+                        <div className="p-3 bg-orange-50 text-orange-500 rounded-lg">
+                            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        </div>
+                        <div>
+                            <p className="text-slate-500 text-sm font-medium">En Progreso</p>
+                            <h3 className="text-2xl font-bold text-blue-950">{stats.enProgreso}</h3>
+                        </div>
+                    </div>
+                    <div className="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4 hover:shadow-md transition-shadow">
+                        <div className="p-3 bg-green-50 text-green-600 rounded-lg">
+                            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        </div>
+                        <div>
+                            <p className="text-slate-500 text-sm font-medium">Completados</p>
+                            <h3 className="text-2xl font-bold text-blue-950">{stats.completados}</h3>
+                        </div>
+                    </div>
+                </div>
+
+                {/* --- SECCIÓN 3: GRÁFICAS CON CONTEXTO --- */}
+                <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-200 mb-12">
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 border-b border-gray-100 pb-4 gap-4">
+                        <div>
+                            <h2 className="text-xl font-bold text-blue-950 flex items-center gap-2">
+                                <svg className="w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" /></svg>
+                                Análisis Visual
+                            </h2>
+                            <p className="text-slate-500 text-sm mt-1">
+                                Una representación gráfica para que entiendas dónde se concentra tu esfuerzo.
+                            </p>
+                        </div>
+                        <div className="bg-blue-50 text-blue-700 text-xs px-3 py-1 rounded-full font-medium">
+                            Actualizado en tiempo real
+                        </div>
+                    </div>
+                    <Charts projects={Allprojects} />
+                </div>
+
+                {/* --- SECCIÓN 4: LISTA DE PROYECTOS --- */}
+                <div className="mb-6">
+                    <h2 className="text-2xl font-bold text-blue-950 mb-2">Galería de Proyectos</h2>
+                    <p className="text-slate-600 mb-6 max-w-3xl">
+                        A continuación verás todos los proyectos que coinciden con tu búsqueda. Haz clic en cualquiera de ellos para ver más detalles, editar tareas o contactar al equipo.
                     </p>
                 </div>
-                <p className="text-md mb-6">
-                    Explora y gestiona todos los proyectos asignados a tu cuenta. Haz clic en cualquier tarjeta para ver los detalles completos.
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {Allprojects.map((project) => (
-                        <ProjectCard
-                            key={project.id}
-                            id={project.id}
-                            nombre={project.nombre}
-                            estado={project.estado}
-                            progreso={project.progreso}
-                            descripcion={project.descripcion}
-                            fechaFin={project.fechaFin}
-                        />
-                    ))}
-                </div>
-            </div>
+
+                {/* Grid de Proyectos */}
+                {Allprojects.length > 0 ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {Allprojects.map((project) => (
+                            <div key={project.id} className="group hover:-translate-y-1 transition-transform duration-300">
+                                <ProjectCard
+                                    id={project.id}
+                                    nombre={project.nombre}
+                                    estado={project.estado}
+                                    progreso={project.progreso}
+                                    descripcion={project.descripcion}
+                                    fechaFin={project.fechaFin}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    // Estado Vacío "Amigable" y Constructivo
+                    <div className="flex flex-col items-center justify-center py-20 bg-white rounded-2xl border border-dashed border-gray-300 text-center px-4">
+                        <div className="bg-orange-50 p-4 rounded-full mb-4">
+                            <svg className="w-10 h-10 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </div>
+                        <h3 className="text-lg font-semibold text-blue-950 mb-2">No encontramos coincidencias</h3>
+                        <p className="text-slate-500 max-w-md mb-6">
+                            Parece que no hay proyectos con el nombre <span className="font-medium text-blue-950">"{searchTerm}"</span> o el filtro seleccionado.
+                        </p>
+                        <button
+                            onClick={() => { setSearchTerm(""); setStatusFilter(undefined) }}
+                            className="px-6 py-2.5 bg-blue-950 text-white rounded-full font-medium hover:bg-blue-900 transition-colors shadow-lg hover:shadow-xl"
+                        >
+                            Ver todos los proyectos
+                        </button>
+                    </div>
+                )}
+            </main>
         </div>
     );
 }
