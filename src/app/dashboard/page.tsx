@@ -85,7 +85,7 @@ export default function DashboardUser() {
                 {/* --- SECCIÓN 1: BIENVENIDA CÁLIDA --- */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
                     <div>
-                        <h1 className="text-3xl md:text-4xl font-bold text-blue-950 mb-2 tracking-tight">
+                        <h1 className="text-2xl md:text-4xl font-bold text-blue-950 mb-2 tracking-tight">
                             {greeting}, <span className="text-[#FF7400]">{capitalize(session.user?.name)}</span>
                         </h1>
                         <p className="text-slate-600 max-w-2xl text-lg">
