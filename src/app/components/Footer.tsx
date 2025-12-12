@@ -40,6 +40,15 @@ export const Footer = () => {
         </span>
 
         {/* Contenedor del logo: Fondo blanco para que el logo negro resalte */}
+
+        <span className="text-sm font-medium tracking-wide group-hover:text-white transition-colors">
+          Marian Suárez
+        </span>
+
+        {/* Flecha con el acento Naranja del Navbar */}
+        <span className="text-[#FF7400] transform translate-x-0 group-hover:translate-x-1 transition-transform duration-300">
+          →
+        </span>
         <div className="relative overflow-hidden rounded-full bg-white p-[2px] shadow-lg shadow-blue-900/20 group-hover:shadow-blue-500/30 group-hover:scale-110 transition-all duration-300">
           <Image
             className="rounded-full"
@@ -50,15 +59,6 @@ export const Footer = () => {
             priority
           />
         </div>
-
-        <span className="text-sm font-medium tracking-wide group-hover:text-white transition-colors">
-          Marian Suárez
-        </span>
-
-        {/* Flecha con el acento Naranja del Navbar */}
-        <span className="text-[#FF7400] transform translate-x-0 group-hover:translate-x-1 transition-transform duration-300">
-          →
-        </span>
       </a>
 
       {/* (Opcional) Texto de copyright o secundario muy sutil */}
