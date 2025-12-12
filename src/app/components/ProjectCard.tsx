@@ -10,58 +10,92 @@ interface ProjectCardProps {
 }
 
 const ProjectCard = ({ id, nombre, estado, progreso, descripcion, fechaFin }: ProjectCardProps) => {
+
     // Función para asignar color basado en el estado
     const getStatusColor = (status: string) => {
         switch (status) {
             case 'Completado':
-                return 'bg-green-500';
+                return 'bg-emerald-500 text-white';
+            case 'En Progreso': // Asegúrate que coincida con tu DB (mayúsculas/minúsculas)
             case 'En progreso':
-                return 'bg-blue-500';
+                return 'bg-blue-500 text-white';
             case 'Pendiente':
-                return 'bg-yellow-500';
+                return 'bg-amber-500 text-white';
             default:
-                return 'bg-gray-500';
+                return 'bg-slate-400 text-white';
         }
     };
 
     const getProgressColorClass = (progreso: number) => {
-        if (progreso < 30) {
-            return 'bg-red-500';
-        } else if (progreso < 70) {
-            return 'bg-yellow-500';
-        } else {
-            return 'bg-green-500';
-        }
+        if (progreso < 30) return 'bg-red-500';
+        if (progreso < 70) return 'bg-amber-500';
+        return 'bg-emerald-500';
     };
 
     return (
-        <Link href={`/projects/${id}`}>
-            <div className="relative bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow duration-300 cursor-pointer min-h-[14rem] min-w-[100px] flex flex-col justify-between overflow-visible">
-                <div className="mb-3 flex items-start justify-between gap-4">
-                    <div className="flex-1 pr-4">
-                        <h3 className="text-lg font-semibold text-gray-900 whitespace-normal break-words">{nombre}</h3>
-                        {descripcion && (
-                            <p className="text-gray-900 text-sm mt-2">{descripcion}</p>
-                        )}
-                    </div>
-                    <div className="flex flex-col items-end gap-2">
-                        <span className={`px-3 py-1 text-sm font-medium rounded-full text-white flex-shrink-0 ${getStatusColor(estado)}`}>
+        <Link href={`/projects/${id}`} className="block h-full">
+            <div className="
+                group relative bg-white 
+                /* --- TAMAÑO FIJO --- */
+                h-[280px] w-full 
+                flex flex-col justify-between 
+                
+                rounded-2xl p-6 
+                border border-gray-100 shadow-sm 
+                hover:shadow-xl hover:-translate-y-1 
+                transition-all duration-300 cursor-pointer
+            ">
+
+                {/* PARTE SUPERIOR: Título, Badge y Descripción */}
+                <div>
+                    <div className="flex justify-between items-start gap-3 mb-3">
+                        {/* Título con límite de 2 líneas */}
+                        <h3 className="text-lg font-bold text-blue-950 leading-tight line-clamp-2" title={nombre}>
+                            {nombre}
+                        </h3>
+
+                        {/* Badge de Estado */}
+                        <span className={`px-2.5 py-1 text-xs font-semibold rounded-full shadow-sm flex-shrink-0 ${getStatusColor(estado)}`}>
                             {estado}
                         </span>
-                        {fechaFin && (
-                            <span className="px-2 py-0.5 text-xs rounded-full bg-gray-700 text-gray-200">Fin: {fechaFin}</span>
-                        )}
                     </div>
+
+                    {/* Descripción con límite de líneas (line-clamp) */}
+                    {descripcion ? (
+                        <p className="text-slate-500 text-sm leading-relaxed line-clamp-3">
+                            {descripcion}
+                        </p>
+                    ) : (
+                        <p className="text-slate-300 text-sm italic">
+                            Sin descripción disponible.
+                        </p>
+                    )}
                 </div>
-                <div>
-                    <p className="text-gray-600 mb-2 text-sm">Progreso:</p>
-                    <div className="w-full bg-gray-200 rounded-full h-2.5">
+
+                {/* PARTE INFERIOR: Fecha y Progreso */}
+                <div className="mt-4">
+                    {fechaFin && (
+                        <div className="flex items-center gap-2 mb-3 text-xs text-slate-400 font-medium">
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <span>Entrega: {fechaFin}</span>
+                        </div>
+                    )}
+
+                    {/* Barra de Progreso */}
+                    <div className="flex justify-between items-center mb-1">
+                        <span className="text-xs font-semibold text-slate-500">Progreso</span>
+                        <span className="text-xs font-bold text-blue-950">{progreso}%</span>
+                    </div>
+                    <div className="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
                         <div
-                            className={`h-2.5 rounded-full ${getProgressColorClass(progreso)}`}
+                            className={`h-full rounded-full transition-all duration-500 ease-out ${getProgressColorClass(progreso)}`}
                             style={{ width: `${progreso}%` }}
                         ></div>
                     </div>
                 </div>
+
             </div>
         </Link>
     );
