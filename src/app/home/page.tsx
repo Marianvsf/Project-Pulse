@@ -264,12 +264,14 @@ export default function HomePage() {
                 <div className="max-w-7xl mx-auto px-6 text-center">
                     <h2 className="text-3xl font-bold text-gray-900 mb-4">¿Por qué elegir Project Pulse?</h2>
                 </div>
-                <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+
+                {/* 1. SECCIÓN DE COMPARACIÓN (Antes vs Después) */}
+                <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto px-6">
                     <div className="bg-red-50 p-8 rounded-2xl border border-red-100">
                         <h3 className="text-xl font-bold text-red-800 mb-6 flex items-center gap-2">
                             <span className="text-2xl">❌</span> Sin Project Pulse
                         </h3>
-                        <ul className="space-y-4 text-red-700/80">
+                        <ul className="space-y-4 text-red-700/80 text-left">
                             <li className="flex gap-3">
                                 <svg className="w-6 h-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                                 Información dispersa en emails y chats.
@@ -289,7 +291,7 @@ export default function HomePage() {
                         <h3 className="text-xl font-bold text-blue-900 mb-6 flex items-center gap-2 relative z-10">
                             <span className="text-2xl">✅</span> Con Project Pulse
                         </h3>
-                        <ul className="space-y-4 text-blue-800/80 relative z-10">
+                        <ul className="space-y-4 text-blue-800/80 relative z-10 text-left">
                             <li className="flex gap-3 font-medium">
                                 <svg className="w-6 h-6 text-blue-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
                                 Todo centralizado en un solo dashboard.
@@ -305,22 +307,47 @@ export default function HomePage() {
                         </ul>
                     </div>
                 </div>
-                <div className="text-center mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 border-y border-slate-100 py-12">
-                    <div>
-                        <p className="text-4xl md:text-5xl font-extrabold text-blue-600 mb-2">30%</p>
-                        <p className="text-slate-600 font-medium">Más productividad</p>
+                <div className="text-center mt-20 max-w-7xl mx-auto px-6">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 border-y border-slate-100 py-12">
+                        <div>
+                            <p className="text-4xl md:text-5xl font-extrabold text-blue-600 mb-2">30%</p>
+                            <p className="text-slate-600 font-medium">Más productividad</p>
+                        </div>
+                        <div>
+                            <p className="text-4xl md:text-5xl font-extrabold text-blue-600 mb-2">10k+</p>
+                            <p className="text-slate-600 font-medium">Tareas completadas</p>
+                        </div>
+                        <div>
+                            <p className="text-4xl md:text-5xl font-extrabold text-blue-600 mb-2">2h</p>
+                            <p className="text-slate-600 font-medium">Ahorradas al día</p>
+                        </div>
+                        <div>
+                            <p className="text-4xl md:text-5xl font-extrabold text-blue-600 mb-2">4.9/5</p>
+                            <p className="text-slate-600 font-medium">Valoración usuarios</p>
+                        </div>
                     </div>
-                    <div>
-                        <p className="text-4xl md:text-5xl font-extrabold text-blue-600 mb-2">10k+</p>
-                        <p className="text-slate-600 font-medium">Tareas completadas</p>
-                    </div>
-                    <div>
-                        <p className="text-4xl md:text-5xl font-extrabold text-blue-600 mb-2">2h</p>
-                        <p className="text-slate-600 font-medium">Ahorradas al día</p>
-                    </div>
-                    <div>
-                        <p className="text-4xl md:text-5xl font-extrabold text-blue-600 mb-2">4.9/5</p>
-                        <p className="text-slate-600 font-medium">Valoración usuarios</p>
+                </div>
+                <div className="mt-24 mb-10 w-full max-w-5xl mx-auto px-6">
+                    <div className="bg-slate-900 rounded-3xl p-10 md:p-16 text-center relative overflow-hidden group">
+                        <div className="absolute inset-0 bg-gradient-to-r from-blue-900 to-slate-900 z-0"></div>
+                        <div className="absolute top-0 left-0 w-64 h-64 bg-blue-500/20 blur-[100px] rounded-full pointer-events-none"></div>
+                        <div className="absolute bottom-0 right-0 w-64 h-64 bg-orange-500/10 blur-[100px] rounded-full pointer-events-none"></div>
+
+                        <div className="relative z-10">
+                            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+                                ¿Listo para organizar tu trabajo?
+                            </h2>
+                            <p className="text-slate-300 text-lg md:text-xl max-w-2xl mx-auto mb-10">
+                                Únete a los estudiantes y profesionales que ya están gestionando sus proyectos de forma inteligente.
+                            </p>
+                            <button
+                                onClick={goToRegistration}
+                                className="px-10 py-4 bg-[#FF7400] text-white font-bold text-lg rounded-xl shadow-lg hover:bg-orange-600 hover:scale-105 transition-all duration-300"
+                            >
+                                Comenzar Gratis Ahora
+                            </button>
+                            <p className="mt-4 text-sm text-slate-500">No se requiere tarjeta de crédito</p>
+                        </div>
                     </div>
                 </div>
             </main>
