@@ -1,18 +1,19 @@
 "use client";
 
-
 import { useRouter } from "next/navigation";
 import Navbar from "../components/navbar/Navbar";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Header } from "./header";
+import { Header } from "./header"; // Si no usas este componente Header, bórralo
 
 export default function HomePage() {
     const router = useRouter();
-    const goToLogin = () => {
-        router.push("/login");
-    }
+    const goToLogin = () => router.push("/login");
+    const goToRegistration = () => router.push("/register");
+
     const [currentSlide, setCurrentSlide] = useState<number>(0);
+
+    // Tus imágenes originales
     const images = [
         "/assets/fot1.jpg",
         "/assets/fot2.jpg",
@@ -22,120 +23,164 @@ export default function HomePage() {
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentSlide((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-        }, 4000);
+        }, 5000); // Aumenté un poco el tiempo para que no maree
         return () => clearInterval(interval);
     }, [images.length]);
 
-    const handlePrev = (): void => {
-        setCurrentSlide((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-    };
-
-    const handleNext = (): void => {
-        setCurrentSlide((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-    };
-    const goToRegistration = () => {
-        router.push("/register");
-    }
+    // Función para cambiar manualmente (opcional, por si quieres flechas)
+    const handlePrev = () => setCurrentSlide((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+    const handleNext = () => setCurrentSlide((prev) => (prev === images.length - 1 ? 0 : prev + 1));
 
     return (
-        <>
-            <Navbar />
-            {/*<header>
-                <div id="default-carousel" className="relative w-full" data-carousel="slide">
-                    {/* <!-- Carousel wrapper --> 
-                    <div className="relative h-56 overflow-hidden rounded-lg md:h-96">
-                        {images.map((image, index) => (
-                            <div
-                                key={index}
-                                className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${index === currentSlide ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
-                                style={{ pointerEvents: index === currentSlide ? 'auto' : 'none' }}
-                            >
-                                <Image
-                                    width={1000}
-                                    height={1000}
-                                    src={image}
-                                    className="absolute block w-full h-full object-cover"
-                                    alt={`Slide ${index + 1}`}
-                                />
-                            </div>
-                        ))}
+        <div className="relative min-h-screen bg-white">
+
+            {/* 1. NAVBAR (Con z-index alto para estar siempre visible) */}
+            <div className="relative z-50">
+                <Navbar />
+            </div>
+
+            {/* 2. HEADER / HERO SECTION (Ocupa toda la pantalla o h-[80vh]) */}
+            <header className="relative w-full h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
+
+                {/* FONDO: El Carrusel ahora está aquí atrás */}
+                <div className="absolute inset-0 w-full h-full z-0">
+                    {images.map((image, index) => (
+                        <div
+                            key={index}
+                            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentSlide ? 'opacity-100' : 'opacity-0'
+                                }`}
+                        >
+                            <Image
+                                src={image}
+                                alt={`Slide ${index + 1}`}
+                                fill // Ocupa todo el contenedor padre
+                                className="object-cover object-center"
+                                priority={index === 0} // Carga rápida para la primera
+                            />
+                            {/* OVERLAY: Capa negra semitransparente para que el texto blanco se lea perfecto */}
+                            <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px]" />
+                        </div>
+                    ))}
+                </div>
+
+                {/* CONTENIDO PRINCIPAL (Texto y Botones) - Ahora vive DENTRO del Header */}
+                <div className="relative z-10 w-full max-w-[980px] px-6 text-center text-white mt-16">
+
+                    {/* Badge / Etiqueta opcional */}
+                    <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full border border-white/20 bg-white/10 text-white/90 text-sm font-medium backdrop-blur-sm animate-in fade-in slide-in-from-bottom-4 duration-700">
+                        <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                        Gestión de proyectos v1.0
                     </div>
-                    <div className="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
+
+                    <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100 leading-[1.1]">
+                        La gestión de tus proyectos, <br className="hidden md:block" />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 via-white to-blue-200">
+                            simplificada y centralizada.
+                        </span>
+                    </h1>
+
+                    <p className="max-w-2xl mx-auto text-lg md:text-2xl text-white/80 font-medium mb-10 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-200">
+                        Project-Pulse ayuda a los equipos a organizar tareas, seguir el progreso y colaborar eficazmente, todo en un solo lugar.
+                    </p>
+
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-300">
+                        {/* Botón Principal */}
+                        <button
+                            onClick={goToRegistration}
+                            className="h-[52px] w-full sm:w-[240px] text-lg font-bold rounded-xl text-white transition-all duration-300 
+                                bg-[#FF7400] shadow-[0_0_20px_rgba(255,116,0,0.4)] hover:shadow-[0_0_30px_rgba(255,116,0,0.6)] hover:scale-105"
+                        >
+                            Registrarse Gratis
+                        </button>
+
+                        {/* Botón Secundario (Glass Effect sobre imagen) */}
+                        <button
+                            onClick={goToLogin}
+                            className="h-[52px] w-full sm:w-[240px] text-lg font-medium rounded-xl text-white transition-all duration-300
+                                bg-white/10 border border-white/20 backdrop-blur-md hover:bg-white/20 hover:scale-105"
+                        >
+                            Ver Demo
+                        </button>
+                    </div>
+
+                    {/* Controles del Slider (Opcionales, pequeños abajo) */}
+                    <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-2">
                         {images.map((_, index) => (
                             <button
                                 key={index}
-                                type="button"
-                                className={`w-3 h-3 rounded-full ${index === currentSlide ? 'bg-blue-500' : 'bg-gray-300'}`}
-                                aria-current={index === currentSlide}
-                                aria-label={`Slide ${index + 1}`}
                                 onClick={() => setCurrentSlide(index)}
+                                className={`h-1.5 rounded-full transition-all duration-300 ${index === currentSlide ? 'w-8 bg-white' : 'w-2 bg-white/40'
+                                    }`}
+                                aria-label={`Go to slide ${index + 1}`}
                             />
                         ))}
                     </div>
-                    {/* <!-- Slider indicators --> 
-                    <div className="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-                        <button type="button" className="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
-                        <button type="button" className="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
-                        <button type="button" className="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
-                        <button type="button" className="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4" data-carousel-slide-to="3"></button>
-                        <button type="button" className="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 5" data-carousel-slide-to="4"></button>
-                    </div>
-                    {/* <!-- Slider controls --> *
-                    <button type="button" className="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" onClick={handlePrev}>
-                        <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                            <svg className="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 1 1 5l4 4" />
-                            </svg>
-                            <span className="sr-only">Previous</span>
-                        </span>
-                    </button>
-                    <button type="button" className="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" onClick={handleNext}>
-                        <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                            <svg className="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4" />
-                            </svg>
-                            <span className="sr-only">Next</span>
-                        </span>
-                    </button>
                 </div>
+
+                {/* Flechas laterales (Sutiles) */}
+                <button onClick={handlePrev} className="absolute left-4 top-1/2 -translate-y-1/2 p-2 text-white/50 hover:text-white transition-colors z-20">
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+                </button>
+                <button onClick={handleNext} className="absolute right-4 top-1/2 -translate-y-1/2 p-2 text-white/50 hover:text-white transition-colors z-20">
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                </button>
+
             </header>
-            */}
-            <Header />
-            <main className="flex flex-col items-center text-center justify-center pt-24 m-auto max-w-[980px]">
-                <h1 className="m-auto mt-5 text-[50px] font-extrabold text-center tracking-tighter">La gestión de tus proyectos, simplificada y centralizada.</h1>
-                <div className="max-w-[750px]">
-                    <small className="text-center text-[25px] text-gray-500 dark:text-gray-400 font-extrabold">
-                        Project-Pulse ayuda a los equipos a organizar tareas, seguir el progreso y colaborar eficazmente, todo en un solo lugar.
-                    </small>
-                </div>
-                <div className="flex flex-col sm:flex-row items-center text-center justify-center m-auto mt-12 mb-10 space-y-4 sm:space-y-0 sm:space-x-5 w-full sm:w-auto">
+            {/* SECCIÓN DE CARACTERÍSTICAS */}
+            <section className="py-24 bg-white">
+                <div className="max-w-7xl mx-auto px-6">
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+                            Todo lo que necesitas para liderar
+                        </h2>
+                        <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+                            Deja de usar hojas de cálculo y correos dispersos. Project Pulse unifica tu flujo de trabajo.
+                        </p>
+                    </div>
 
-                    {/* Botón Principal: Mantiene el naranja, pero con sombra ajustada */}
-                    <button
-                        onClick={goToRegistration}
-                        className="h-[52px] w-full sm:w-[240px] text-lg font-bold rounded-xl text-white transition-all duration-300 
-                            bg-[#FF7400] shadow-[0_4px_14px_0_rgba(255,116,0,0.39)] hover:shadow-[0_6px_20px_rgba(255,116,0,0.23)] hover:scale-105"
-                    >
-                        Registrarse Gratis
-                    </button>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {/* Card 1 */}
+                        <div className="p-8 rounded-2xl bg-slate-50 border border-slate-200 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                            <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
+                                <svg className="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
+                            </div>
+                            <h3 className="text-xl font-bold text-slate-900 mb-3">Organización Visual</h3>
+                            <p className="text-slate-600 leading-relaxed">
+                                Tableros Kanban, listas y cronogramas. Visualiza el estado de cada tarea al instante y sin esfuerzo.
+                            </p>
+                        </div>
 
-                    {/* Botón Secundario: Fondo blanco con borde gris (Estilo limpio) */}
-                    <button
-                        onClick={goToLogin}
-                        className="h-[52px] w-full sm:w-[240px] text-lg font-medium rounded-xl text-slate-600 transition-all duration-300
-                            bg-white border border-gray-200 shadow-sm hover:bg-gray-50 hover:text-slate-900 hover:border-gray-300"
-                    >
-                        Ver Demo
-                    </button>
+                        {/* Card 2 */}
+                        <div className="p-8 rounded-2xl bg-slate-50 border border-slate-200 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                            <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mb-6">
+                                <svg className="w-6 h-6 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                            </div>
+                            <h3 className="text-xl font-bold text-slate-900 mb-3">Automatización Real</h3>
+                            <p className="text-slate-600 leading-relaxed">
+                                Olvídate de las tareas repetitivas. Configura recordatorios y flujos de trabajo automáticos.
+                            </p>
+                        </div>
+
+                        {/* Card 3 */}
+                        <div className="p-8 rounded-2xl bg-slate-50 border border-slate-200 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                            <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-6">
+                                <svg className="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                            </div>
+                            <h3 className="text-xl font-bold text-slate-900 mb-3">Colaboración en vivo</h3>
+                            <p className="text-slate-600 leading-relaxed">
+                                Comentarios, menciones y adjuntos en tiempo real. Mantén a tu equipo sincronizado siempre.
+                            </p>
+                        </div>
+                    </div>
                 </div>
-                {/* <Image
-                    className="w-[180px] h-[175px] mb-5"
-                    src="/IconLogo.png"
-                    alt="symbol"
-                    width={188}
-                    height={75}
-                />*/}
-            </main >
-        </>
+            </section>
+            {/* SECCIONES EXTRA (Si tienes más contenido abajo, va aquí) */}
+            <main className="py-20 bg-white">
+                <div className="max-w-7xl mx-auto px-6 text-center">
+                    <h2 className="text-3xl font-bold text-gray-900 mb-4">¿Por qué elegir Project Pulse?</h2>
+                    <p className="text-gray-600">Aquí puedes continuar con el resto de tu landing page...</p>
+                </div>
+            </main>
+        </div>
     );
 }
