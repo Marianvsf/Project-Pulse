@@ -174,7 +174,92 @@ export default function HomePage() {
                     </div>
                 </div>
             </section>
-            {/* SECCIONES EXTRA (Si tienes más contenido abajo, va aquí) */}
+            {/* {/* SECCIÓN BENTO GRID *
+            <section className="py-20 bg-slate-50">
+                <div className="max-w-7xl mx-auto px-6">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                        {/* Bloque Grande (Izquierda) *
+                        <div className="md:col-span-2 bg-white rounded-3xl p-8 border border-slate-200 shadow-sm flex flex-col justify-between overflow-hidden relative group">
+                            <div className="relative z-10">
+                                <h3 className="text-2xl font-bold text-slate-900 mb-2">Panel de Control Intuitivo</h3>
+                                <p className="text-slate-500">Todo lo importante, en una sola vista.</p>
+                            </div>
+                            {/* Mockup visual abstracto *
+                            <div className="mt-8 bg-slate-100 rounded-tl-xl border border-slate-200 h-64 w-full shadow-inner group-hover:scale-105 transition-transform duration-500 origin-bottom-right"></div>
+                        </div>
+
+                        {/* Bloque Pequeño (Derecha Arriba) 
+                        <div className="bg-blue-600 rounded-3xl p-8 text-white shadow-lg flex flex-col justify-center items-center text-center">
+                            <h3 className="text-5xl font-extrabold mb-2">10x</h3>
+                            <p className="text-blue-100 font-medium">Más productividad en equipos remotos.</p>
+                        </div>
+
+                        {/* Bloque Pequeño (Derecha Abajo) 
+                        <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
+                            <div className="flex items-center gap-4 mb-4">
+                                <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-bold">✓</div>
+                                <div>
+                                    <h4 className="font-bold text-slate-900">Tareas al día</h4>
+                                    <p className="text-xs text-slate-500">Sin retrasos</p>
+                                </div>
+                            </div>
+                            <div className="flex items-center gap-4">
+                                <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold">⚡</div>
+                                <div>
+                                    <h4 className="font-bold text-slate-900">Reportes</h4>
+                                    <p className="text-xs text-slate-500">Automáticos</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>*/}
+            {/* SECCIÓN DE PRECIOS */}
+            <section className="py-24 bg-white border-t border-slate-100">
+                <div className="max-w-7xl mx-auto px-6 text-center">
+                    <h2 className="text-3xl font-bold text-slate-900 mb-12">Planes flexibles para cada etapa</h2>
+
+                    <div className="flex flex-col md:flex-row justify-center gap-8">
+                        {/* Plan Gratuito */}
+                        <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm w-full md:w-80 hover:border-blue-300 transition-colors">
+                            <h3 className="text-xl font-bold text-slate-900">Starter</h3>
+                            <p className="text-slate-500 text-sm mt-2">Para estudiantes y hobby</p>
+                            <div className="my-6">
+                                <span className="text-4xl font-extrabold text-slate-900">$0</span>
+                                <span className="text-slate-500">/mes</span>
+                            </div>
+                            <ul className="text-left space-y-3 mb-8 text-slate-600 text-sm">
+                                <li className="flex items-center gap-2">✓ Hasta 3 proyectos</li>
+                                <li className="flex items-center gap-2">✓ 1 usuario</li>
+                                <li className="flex items-center gap-2">✓ Historial de 7 días</li>
+                            </ul>
+                            <button className="w-full py-3 rounded-xl border border-slate-200 font-semibold text-slate-700 hover:bg-slate-50 transition-colors">
+                                Empezar Gratis
+                            </button>
+                        </div>
+
+                        {/* Plan Pro (Destacado) */}
+                        <div className="bg-slate-900 p-8 rounded-2xl border border-slate-900 shadow-xl w-full md:w-80 relative overflow-hidden">
+                            <div className="absolute top-0 right-0 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">POPULAR</div>
+                            <h3 className="text-xl font-bold text-white">Pro Team</h3>
+                            <p className="text-slate-400 text-sm mt-2">Para equipos ágiles</p>
+                            <div className="my-6">
+                                <span className="text-4xl font-extrabold text-white">$15</span>
+                                <span className="text-slate-400">/mes</span>
+                            </div>
+                            <ul className="text-left space-y-3 mb-8 text-slate-300 text-sm">
+                                <li className="flex items-center gap-2 text-white">✓ Proyectos ilimitados</li>
+                                <li className="flex items-center gap-2 text-white">✓ Hasta 10 usuarios</li>
+                                <li className="flex items-center gap-2 text-white">✓ Analíticas avanzadas</li>
+                            </ul>
+                            <button className="w-full py-3 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-500 transition-colors shadow-lg shadow-blue-900/50">
+                                Prueba 14 días
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
             <main className="py-20 bg-white">
                 <div className="max-w-7xl mx-auto px-6 text-center">
                     <h2 className="text-3xl font-bold text-gray-900 mb-4">¿Por qué elegir Project Pulse?</h2>
