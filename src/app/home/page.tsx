@@ -108,13 +108,25 @@ export default function HomePage() {
                         Project-Pulse ayuda a los equipos a organizar tareas, seguir el progreso y colaborar eficazmente, todo en un solo lugar.
                     </small>
                 </div>
-                <div className="flex items-center text-center justify-center m-auto mb-10 space-x-3">
-                    <button onClick={goToRegistration}
-                        className="h-[44px] w-[237px] text-lg rounded-xl mt-7 text-white md:hover:text-orange-600 transition-colors duration-200 justify-center items-center shadow-md bg-white border border-gray-100 dark:bg-gray-900 dark:border-gray-800">
-                        Registrarse Gratis</button>
-                    <button onClick={goToLogin}
-                        className="h-[44px] w-[237px] text-lg rounded-xl mt-7 text-white  md:hover:text-orange-600 transition-colors duration-200 justify-center items-center bg-[#FF7400]">
-                        Ver Demo</button>
+                <div className="flex flex-col sm:flex-row items-center text-center justify-center m-auto mt-12 mb-10 space-y-4 sm:space-y-0 sm:space-x-5 w-full sm:w-auto">
+
+                    {/* Botón Principal: Mantiene el naranja, pero con sombra ajustada */}
+                    <button
+                        onClick={goToRegistration}
+                        className="h-[52px] w-full sm:w-[240px] text-lg font-bold rounded-xl text-white transition-all duration-300 
+                            bg-[#FF7400] shadow-[0_4px_14px_0_rgba(255,116,0,0.39)] hover:shadow-[0_6px_20px_rgba(255,116,0,0.23)] hover:scale-105"
+                    >
+                        Registrarse Gratis
+                    </button>
+
+                    {/* Botón Secundario: Fondo blanco con borde gris (Estilo limpio) */}
+                    <button
+                        onClick={goToLogin}
+                        className="h-[52px] w-full sm:w-[240px] text-lg font-medium rounded-xl text-slate-600 transition-all duration-300
+                            bg-white border border-gray-200 shadow-sm hover:bg-gray-50 hover:text-slate-900 hover:border-gray-300"
+                    >
+                        Ver Demo
+                    </button>
                 </div>
                 {/* <Image
                     className="w-[180px] h-[175px] mb-5"
