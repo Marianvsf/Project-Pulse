@@ -265,6 +265,47 @@ export default function HomePage() {
                     <h2 className="text-3xl font-bold text-gray-900 mb-4">¿Por qué elegir Project Pulse?</h2>
                     <p className="text-gray-600">Aquí puedes continuar con el resto de tu landing page...</p>
                 </div>
+                <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    <div className="bg-red-50 p-8 rounded-2xl border border-red-100">
+                        <h3 className="text-xl font-bold text-red-800 mb-6 flex items-center gap-2">
+                            <span className="text-2xl">❌</span> Sin Project Pulse
+                        </h3>
+                        <ul className="space-y-4 text-red-700/80">
+                            <li className="flex gap-3">
+                                <svg className="w-6 h-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                                Información dispersa en emails y chats.
+                            </li>
+                            <li className="flex gap-3">
+                                <svg className="w-6 h-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                                Fechas de entrega olvidadas constantemente.
+                            </li>
+                            <li className="flex gap-3">
+                                <svg className="w-6 h-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                                Nadie sabe quién está haciendo qué.
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="bg-blue-50 p-8 rounded-2xl border border-blue-100 shadow-lg relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-20 h-20 bg-blue-200 blur-2xl rounded-full -mr-10 -mt-10"></div>
+                        <h3 className="text-xl font-bold text-blue-900 mb-6 flex items-center gap-2 relative z-10">
+                            <span className="text-2xl">✅</span> Con Project Pulse
+                        </h3>
+                        <ul className="space-y-4 text-blue-800/80 relative z-10">
+                            <li className="flex gap-3 font-medium">
+                                <svg className="w-6 h-6 text-blue-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                                Todo centralizado en un solo dashboard.
+                            </li>
+                            <li className="flex gap-3 font-medium">
+                                <svg className="w-6 h-6 text-blue-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                                Alertas automáticas antes de vencer plazos.
+                            </li>
+                            <li className="flex gap-3 font-medium">
+                                <svg className="w-6 h-6 text-blue-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                                Claridad total en roles y responsabilidades.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </main>
         </div>
     );
