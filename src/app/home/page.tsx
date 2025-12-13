@@ -306,6 +306,24 @@ export default function HomePage() {
                         </ul>
                     </div>
                 </div>
+                <div className="text-center mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 border-y border-slate-100 py-12">
+                    <div>
+                        <p className="text-4xl md:text-5xl font-extrabold text-blue-600 mb-2">30%</p>
+                        <p className="text-slate-600 font-medium">Más productividad</p>
+                    </div>
+                    <div>
+                        <p className="text-4xl md:text-5xl font-extrabold text-blue-600 mb-2">10k+</p>
+                        <p className="text-slate-600 font-medium">Tareas completadas</p>
+                    </div>
+                    <div>
+                        <p className="text-4xl md:text-5xl font-extrabold text-blue-600 mb-2">2h</p>
+                        <p className="text-slate-600 font-medium">Ahorradas al día</p>
+                    </div>
+                    <div>
+                        <p className="text-4xl md:text-5xl font-extrabold text-blue-600 mb-2">4.9/5</p>
+                        <p className="text-slate-600 font-medium">Valoración usuarios</p>
+                    </div>
+                </div>
             </main>
         </div>
     );
