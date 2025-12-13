@@ -264,8 +264,6 @@ export default function HomePage() {
                 <div className="max-w-7xl mx-auto px-6 text-center">
                     <h2 className="text-3xl font-bold text-gray-900 mb-4">¿Por qué elegir Project Pulse?</h2>
                 </div>
-
-                {/* 1. SECCIÓN DE COMPARACIÓN (Antes vs Después) */}
                 <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto px-6">
                     <div className="bg-red-50 p-8 rounded-2xl border border-red-100">
                         <h3 className="text-xl font-bold text-red-800 mb-6 flex items-center gap-2">
