@@ -209,7 +209,7 @@ export default function HomePage() {
                 </div>
             </section>*/}
             {/* SECCIÓN DE PRECIOS */}
-            <section className="py-24 bg-white border-t border-slate-100">
+            <section className="py-12 bg-white border-t border-slate-100">
                 <div className="max-w-7xl mx-auto px-6 text-center">
                     <h2 className="text-3xl font-bold text-slate-900 mb-12">Planes flexibles para cada etapa</h2>
 
