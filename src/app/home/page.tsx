@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import Navbar from "../components/navbar/Navbar";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Header } from "./header"; // Si no usas este componente Header, bórralo
 
 export default function HomePage() {
     const router = useRouter();
@@ -13,7 +12,6 @@ export default function HomePage() {
 
     const [currentSlide, setCurrentSlide] = useState<number>(0);
 
-    // Tus imágenes originales
     const images = [
         "/assets/fot1.jpg",
         "/assets/fot2.jpg",
@@ -23,11 +21,10 @@ export default function HomePage() {
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentSlide((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-        }, 5000); // Aumenté un poco el tiempo para que no maree
+        }, 5000);
         return () => clearInterval(interval);
     }, [images.length]);
 
-    // Función para cambiar manualmente (opcional, por si quieres flechas)
     const handlePrev = () => setCurrentSlide((prev) => (prev === 0 ? images.length - 1 : prev - 1));
     const handleNext = () => setCurrentSlide((prev) => (prev === images.length - 1 ? 0 : prev + 1));
 
@@ -38,11 +35,7 @@ export default function HomePage() {
             <div className="relative z-50">
                 <Navbar />
             </div>
-
-            {/* 2. HEADER / HERO SECTION (Ocupa toda la pantalla o h-[80vh]) */}
             <header className="relative w-full h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
-
-                {/* FONDO: El Carrusel ahora está aquí atrás */}
                 <div className="absolute inset-0 w-full h-full z-0">
                     {images.map((image, index) => (
                         <div
@@ -104,7 +97,7 @@ export default function HomePage() {
                     </div>
 
                     {/* Controles del Slider (Opcionales, pequeños abajo) */}
-                    <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-2">
+                    <div className="absolute bottom-18 left-1/2 -translate-x-1/2 flex gap-2">
                         {images.map((_, index) => (
                             <button
                                 key={index}
