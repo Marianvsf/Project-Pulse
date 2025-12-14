@@ -13,13 +13,11 @@ export default function DashboardUser() {
     const { data: session, status } = useSession();
     const router = useRouter();
     const [greeting, setGreeting] = useState("Hola");
-
-    // --- ESTADO PARA LA GALERÍA ---
     const [currentSlide, setCurrentSlide] = useState(0);
     const galleryImages = [
-        "/assets/art1.jpg",
-        "/assets/art2.jpg",
-        "/assets/art3.jpg"
+        "/assets/fot1.jpg",
+        "/assets/fot2.jpg",
+        "/assets/fot3.jpg"
     ];
 
     const projects = useProjectStore((s) => s.projects);
@@ -28,7 +26,6 @@ export default function DashboardUser() {
     const setSearchTerm = useProjectStore((s) => s.setSearchTerm);
     const setStatusFilter = useProjectStore((s) => s.setStatusFilter);
 
-    // Efecto para el saludo dinámico
     useEffect(() => {
         const hour = new Date().getHours();
         if (hour < 12) setGreeting("Buenos días");
