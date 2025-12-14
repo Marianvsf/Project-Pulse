@@ -17,9 +17,9 @@ export default function DashboardUser() {
     // --- ESTADO PARA LA GALERÍA ---
     const [currentSlide, setCurrentSlide] = useState(0);
     const galleryImages = [
-        "/assets/fot1.jpg",
-        "/assets/fot2.jpg",
-        "/assets/fot3.jpg"
+        "/assets/art1.jpg",
+        "/assets/art2.jpg",
+        "/assets/art3.jpg"
     ];
 
     const projects = useProjectStore((s) => s.projects);
@@ -67,6 +67,7 @@ export default function DashboardUser() {
         return filtered;
     }, [projects, searchTerm, statusFilter]);
 
+    // Cálculo rápido de estadísticas
     const stats = useMemo(() => {
         const total = projects.length;
         const completados = projects.filter((p: any) => p.estado === 'Completado').length;
@@ -98,7 +99,7 @@ export default function DashboardUser() {
 
             <main className="container mx-auto px-4 lg:px-8 max-w-[1400px]">
 
-                {/* --- SECCIÓN 1: BIENVENIDA (Ancho completo) --- */}
+                {/* --- SECCIÓN 1: BIENVENIDA --- */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
                     <div>
                         <h1 className="text-2xl md:text-4xl font-bold text-blue-950 mb-2 tracking-tight">
@@ -113,13 +114,13 @@ export default function DashboardUser() {
                     </div>
                 </div>
 
-                {/* LAYOUT PRINCIPAL: GRID 2 COLUMNAS (Contenido 3/4 - Galería 1/4) */}
+                {/* LAYOUT PRINCIPAL: GRID 2 COLUMNAS */}
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
 
-                    {/* COLUMNA IZQUIERDA (CONTENIDO PRINCIPAL) */}
+                    {/* --- COLUMNA IZQUIERDA (CONTENIDO PRINCIPAL) --- */}
                     <div className="lg:col-span-3 space-y-8">
 
-                        {/* --- SECCIÓN 2: TARJETAS INFORMATIVAS --- */}
+                        {/* TARJETAS DE ESTADÍSTICAS */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div className="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4 hover:shadow-md transition-shadow">
                                 <div className="p-3 bg-blue-50 text-blue-600 rounded-lg">
@@ -150,7 +151,7 @@ export default function DashboardUser() {
                             </div>
                         </div>
 
-                        {/* --- SECCIÓN 3: GRÁFICAS --- */}
+                        {/* GRÁFICAS */}
                         <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-200">
                             <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 border-b border-gray-100 pb-4 gap-4">
                                 <div>
@@ -165,7 +166,7 @@ export default function DashboardUser() {
                             <Charts projects={Allprojects} />
                         </div>
 
-                        {/* --- SECCIÓN 4: LISTA DE PROYECTOS --- */}
+                        {/* LISTA DE PROYECTOS */}
                         <div>
                             <div className="mb-6">
                                 <h2 className="text-2xl font-bold text-blue-950 mb-2">Galería de Proyectos</h2>
@@ -208,68 +209,69 @@ export default function DashboardUser() {
                         </div>
                     </div>
 
-                    {/* COLUMNA DERECHA (GALERÍA SIDEBAR) */}
-                    <div className="lg:col-span-1 space-y-6">
+                    {/* --- COLUMNA DERECHA (SIDEBAR FIJO) --- */}
+                    <div className="lg:col-span-1">
+                        <div className="sticky top-28 space-y-6">
 
-                        {/* WIDGET GALERÍA */}
-                        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden sticky top-28">
-                            <div className="p-4 border-b border-gray-100 flex justify-between items-center">
-                                <h3 className="font-bold text-blue-950">Inspiración</h3>
-                                <span className="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full font-medium">Nuevo</span>
-                            </div>
-
-                            <div className="relative h-[400px] w-full bg-slate-900 group">
-                                {galleryImages.map((img, index) => (
-                                    <div
-                                        key={index}
-                                        className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentSlide ? "opacity-100" : "opacity-0"
-                                            }`}
-                                    >
-                                        <Image
-                                            src={img}
-                                            alt={`Arte ${index + 1}`}
-                                            fill
-                                            className="object-cover"
-                                        />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                                    </div>
-                                ))}
-
-                                {/* Info sobre la imagen */}
-                                <div className="absolute bottom-0 left-0 w-full p-5 text-white">
-                                    <p className="text-xs text-orange-400 font-bold uppercase tracking-wider mb-1">Colección 2024</p>
-                                    <h4 className="text-lg font-bold leading-tight">Arte Digital & Creatividad</h4>
+                            {/* WIDGET 1: GALERÍA */}
+                            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                                <div className="p-4 border-b border-gray-100 flex justify-between items-center">
+                                    <h3 className="font-bold text-blue-950">Inspiración</h3>
+                                    <span className="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full font-medium">Nuevo</span>
                                 </div>
 
-                                {/* Indicadores */}
-                                <div className="absolute top-4 right-4 flex gap-1.5">
-                                    {galleryImages.map((_, idx) => (
+                                <div className="relative h-[400px] w-full bg-slate-900 group">
+                                    {galleryImages.map((img, index) => (
                                         <div
-                                            key={idx}
-                                            className={`h-1.5 w-1.5 rounded-full transition-all ${idx === currentSlide ? "bg-orange-500 scale-125" : "bg-white/50"
+                                            key={index}
+                                            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentSlide ? "opacity-100" : "opacity-0"
                                                 }`}
-                                        />
+                                        >
+                                            <Image
+                                                src={img}
+                                                alt={`Arte ${index + 1}`}
+                                                fill
+                                                className="object-cover"
+                                            />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                                        </div>
                                     ))}
+
+                                    <div className="absolute bottom-0 left-0 w-full p-5 text-white">
+                                        <p className="text-xs text-orange-400 font-bold uppercase tracking-wider mb-1">Colección 2024</p>
+                                        <h4 className="text-lg font-bold leading-tight">Arte Digital & Creatividad</h4>
+                                    </div>
+
+                                    <div className="absolute top-4 right-4 flex gap-1.5">
+                                        {galleryImages.map((_, idx) => (
+                                            <div
+                                                key={idx}
+                                                className={`h-1.5 w-1.5 rounded-full transition-all ${idx === currentSlide ? "bg-orange-500 scale-125" : "bg-white/50"
+                                                    }`}
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="p-4 bg-gray-50">
+                                    <p className="text-xs text-slate-500 text-center">
+                                        "La creatividad es la inteligencia divirtiéndose."
+                                    </p>
                                 </div>
                             </div>
 
-                            <div className="p-4 bg-gray-50">
-                                <p className="text-xs text-slate-500 text-center">
-                                    "La creatividad es la inteligencia divirtiéndose."
-                                </p>
+                            {/* WIDGET 2: SOPORTE */}
+                            <div className="bg-blue-950 rounded-2xl p-6 text-white shadow-lg">
+                                <h3 className="font-bold text-lg mb-2">¿Necesitas ayuda?</h3>
+                                <p className="text-blue-200 text-sm mb-4">Contacta con soporte técnico si tienes dudas con tu panel.</p>
+                                <button className="w-full py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm font-medium transition-colors border border-white/10">
+                                    Contactar Soporte
+                                </button>
                             </div>
-                        </div>
 
-                        {/* WIDGET EXTRA (Opcional, para llenar espacio) */}
-                        <div className="bg-blue-950 rounded-2xl p-6 text-white shadow-lg">
-                            <h3 className="font-bold text-lg mb-2">¿Necesitas ayuda?</h3>
-                            <p className="text-blue-200 text-sm mb-4">Contacta con soporte técnico si tienes dudas con tu panel.</p>
-                            <button className="w-full py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm font-medium transition-colors border border-white/10">
-                                Contactar Soporte
-                            </button>
                         </div>
-
                     </div>
+
                 </div>
 
             </main>
