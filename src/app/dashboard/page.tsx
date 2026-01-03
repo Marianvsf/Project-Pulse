@@ -67,8 +67,8 @@ export default function DashboardUser() {
     // Cálculo rápido de estadísticas
     const stats = useMemo(() => {
         const total = projects.length;
-        const completados = projects.filter((p: any) => p.estado === 'Completado').length;
-        const enProgreso = projects.filter((p: any) => p.estado === 'En Progreso').length;
+        const completados = projects.filter((p: unknown) => p.estado === 'Completado').length;
+        const enProgreso = projects.filter((p: unknown) => p.estado === 'En Progreso').length;
         return { total, completados, enProgreso };
     }, [projects]);
 
@@ -252,7 +252,7 @@ export default function DashboardUser() {
 
                                 <div className="p-4 bg-gray-50">
                                     <p className="text-xs text-slate-500 text-center">
-                                        "La creatividad es la inteligencia divirtiéndose."
+                                        &quot;La creatividad es la inteligencia divirtiéndose.&quot;
                                     </p>
                                 </div>
                             </div>
