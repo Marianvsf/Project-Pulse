@@ -67,8 +67,8 @@ export default function DashboardUser() {
     // Cálculo rápido de estadísticas
     const stats = useMemo(() => {
         const total = projects.length;
-        const completados = projects.filter((p: unknown) => p.estado === 'Completado').length;
-        const enProgreso = projects.filter((p: unknown) => p.estado === 'En Progreso').length;
+        const completados = projects.filter((p: Project) => p.estado === 'Completado').length;
+        const enProgreso = projects.filter((p: Project) => p.estado === 'En Progreso').length;
         return { total, completados, enProgreso };
     }, [projects]);
 
