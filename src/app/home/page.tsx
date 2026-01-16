@@ -333,8 +333,9 @@ export default function HomePage() {
                   ✓ Analíticas avanzadas
                 </li>
               </ul>
-              <button className="w-full py-3 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-500 transition-colors shadow-lg shadow-blue-900/50">
-                Prueba 14 días
+              <button className="group relative w-full overflow-hidden py-3 rounded-xl bg-blue-600 text-white font-bold shadow-lg shadow-blue-900/50">
+                <span className="relative z-10">Prueba 14 días</span>
+                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-0 bg-white/20 transition-transform duration-500 ease-out" />
               </button>
             </div>
           </div>
