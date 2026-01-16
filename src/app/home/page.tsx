@@ -37,9 +37,8 @@ export default function HomePage() {
           {images.map((image, index) => (
             <div
               key={index}
-              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                index === currentSlide ? "opacity-100" : "opacity-0"
-              }`}
+              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentSlide ? "opacity-100" : "opacity-0"
+                }`}
             >
               <Image
                 src={image}
@@ -75,15 +74,6 @@ export default function HomePage() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-300">
-            {/* Botón Principal */}
-            <button
-              onClick={goToRegistration}
-              className="h-[52px] w-full sm:w-[240px] text-lg font-bold rounded-xl text-white transition-all duration-300 
-                                bg-[#FF7400] shadow-[0_0_20px_rgba(255,116,0,0.4)] hover:shadow-[0_0_30px_rgba(255,116,0,0.6)] hover:scale-105"
-            >
-              Registrarse Gratis
-            </button>
-
             {/* Botón Secundario (Glass Effect sobre imagen) */}
             <button
               onClick={goToLogin}
@@ -91,6 +81,14 @@ export default function HomePage() {
                                 bg-white/10 border border-white/20 backdrop-blur-md hover:bg-white/20 hover:scale-105"
             >
               Ver Demo
+            </button>
+            {/* Botón Principal */}
+            <button
+              onClick={goToRegistration}
+              className="h-[52px] w-full sm:w-[240px] text-lg font-bold rounded-xl text-white transition-all duration-300 
+                                bg-[#FF7400] hover:scale-105"
+            >
+              Registrarse Gratis
             </button>
           </div>
 
@@ -100,9 +98,8 @@ export default function HomePage() {
               <button
                 key={index}
                 onClick={() => setCurrentSlide(index)}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
-                  index === currentSlide ? "w-8 bg-white" : "w-2 bg-white/40"
-                }`}
+                className={`h-1.5 rounded-full transition-all duration-300 ${index === currentSlide ? "w-8 bg-white" : "w-2 bg-white/40"
+                  }`}
                 aria-label={`Go to slide ${index + 1}`}
               />
             ))}
@@ -507,7 +504,7 @@ export default function HomePage() {
               <button
                 onClick={goToRegistration}
                 className="h-[52px] w-full sm:w-[240px] text-lg font-bold rounded-xl text-white transition-all duration-300 
-                                bg-[#FF7400] shadow-[0_0_20px_rgba(255,116,0,0.4)] hover:shadow-[0_0_30px_rgba(255,116,0,0.6)] hover:scale-105"
+                                bg-[#FF7400] hover:scale-105"
               >
                 Comenzar Gratis Ahora
               </button>
