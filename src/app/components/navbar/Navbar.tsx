@@ -61,7 +61,7 @@ const Navbar = () => {
             {pathname !== "/register" && (
               <button
                 onClick={goToRegistration}
-                className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-lg bg-[#FF7400] px-5 py-2 text-sm font-medium text-white shadow-md transition-all duration-300 hover:shadow-orange-500/25 hover:scale-105"
+                className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-lg bg-[#FF7400] px-5 py-2 text-sm font-medium text-white shadow-md transition-all duration-300 hover:shadow-orange-500/25"
               >
                 <span className="relative z-10">Registrarse</span>
                 {/* Efecto de brillo sutil en hover */}
