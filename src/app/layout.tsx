@@ -67,7 +67,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${outfit.variable} antialiased min-h-screen flex flex-col`}
+        className={`${outfit.variable} antialiased min-h-screen bg-gray-50 flex flex-col`}
       >
         <Providers>
           <main className="bg-gray-50 flex-1">{children}</main>
