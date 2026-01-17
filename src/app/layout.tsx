@@ -70,7 +70,7 @@ export default function RootLayout({
         className={`${outfit.variable} antialiased min-h-screen flex flex-col`}
       >
         <Providers>
-          <main className="flex-1">{children}</main>
+          <main className="bg-gray-50 flex-1">{children}</main>
           <Footer />
         </Providers>
       </body>
