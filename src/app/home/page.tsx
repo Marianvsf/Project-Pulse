@@ -61,7 +61,7 @@ export default function HomePage() {
             Gestión de proyectos v1.0
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100 leading-[1.1]">
+          <h1 className="text-6xl font-extrabold tracking-tight mb-6 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100 leading-[1.1]">
             La gestión de tus proyectos, <br className="hidden md:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 via-white to-blue-200">
               simplificada y centralizada.
