@@ -515,7 +515,128 @@ export default function HomePage() {
             </div>
           </div>
         </div>
+
+        <section className="py-24 bg-slate-50 border-t border-slate-100">
+          <div className="max-w-4xl mx-auto px-6">
+
+            {/* Encabezado de la Sección */}
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center px-3 py-1 mb-4 rounded-full border border-blue-100 bg-blue-50 text-blue-700 text-sm font-medium">
+                Soporte
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+                Preguntas Frecuentes
+              </h2>
+            </div>
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+              ¿Tienes dudas sobre Project Pulse? Aquí respondemos las preguntas más comunes para ayudarte a empezar.
+            </p>
+          </div>
+
+          {/* Contenedor del Acordeón */}
+          <div className="space-y-4">
+
+            {/* Pregunta 1 */}
+            <details className="group border border-slate-200 bg-white rounded-xl shadow-sm overflow-hidden [&_summary::-webkit-details-marker]:hidden">
+              <summary className="flex items-center justify-between gap-4 p-6 cursor-pointer bg-white transition-colors hover:bg-slate-50">
+                <h3 className="text-lg font-semibold text-slate-900">
+                  ¿Es realmente gratuito el plan Starter?
+                </h3>
+                {/* Icono de flecha que rota */}
+                <span className="shrink-0 rounded-full bg-slate-100 p-1.5 text-slate-900 transition-transform duration-300 group-open:-rotate-180">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-5 h-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </span>
+              </summary>
+              <div className="px-6 pb-6 pt-0 text-slate-600 leading-relaxed border-t border-slate-100 bg-slate-50/50">
+                <p>
+                  ¡Sí, totalmente! El plan Starter es gratis para siempre. Está diseñado para estudiantes, freelancers o cualquier persona que esté empezando y necesite organizar hasta 3 proyectos personales sin costo alguno. No solicitamos tarjeta de crédito para este plan.
+                </p>
+              </div>
+            </details>
+
+            {/* Pregunta 2 */}
+            <details className="group border border-slate-200 bg-white rounded-xl shadow-sm overflow-hidden [&_summary::-webkit-details-marker]:hidden">
+              <summary className="flex items-center justify-between gap-4 p-6 cursor-pointer bg-white transition-colors hover:bg-slate-50">
+                <h3 className="text-lg font-semibold text-slate-900">
+                  ¿Puedo cambiar de plan más adelante?
+                </h3>
+                <span className="shrink-0 rounded-full bg-slate-100 p-1.5 text-slate-900 transition-transform duration-300 group-open:-rotate-180">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </span>
+              </summary>
+              <div className="px-6 pb-6 pt-0 text-slate-600 leading-relaxed border-t border-slate-100 bg-slate-50/50">
+                <p>
+                  Por supuesto. Puedes subir o bajar de plan en cualquier momento desde la configuración de tu cuenta. Si subes al plan Pro Team, el cambio es inmediato. Si decides bajar de plan, el cambio se aplicará al final de tu ciclo de facturación actual.
+                </p>
+              </div>
+            </details>
+
+            {/* Pregunta 3 */}
+            <details className="group border border-slate-200 bg-white rounded-xl shadow-sm overflow-hidden [&_summary::-webkit-details-marker]:hidden" open>
+              {/* 'open' hace que esta pregunta esté expandida por defecto */}
+              <summary className="flex items-center justify-between gap-4 p-6 cursor-pointer bg-white transition-colors hover:bg-slate-50">
+                <h3 className="text-lg font-semibold text-slate-900">
+                  ¿Qué tan seguros están mis datos en Project Pulse?
+                </h3>
+                <span className="shrink-0 rounded-full bg-slate-100 p-1.5 text-slate-900 transition-transform duration-300 group-open:-rotate-180">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </span>
+              </summary>
+              <div className="px-6 pb-6 pt-0 text-slate-600 leading-relaxed border-t border-slate-100 bg-slate-50/50">
+                <p>
+                  La seguridad es nuestra máxima prioridad. Utilizamos encriptación SSL/TLS de extremo a extremo para todas tus transferencias de datos. Además, tus datos se almacenan en servidores seguros con copias de seguridad automáticas diarias. Cumplimos con los estándares principales de protección de datos.
+                </p>
+              </div>
+            </details>
+
+            {/* Pregunta 4 */}
+            <details className="group border border-slate-200 bg-white rounded-xl shadow-sm overflow-hidden [&_summary::-webkit-details-marker]:hidden">
+              <summary className="flex items-center justify-between gap-4 p-6 cursor-pointer bg-white transition-colors hover:bg-slate-50">
+                <h3 className="text-lg font-semibold text-slate-900">
+                  ¿Ofrecen descuentos para estudiantes?
+                </h3>
+                <span className="shrink-0 rounded-full bg-slate-100 p-1.5 text-slate-900 transition-transform duration-300 group-open:-rotate-180">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </span>
+              </summary>
+              <div className="px-6 pb-6 pt-0 text-slate-600 leading-relaxed border-t border-slate-100 bg-slate-50/50">
+                <p>
+                  ¡Sí! Aunque el plan Starter es gratuito, ofrecemos descuentos especiales en el plan Pro Team para estudiantes y organizaciones sin fines de lucro. Por favor, contáctanos desde tu correo institucional para darte más información.
+                </p>
+              </div>
+            </details>
+
+          </div>
+
+          {/* Llamado a la acción inferior (Opcional, muy útil) */}
+          <div className="mt-16 text-center bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
+            <p className="text-slate-700 font-medium mb-4">
+              ¿Aún tienes preguntas sin responder?
+            </p>
+            <button className="px-6 py-2.5 rounded-lg border border-slate-200 text-sm font-semibold text-slate-800 hover:bg-slate-50 transition-colors">
+              Contactar a Soporte
+            </button>
+          </div>
+        </section>
+
       </main>
-    </div>
+    </div >
   );
 }
