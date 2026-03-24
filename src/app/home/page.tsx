@@ -7,11 +7,7 @@ import { useEffect, useState } from "react";
 
 export default function HomePage() {
   const router = useRouter();
-  const goToLogin = () => router.push("/login");
-  const goToRegistration = () => router.push("/register");
-
   const [currentSlide, setCurrentSlide] = useState<number>(0);
-
   const images = ["/assets/fot1.jpg", "/assets/fot2.jpg", "/assets/fot3.jpg"];
 
   useEffect(() => {
@@ -21,623 +17,226 @@ export default function HomePage() {
     return () => clearInterval(interval);
   }, [images.length]);
 
-  const handlePrev = () =>
-    setCurrentSlide((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  const handleNext = () =>
-    setCurrentSlide((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-
   return (
-    <div className="relative min-h-screen bg-white">
-      {/* 1. NAVBAR (Con z-index alto para estar siempre visible) */}
+    <div className="relative min-h-screen bg-white font-sans antialiased text-slate-900">
       <div className="relative z-50">
         <Navbar />
       </div>
-      <header className="relative w-full h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 w-full h-full z-0">
+
+      {/* --- HERO SECTION --- */}
+      <header className="relative w-full h-[90vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
           {images.map((image, index) => (
             <div
               key={index}
               className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentSlide ? "opacity-100" : "opacity-0"
                 }`}
             >
-              <Image
-                src={image}
-                alt={`Slide ${index + 1}`}
-                fill // Ocupa todo el contenedor padre
-                className="object-cover object-center"
-                priority={index === 0} // Carga rápida para la primera
-              />
-              {/* OVERLAY: Capa negra semitransparente para que el texto blanco se lea perfecto */}
-              <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px]" />
+              <Image src={image} alt="Hero Background" fill className="object-cover" priority={index === 0} />
+              <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-[1px]" />
             </div>
           ))}
         </div>
 
-        {/* CONTENIDO PRINCIPAL (Texto y Botones) - Ahora vive DENTRO del Header */}
-        <div className="relative z-10 w-full max-w-[980px] px-6 text-center text-white mt-16">
-          {/* Badge / Etiqueta opcional */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full border border-white/20 bg-white/10 text-white/90 text-sm font-medium backdrop-blur-sm animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div className="relative z-10 w-full max-w-4xl px-6 text-center text-white">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full border border-white/20 bg-white/10 backdrop-blur-md animate-in fade-in slide-in-from-top-4 duration-700">
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-            Gestión de proyectos v1.0
+            <span className="text-sm font-medium">Gestión de proyectos v1.0</span>
           </div>
 
-          <h1 className="text-6xl font-extrabold tracking-tight mb-6 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100 leading-[1.1]">
-            La gestión de tus proyectos, <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 via-white to-blue-200">
-              simplificada y centralizada.
+          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
+            Tus proyectos, <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-indigo-200">
+              en un solo latido.
             </span>
           </h1>
 
-          <p className="max-w-2xl mx-auto text-lg md:text-2xl text-white/80 font-medium mb-10 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-200">
-            Project-Pulse ayuda a los equipos a organizar tareas, seguir el
-            progreso y colaborar eficazmente, todo en un solo lugar.
+          <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-10 leading-relaxed">
+            Project-Pulse unifica tareas, equipos y cronogramas. La herramienta definitiva para dejar de "sobrevivir" al trabajo y empezar a liderarlo.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-300">
-            {/* Botón Secundario (Glass Effect sobre imagen) */}
-            <button
-              onClick={goToLogin}
-              className="h-[52px] w-full sm:w-[240px] text-lg font-medium rounded-xl text-white transition-all duration-300
-                                bg-white/10 border border-white/20 backdrop-blur-md hover:bg-white/20 hover:scale-105"
-            >
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <button onClick={() => router.push("/register")} className="h-14 w-full sm:w-60 bg-[#FF7400] hover:bg-[#e66900] text-white font-bold rounded-2xl transition-all hover:scale-105 shadow-lg shadow-orange-500/20">
+              Empezar Gratis
+            </button>
+            <button onClick={() => router.push("/login")} className="h-14 w-full sm:w-60 bg-white/10 border border-white/20 backdrop-blur-md text-white font-semibold rounded-2xl hover:bg-white/20 transition-all">
               Ver Demo
             </button>
-            {/* Botón Principal */}
-            <button
-              onClick={goToRegistration}
-              className="h-[52px] w-full sm:w-[240px] text-lg font-bold rounded-xl text-white transition-all duration-300 
-                                bg-[#FF7400] hover:scale-105"
-            >
-              Registrarse Gratis
-            </button>
-          </div>
-
-          {/* Controles del Slider (Opcionales, pequeños abajo) */}
-          <div className="absolute bottom-18 left-1/2 -translate-x-1/2 flex gap-2">
-            {images.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentSlide(index)}
-                className={`h-1.5 rounded-full transition-all duration-300 ${index === currentSlide ? "w-8 bg-white" : "w-2 bg-white/40"
-                  }`}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
           </div>
         </div>
-
-        {/* Flechas laterales (Sutiles) */}
-        <button
-          onClick={handlePrev}
-          className="absolute left-4 top-1/2 -translate-y-1/2 p-2 text-white/50 hover:text-white transition-colors z-20"
-        >
-          <svg
-            className="w-8 h-8"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
-        </button>
-        <button
-          onClick={handleNext}
-          className="absolute right-4 top-1/2 -translate-y-1/2 p-2 text-white/50 hover:text-white transition-colors z-20"
-        >
-          <svg
-            className="w-8 h-8"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
-        </button>
       </header>
-      {/* SECCIÓN DE CARACTERÍSTICAS */}
-      <section className="py-24 bg-white">
+
+      {/* --- BENTO GRID: FUNCIONALIDADES CLAVE --- */}
+      <section className="py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-              Todo lo que necesitas para liderar
-            </h2>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-              Deja de usar hojas de cálculo y correos dispersos. Project Pulse
-              unifica tu flujo de trabajo.
-            </p>
+            <h2 className="text-3xl md:text-5xl font-bold mb-4">Potencia tu flujo de trabajo</h2>
+            <p className="text-slate-600">Diseñado para la velocidad, construido para la colaboración.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Card 1 */}
-            <div className="p-8 rounded-2xl bg-slate-50 border border-slate-200 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-              <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
-                <svg
-                  className="w-6 h-6 text-blue-600"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
-                  />
-                </svg>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="md:col-span-2 bg-white p-10 rounded-[2rem] border border-slate-200 shadow-sm flex flex-col justify-between overflow-hidden relative group">
+              <div>
+                <h3 className="text-2xl font-bold mb-2">Panel de Control Intuitivo</h3>
+                <p className="text-slate-500 max-w-sm">Visualiza el progreso de tu equipo con métricas en tiempo real y dashboards personalizados.</p>
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3">
-                Organización Visual
-              </h3>
-              <p className="text-slate-600 leading-relaxed">
-                Tableros Kanban, listas y cronogramas. Visualiza el estado de
-                cada tarea al instante y sin esfuerzo.
-              </p>
+              <div className="mt-12 bg-slate-100 rounded-xl border border-slate-200 h-48 w-full group-hover:translate-y-2 transition-transform duration-500 shadow-inner" />
             </div>
 
-            {/* Card 2 */}
-            <div className="p-8 rounded-2xl bg-slate-50 border border-slate-200 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-              <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mb-6">
-                <svg
-                  className="w-6 h-6 text-orange-600"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 10V3L4 14h7v7l9-11h-7z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3">
-                Automatización Real
-              </h3>
-              <p className="text-slate-600 leading-relaxed">
-                Olvídate de las tareas repetitivas. Configura recordatorios y
-                flujos de trabajo automáticos.
-              </p>
+            <div className="bg-blue-600 rounded-[2rem] p-10 text-white shadow-xl flex flex-col items-center justify-center text-center">
+              <span className="text-6xl font-black mb-4 tracking-tighter">10x</span>
+              <p className="text-blue-100 font-medium">Aceleración en la entrega de tareas repetitivas mediante IA.</p>
             </div>
 
-            {/* Card 3 */}
-            <div className="p-8 rounded-2xl bg-slate-50 border border-slate-200 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-              <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-6">
-                <svg
-                  className="w-6 h-6 text-green-600"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                  />
-                </svg>
+            <div className="bg-white p-10 rounded-[2rem] border border-slate-200 shadow-sm">
+              <div className="w-12 h-12 bg-orange-100 rounded-2xl flex items-center justify-center mb-6 text-orange-600">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3">
-                Colaboración en vivo
-              </h3>
-              <p className="text-slate-600 leading-relaxed">
-                Comentarios, menciones y adjuntos en tiempo real. Mantén a tu
-                equipo sincronizado siempre.
-              </p>
+              <h3 className="text-xl font-bold mb-3">Automatización</h3>
+              <p className="text-slate-600 leading-relaxed text-sm">Configura flujos de trabajo que se ejecutan solos mientras te enfocas en lo importante.</p>
+            </div>
+
+            <div className="md:col-span-2 bg-slate-900 rounded-[2rem] p-10 text-white flex flex-col md:flex-row items-center gap-8 border border-slate-800">
+              <div className="flex-1">
+                <h3 className="text-2xl font-bold mb-3">Colaboración Total</h3>
+                <p className="text-slate-400">Menciones, hilos de comentarios y edición de documentos en vivo. Sin salir de la plataforma.</p>
+              </div>
+              <div className="flex -space-x-4">
+                {[1, 2, 3, 4].map(i => <div key={i} className="w-12 h-12 rounded-full border-4 border-slate-900 bg-slate-700 flex items-center justify-center text-xs">U{i}</div>)}
+              </div>
             </div>
           </div>
         </div>
       </section>
-      {/* {/* SECCIÓN BENTO GRID *
-            <section className="py-20 bg-slate-50">
-                <div className="max-w-7xl mx-auto px-6">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-                        {/* Bloque Grande (Izquierda) *
-                        <div className="md:col-span-2 bg-white rounded-3xl p-8 border border-slate-200 shadow-sm flex flex-col justify-between overflow-hidden relative group">
-                            <div className="relative z-10">
-                                <h3 className="text-2xl font-bold text-slate-900 mb-2">Panel de Control Intuitivo</h3>
-                                <p className="text-slate-500">Todo lo importante, en una sola vista.</p>
-                            </div>
-                            {/* Mockup visual abstracto *
-                            <div className="mt-8 bg-slate-100 rounded-tl-xl border border-slate-200 h-64 w-full shadow-inner group-hover:scale-105 transition-transform duration-500 origin-bottom-right"></div>
-                        </div>
-
-                        {/* Bloque Pequeño (Derecha Arriba) 
-                        <div className="bg-blue-600 rounded-3xl p-8 text-white shadow-lg flex flex-col justify-center items-center text-center">
-                            <h3 className="text-5xl font-extrabold mb-2">10x</h3>
-                            <p className="text-blue-100 font-medium">Más productividad en equipos remotos.</p>
-                        </div>
-
-                        {/* Bloque Pequeño (Derecha Abajo) 
-                        <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
-                            <div className="flex items-center gap-4 mb-4">
-                                <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-bold">✓</div>
-                                <div>
-                                    <h4 className="font-bold text-slate-900">Tareas al día</h4>
-                                    <p className="text-xs text-slate-500">Sin retrasos</p>
-                                </div>
-                            </div>
-                            <div className="flex items-center gap-4">
-                                <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold">⚡</div>
-                                <div>
-                                    <h4 className="font-bold text-slate-900">Reportes</h4>
-                                    <p className="text-xs text-slate-500">Automáticos</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>*/}
-      {/* SECCIÓN DE PRECIOS */}
-      <section className="py-12 bg-white border-t border-slate-100">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold text-slate-900 mb-12">
-            Planes flexibles para cada etapa
-          </h2>
-
-          <div className="flex flex-col md:flex-row justify-center gap-8">
-            {/* Plan Gratuito */}
-            <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm w-full md:w-80 hover:border-blue-300 transition-colors">
-              <h3 className="text-xl font-bold text-slate-900">Starter</h3>
-              <p className="text-slate-500 text-sm mt-2">
-                Para estudiantes y hobby
-              </p>
-              <div className="my-6">
-                <span className="text-4xl font-extrabold text-slate-900">
-                  $0
-                </span>
-                <span className="text-slate-500">/mes</span>
-              </div>
-              <ul className="text-left space-y-3 mb-8 text-slate-600 text-sm">
-                <li className="flex items-center gap-2">✓ Hasta 3 proyectos</li>
-                <li className="flex items-center gap-2">✓ 1 usuario</li>
-                <li className="flex items-center gap-2">
-                  ✓ Historial de 7 días
-                </li>
+      {/* --- SECCIÓN COMPARATIVA: ANTES Y DESPUÉS --- */}
+      <section className="py-24 bg-white">
+        <div className="max-w-5xl mx-auto px-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">¿Por qué cambiar a Project Pulse?</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-0 rounded-[2.5rem] overflow-hidden border border-slate-200 shadow-2xl">
+            <div className="bg-slate-50 p-12">
+              <h3 className="text-red-600 font-bold mb-8 flex items-center gap-2 uppercase tracking-widest text-sm">
+                <span className="text-xl">✕</span> El Caos Actual
+              </h3>
+              <ul className="space-y-6 text-slate-500">
+                <li className="flex gap-4"><span>•</span> "Busca en el hilo de Slack de hace 3 días"</li>
+                <li className="flex gap-4"><span>•</span> Excel desactualizados con versiones V3_FINAL_2</li>
+                <li className="flex gap-4"><span>•</span> Reuniones de 1 hora solo para saber qué falta</li>
               </ul>
-              <button className="w-full py-3 rounded-xl border border-slate-200 font-semibold text-slate-700 hover:bg-slate-50 transition-colors">
-                Empezar Gratis
-              </button>
             </div>
-
-            {/* Plan Pro (Destacado) */}
-            <div className="bg-slate-900 p-8 rounded-2xl border border-slate-900 shadow-xl w-full md:w-80 relative overflow-hidden">
-              <div className="absolute top-0 right-0 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
-                POPULAR
-              </div>
-              <h3 className="text-xl font-bold text-white">Pro Team</h3>
-              <p className="text-slate-400 text-sm mt-2">Para equipos ágiles</p>
-              <div className="my-6">
-                <span className="text-4xl font-extrabold text-white">$15</span>
-                <span className="text-slate-400">/mes</span>
-              </div>
-              <ul className="text-left space-y-3 mb-8 text-slate-300 text-sm">
-                <li className="flex items-center gap-2 text-white">
-                  ✓ Proyectos ilimitados
-                </li>
-                <li className="flex items-center gap-2 text-white">
-                  ✓ Hasta 10 usuarios
-                </li>
-                <li className="flex items-center gap-2 text-white">
-                  ✓ Analíticas avanzadas
-                </li>
+            <div className="bg-blue-600 p-12 text-white">
+              <h3 className="text-blue-200 font-bold mb-8 flex items-center gap-2 uppercase tracking-widest text-sm">
+                <span className="text-xl">✓</span> Con Project Pulse
+              </h3>
+              <ul className="space-y-6 text-blue-50">
+                <li className="flex gap-4"><span className="text-blue-300">★</span> Una sola fuente de verdad para todos</li>
+                <li className="flex gap-4"><span className="text-blue-300">★</span> Notificaciones que sí importan</li>
+                <li className="flex gap-4"><span className="text-blue-300">★</span> Claridad absoluta en el "Quién" y "Cuándo"</li>
               </ul>
-              <button className="group relative w-full overflow-hidden py-3 rounded-xl bg-blue-600 text-white font-bold">
-                <span className="relative z-10">Prueba 14 días</span>
-                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-0 bg-white/20 transition-transform duration-500 ease-out" />
-              </button>
             </div>
           </div>
         </div>
       </section>
-      <main className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
-            ¿Por qué elegir Project Pulse?
-          </h2>
-        </div>
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto px-6">
-          <div className="bg-red-50 p-8 rounded-2xl border border-red-100">
-            <h3 className="text-xl font-bold text-red-800 mb-6 flex items-center gap-2">
-              <span className="text-2xl">❌</span> Sin Project Pulse
-            </h3>
-            <ul className="space-y-4 text-red-700/80 text-left">
-              <li className="flex gap-3">
-                <svg
-                  className="w-6 h-6 shrink-0"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-                Información dispersa en emails y chats.
-              </li>
-              <li className="flex gap-3">
-                <svg
-                  className="w-6 h-6 shrink-0"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-                Fechas de entrega olvidadas constantemente.
-              </li>
-              <li className="flex gap-3">
-                <svg
-                  className="w-6 h-6 shrink-0"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-                Nadie sabe quién está haciendo qué.
-              </li>
-            </ul>
-          </div>
-          <div className="bg-blue-50 p-8 rounded-2xl border border-blue-100 shadow-lg relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-20 h-20 bg-blue-200 blur-2xl rounded-full -mr-10 -mt-10"></div>
-            <h3 className="text-xl font-bold text-blue-900 mb-6 flex items-center gap-2 relative z-10">
-              <span className="text-2xl">✅</span> Con Project Pulse
-            </h3>
-            <ul className="space-y-4 text-blue-800/80 relative z-10 text-left">
-              <li className="flex gap-3 font-medium">
-                <svg
-                  className="w-6 h-6 text-blue-600 shrink-0"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                Todo centralizado en un solo dashboard.
-              </li>
-              <li className="flex gap-3 font-medium">
-                <svg
-                  className="w-6 h-6 text-blue-600 shrink-0"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                Alertas automáticas antes de vencer plazos.
-              </li>
-              <li className="flex gap-3 font-medium">
-                <svg
-                  className="w-6 h-6 text-blue-600 shrink-0"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                Claridad total en roles y responsabilidades.
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div className="text-center mt-20 max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 border-y border-slate-100 py-12">
+
+      {/* --- SOCIAL PROOF / STATS --- */}
+      <section className="py-16 border-y border-slate-100">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
-              <p className="text-4xl md:text-5xl font-extrabold text-blue-600 mb-2">
-                30%
-              </p>
-              <p className="text-slate-600 font-medium">Más productividad</p>
+              <p className="text-4xl font-black text-blue-600">+30%</p>
+              <p className="text-slate-500 text-sm font-medium mt-1">Eficiencia de equipo</p>
             </div>
             <div>
-              <p className="text-4xl md:text-5xl font-extrabold text-blue-600 mb-2">
-                10k+
-              </p>
-              <p className="text-slate-600 font-medium">Tareas completadas</p>
+              <p className="text-4xl font-black text-blue-600">10k+</p>
+              <p className="text-slate-500 text-sm font-medium mt-1">Proyectos activos</p>
             </div>
             <div>
-              <p className="text-4xl md:text-5xl font-extrabold text-blue-600 mb-2">
-                2h
-              </p>
-              <p className="text-slate-600 font-medium">Ahorradas al día</p>
+              <p className="text-4xl font-black text-blue-600">24/7</p>
+              <p className="text-slate-500 text-sm font-medium mt-1">Soporte Premium</p>
             </div>
             <div>
-              <p className="text-4xl md:text-5xl font-extrabold text-blue-600 mb-2">
-                4.9/5
-              </p>
-              <p className="text-slate-600 font-medium">Valoración usuarios</p>
+              <p className="text-4xl font-black text-blue-600">4.9/5</p>
+              <p className="text-slate-500 text-sm font-medium mt-1">User Rating</p>
             </div>
           </div>
         </div>
-        <div className="mt-24 mb-10 w-full max-w-5xl mx-auto px-6">
-          <div className="bg-slate-900 rounded-3xl p-10 md:p-16 text-center relative overflow-hidden group">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-900 to-slate-900 z-0"></div>
-            <div className="absolute top-0 left-0 w-64 h-64 bg-blue-500/20 blur-[100px] rounded-full pointer-events-none"></div>
-            <div className="absolute bottom-0 right-0 w-64 h-64 bg-orange-500/10 blur-[100px] rounded-full pointer-events-none"></div>
+      </section>
 
-            <div className="relative z-10">
-              <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-                ¿Listo para organizar tu trabajo?
-              </h2>
-              <p className="text-slate-300 text-lg md:text-xl max-w-2xl mx-auto mb-10">
-                Únete a los estudiantes y profesionales que ya están gestionando
-                sus proyectos de forma inteligente.
-              </p>
-              <button
-                onClick={goToRegistration}
-                className="h-[52px] w-full sm:w-[240px] text-lg font-bold rounded-xl text-white transition-all duration-300 
-                                bg-[#FF7400] hover:scale-105"
-              >
-                Comenzar Gratis Ahora
-              </button>
-              <p className="mt-4 text-sm text-slate-500">
-                No se requiere tarjeta de crédito
-              </p>
+      {/* --- PRECIOS --- */}
+      <section className="py-24 bg-slate-50">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-4xl font-bold mb-16">Planes para todos los tamaños</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Starter */}
+            <div className="bg-white p-10 rounded-[2rem] border border-slate-200 hover:shadow-xl transition-all">
+              <h3 className="text-xl font-bold">Starter</h3>
+              <p className="text-slate-500 text-sm mb-6">Gratis para siempre</p>
+              <div className="text-4xl font-black mb-8">$0</div>
+              <ul className="text-left space-y-4 mb-10 text-slate-600">
+                <li className="flex items-center gap-3"><span className="text-green-500">✓</span> Hasta 3 proyectos</li>
+                <li className="flex items-center gap-3"><span className="text-green-500">✓</span> Tareas ilimitadas</li>
+                <li className="flex items-center gap-3"><span className="text-green-500">✓</span> App móvil</li>
+              </ul>
+              <button className="w-full py-4 rounded-xl border-2 border-slate-100 font-bold hover:bg-slate-50 transition-all">Empezar ya</button>
+            </div>
+
+            {/* Pro */}
+            <div className="bg-slate-900 p-10 rounded-[2rem] text-white shadow-2xl relative">
+              <div className="absolute top-6 right-6 bg-orange-500 text-[10px] font-bold px-2 py-1 rounded-full uppercase">Recomendado</div>
+              <h3 className="text-xl font-bold">Pro Team</h3>
+              <p className="text-slate-400 text-sm mb-6">Para equipos en crecimiento</p>
+              <div className="text-4xl font-black mb-8">$15<span className="text-lg text-slate-500">/mes</span></div>
+              <ul className="text-left space-y-4 mb-10 text-slate-300">
+                <li className="flex items-center gap-3"><span className="text-blue-400">✓</span> Proyectos ilimitados</li>
+                <li className="flex items-center gap-3"><span className="text-blue-400">✓</span> Dashboards avanzados</li>
+                <li className="flex items-center gap-3"><span className="text-blue-400">✓</span> Soporte prioritario</li>
+              </ul>
+              <button className="w-full py-4 rounded-xl bg-blue-600 font-bold hover:bg-blue-500 transition-all shadow-lg shadow-blue-600/30">Prueba de 14 días</button>
             </div>
           </div>
         </div>
+      </section>
 
-        <section className="py-24 p-g  m-auto bg-slate-50 border-t border-slate-100">
-          <div className="max-w-4xl mx-auto px-6">
-            <div className="max-w-4xl mx-auto px-6">
+      {/* --- FAQ SECTION (Simplificada) --- */}
+      <section className="py-24 bg-white">
+        <div className="max-w-3xl mx-auto px-6">
+          <h2 className="text-3xl font-bold text-center mb-12">Preguntas Frecuentes</h2>
+          <div className="divide-y divide-slate-100">
+            <details className="group py-6">
+              <summary className="flex justify-between items-center font-bold cursor-pointer list-none">
+                ¿Cómo funciona la seguridad?
+                <span className="group-open:rotate-180 transition-transform">↓</span>
+              </summary>
+              <p className="mt-4 text-slate-600 leading-relaxed">Encriptación de grado bancario y backups diarios automáticos para que nunca pierdas nada.</p>
+            </details>
+            <details className="group py-6">
+              <summary className="flex justify-between items-center font-bold cursor-pointer list-none">
+                ¿Puedo cancelar en cualquier momento?
+                <span className="group-open:rotate-180 transition-transform">↓</span>
+              </summary>
+              <p className="mt-4 text-slate-600 leading-relaxed">Sí, sin contratos ni letras pequeñas. Te vas cuando quieras (aunque no querrás).</p>
+            </details>
+          </div>
+        </div>
+      </section>
 
-              {/* Encabezado de la Sección */}
-              <div className="text-center mb-16">
-                <div className="inline-flex items-center px-3 py-1 mb-4 rounded-full border border-blue-100 bg-blue-50 text-blue-700 text-sm font-medium">
-                  Soporte
-                </div>
-                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-                  Preguntas Frecuentes
-                </h2>
-              </div>
-              <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-                ¿Tienes dudas sobre Project Pulse? Aquí respondemos las preguntas más comunes para ayudarte a empezar.
-              </p>
-            </div>
+      {/* --- FINAL CTA --- */}
+      <section className="py-20 px-6">
+        <div className="max-w-5xl mx-auto bg-gradient-to-br from-slate-900 to-blue-900 rounded-[3rem] p-12 text-center text-white relative overflow-hidden">
+          <div className="relative z-10">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6">Eleva el ritmo de tu equipo</h2>
+            <p className="text-blue-100/70 mb-10 max-w-xl mx-auto text-lg">Únete a miles de profesionales que ya han recuperado su tiempo.</p>
+            <button onClick={() => router.push("/register")} className="bg-[#FF7400] text-white px-10 py-4 rounded-2xl font-black text-lg hover:scale-105 transition-all">
+              Crear mi cuenta gratis
+            </button>
+          </div>
+        </div>
+      </section>
 
-            {/* Contenedor del Acordeón */}
-            <div className="space-y-4">
-
-              {/* Pregunta 1 */}
-              <details className="group border border-slate-200 bg-white rounded-xl shadow-sm overflow-hidden [&_summary::-webkit-details-marker]:hidden">
-                <summary className="flex items-center justify-between gap-4 p-6 cursor-pointer bg-white transition-colors hover:bg-slate-50">
-                  <h3 className="text-lg font-semibold text-slate-900">
-                    ¿Es realmente gratuito el plan Starter?
-                  </h3>
-                  {/* Icono de flecha que rota */}
-                  <span className="shrink-0 rounded-full bg-slate-100 p-1.5 text-slate-900 transition-transform duration-300 group-open:-rotate-180">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-5 h-5"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </span>
-                </summary>
-                <div className="px-6 pb-6 pt-0 text-slate-600 leading-relaxed border-t border-slate-100 bg-slate-50/50">
-                  <p>
-                    ¡Sí, totalmente! El plan Starter es gratis para siempre. Está diseñado para estudiantes, freelancers o cualquier persona que esté empezando y necesite organizar hasta 3 proyectos personales sin costo alguno. No solicitamos tarjeta de crédito para este plan.
-                  </p>
-                </div>
-              </details>
-
-              {/* Pregunta 2 */}
-              <details className="group border border-slate-200 bg-white rounded-xl shadow-sm overflow-hidden [&_summary::-webkit-details-marker]:hidden">
-                <summary className="flex items-center justify-between gap-4 p-6 cursor-pointer bg-white transition-colors hover:bg-slate-50">
-                  <h3 className="text-lg font-semibold text-slate-900">
-                    ¿Puedo cambiar de plan más adelante?
-                  </h3>
-                  <span className="shrink-0 rounded-full bg-slate-100 p-1.5 text-slate-900 transition-transform duration-300 group-open:-rotate-180">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                    </svg>
-                  </span>
-                </summary>
-                <div className="px-6 pb-6 pt-0 text-slate-600 leading-relaxed border-t border-slate-100 bg-slate-50/50">
-                  <p>
-                    Por supuesto. Puedes subir o bajar de plan en cualquier momento desde la configuración de tu cuenta. Si subes al plan Pro Team, el cambio es inmediato. Si decides bajar de plan, el cambio se aplicará al final de tu ciclo de facturación actual.
-                  </p>
-                </div>
-              </details>
-
-              {/* Pregunta 3 */}
-              <details className="group border border-slate-200 bg-white rounded-xl shadow-sm overflow-hidden [&_summary::-webkit-details-marker]:hidden" open>
-                {/* 'open' hace que esta pregunta esté expandida por defecto */}
-                <summary className="flex items-center justify-between gap-4 p-6 cursor-pointer bg-white transition-colors hover:bg-slate-50">
-                  <h3 className="text-lg font-semibold text-slate-900">
-                    ¿Qué tan seguros están mis datos en Project Pulse?
-                  </h3>
-                  <span className="shrink-0 rounded-full bg-slate-100 p-1.5 text-slate-900 transition-transform duration-300 group-open:-rotate-180">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                    </svg>
-                  </span>
-                </summary>
-                <div className="px-6 pb-6 pt-0 text-slate-600 leading-relaxed border-t border-slate-100 bg-slate-50/50">
-                  <p>
-                    La seguridad es nuestra máxima prioridad. Utilizamos encriptación SSL/TLS de extremo a extremo para todas tus transferencias de datos. Además, tus datos se almacenan en servidores seguros con copias de seguridad automáticas diarias. Cumplimos con los estándares principales de protección de datos.
-                  </p>
-                </div>
-              </details>
-
-              {/* Pregunta 4 */}
-              <details className="group border border-slate-200 bg-white rounded-xl shadow-sm overflow-hidden [&_summary::-webkit-details-marker]:hidden">
-                <summary className="flex items-center justify-between gap-4 p-6 cursor-pointer bg-white transition-colors hover:bg-slate-50">
-                  <h3 className="text-lg font-semibold text-slate-900">
-                    ¿Ofrecen descuentos para estudiantes?
-                  </h3>
-                  <span className="shrink-0 rounded-full bg-slate-100 p-1.5 text-slate-900 transition-transform duration-300 group-open:-rotate-180">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                    </svg>
-                  </span>
-                </summary>
-                <div className="px-6 pb-6 pt-0 text-slate-600 leading-relaxed border-t border-slate-100 bg-slate-50/50">
-                  <p>
-                    ¡Sí! Aunque el plan Starter es gratuito, ofrecemos descuentos especiales en el plan Pro Team para estudiantes y organizaciones sin fines de lucro. Por favor, contáctanos desde tu correo institucional para darte más información.
-                  </p>
-                </div>
-              </details>
-
-            </div>
-
-            {/* Llamado a la acción inferior (Opcional, muy útil) */}
-            <div className="mt-16 text-center bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
-              <p className="text-slate-700 font-medium mb-4">
-                ¿Aún tienes preguntas sin responder?
-              </p>
-              <button className="px-6 py-2.5 rounded-lg border border-slate-200 text-sm font-semibold text-slate-800 hover:bg-slate-50 transition-colors">
-                Contactar a Soporte
-              </button>
-            </div>
-          </div >
-        </section>
-      </main >
-    </div >
+      {/* Footer simple */}
+      <footer className="py-12 border-t border-slate-100 text-center text-slate-400 text-sm">
+        © 2026 Project Pulse. Todos los derechos reservados.
+      </footer>
+    </div>
   );
 }
