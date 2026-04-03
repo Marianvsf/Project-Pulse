@@ -10,21 +10,29 @@ export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const images = ["/assets/fot1.jpg", "/assets/fot2.jpg", "/assets/fot3.jpg"];
 
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev === images.length - 1 ? 0 : prev + 1));
     }, 5000);
     return () => clearInterval(interval);
-  }, [images.length]);
+  }, [images.length, currentSlide]);
 
   return (
-    <div className="relative min-h-screen bg-white font-sans antialiased text-slate-900">
+    <div className="relative bg-white font-sans antialiased text-slate-900">
       <div className="relative z-50">
         <Navbar />
       </div>
 
       {/* --- HERO SECTION --- */}
-      <header className="relative w-full h-[90vh] flex items-center justify-center overflow-hidden">
+      <header className="relative w-full h-[100vh] flex items-center justify-center overflow-hidden group">
         <div className="absolute inset-0 z-0">
           {images.map((image, index) => (
             <div
@@ -35,6 +43,35 @@ export default function HomePage() {
               <Image src={image} alt="Hero Background" fill className="object-cover" priority={index === 0} />
               <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-[1px]" />
             </div>
+          ))}
+        </div>
+
+        <button
+          onClick={prevSlide}
+          className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white/10 text-white opacity-0 group-hover:opacity-100 hover:bg-white/30 transition-all backdrop-blur-sm border border-white/20"
+          aria-label="Imagen anterior"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+        </button>
+
+        <button
+          onClick={nextSlide}
+          className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white/10 text-white opacity-0 group-hover:opacity-100 hover:bg-white/30 transition-all backdrop-blur-sm border border-white/20"
+          aria-label="Siguiente imagen"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+        </button>
+
+        {/* Controles manuales: Puntos (Dots) */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-3">
+          {images.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              aria-label={`Ir a la imagen ${index + 1}`}
+              className={`h-2 rounded-full transition-all duration-300 ${index === currentSlide ? "w-8 bg-white" : "w-2 bg-white/50 hover:bg-white/80"
+                }`}
+            />
           ))}
         </div>
 
