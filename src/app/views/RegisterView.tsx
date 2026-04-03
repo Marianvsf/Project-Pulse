@@ -10,6 +10,8 @@ export default function RegisterView() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
@@ -118,25 +120,45 @@ export default function RegisterView() {
                                 <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                                     <div>
                                         <label className="block text-sm font-semibold text-gray-700 mb-1.5 ml-1">Contraseña</label>
-                                        <input
-                                            type="password"
-                                            placeholder="••••••••"
-                                            value={password}
-                                            onChange={(e) => setPassword(e.target.value)}
-                                            className="w-full h-[50px] px-4 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#FF7400] focus:ring-1 focus:ring-[#FF7400] transition-all"
-                                            required
-                                        />
+                                        <div className="relative">
+                                            <input
+                                                type={showPassword ? "text" : "password"}
+                                                placeholder="••••••••"
+                                                value={password}
+                                                onChange={(e) => setPassword(e.target.value)}
+                                                className="w-full h-[50px] px-4 pr-20 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#FF7400] focus:ring-1 focus:ring-[#FF7400] transition-all"
+                                                required
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={() => setShowPassword((prev) => !prev)}
+                                                className="absolute inset-y-0 right-0 px-4 text-sm font-medium text-[#FF7400] hover:text-[#e06500]"
+                                                aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                                            >
+                                                {showPassword ? "Ocultar" : "Mostrar"}
+                                            </button>
+                                        </div>
                                     </div>
                                     <div>
                                         <label className="block text-sm font-semibold text-gray-700 mb-1.5 ml-1">Confirmar</label>
-                                        <input
-                                            type="password"
-                                            placeholder="••••••••"
-                                            value={confirmPassword}
-                                            onChange={(e) => setConfirmPassword(e.target.value)}
-                                            className="w-full h-[50px] px-4 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#FF7400] focus:ring-1 focus:ring-[#FF7400] transition-all"
-                                            required
-                                        />
+                                        <div className="relative">
+                                            <input
+                                                type={showConfirmPassword ? "text" : "password"}
+                                                placeholder="••••••••"
+                                                value={confirmPassword}
+                                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                                className="w-full h-[50px] px-4 pr-20 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#FF7400] focus:ring-1 focus:ring-[#FF7400] transition-all"
+                                                required
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={() => setShowConfirmPassword((prev) => !prev)}
+                                                className="absolute inset-y-0 right-0 px-4 text-sm font-medium text-[#FF7400] hover:text-[#e06500]"
+                                                aria-label={showConfirmPassword ? "Ocultar confirmación de contraseña" : "Mostrar confirmación de contraseña"}
+                                            >
+                                                {showConfirmPassword ? "Ocultar" : "Mostrar"}
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
 
