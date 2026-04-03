@@ -1,7 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import UserNavbar from "@/app/components/navbar/UserNavbar";
-import projects from "../../../data/projects.json";
 
 interface Project {
   id: string;
@@ -23,6 +23,64 @@ export default function ProjectDetailsPage({ params }: any) {
 }
 
 function ProjectDetailsClient({ projectId }: { projectId: string }) {
+  const [project, setProject] = useState<Project | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadProject = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const response = await fetch(`/api/projects/${projectId}`, {
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          if (response.status === 404) {
+            setError("Proyecto no encontrado.");
+            setProject(null);
+            return;
+          }
+          throw new Error("No se pudo cargar el proyecto");
+        }
+
+        const data = (await response.json()) as {
+          project: {
+            id: string;
+            nombre: string;
+            descripcion: string;
+            estado: string;
+            prioridad: string;
+            progreso: number;
+            tareas: unknown;
+            equipo: unknown;
+            fechaInicio: string;
+            fechaFin: string;
+          };
+        };
+
+        setProject({
+          ...data.project,
+          tareas: Array.isArray(data.project.tareas)
+            ? (data.project.tareas as Project["tareas"])
+            : [],
+          equipo: Array.isArray(data.project.equipo)
+            ? (data.project.equipo as string[])
+            : [],
+        });
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "No se pudo cargar el proyecto");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (projectId) {
+      void loadProject();
+    }
+  }, [projectId]);
+
   const formatDate = (s?: string) => {
     if (!s) return '';
     const d = new Date(s);
@@ -32,16 +90,35 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
     parts[1] = parts[1].charAt(0).toUpperCase() + parts[1].slice(1);
     return `${parts[0]} ${parts[1]} ${parts[2]}`;
   };
-  // Busca el proyecto con el ID de la URL
-  const project: Project | undefined = (projects as Project[]).find((p) => p.id === projectId);
-
-  if (!project) {
-    return <div>Proyecto no encontrado.</div>;
-  }
-
   const handleSearch = () => {
     // Esta función no se usará, pero es una prop obligatoria para UserNavbar
   };
+
+  if (loading) {
+    return (
+      <div className="pt-25">
+        <UserNavbar onSearch={handleSearch} showSearchAndFilter={false} />
+        <div className="container mx-auto p-8 max-w-[1200px]">
+          <div className="bg-white rounded-lg shadow-xl p-6 text-slate-600">
+            Cargando proyecto...
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !project) {
+    return (
+      <div className="pt-25">
+        <UserNavbar onSearch={handleSearch} showSearchAndFilter={false} />
+        <div className="container mx-auto p-8 max-w-[1200px]">
+          <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg shadow-sm p-6">
+            {error || "Proyecto no encontrado."}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="pt-25">

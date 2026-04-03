@@ -5,9 +5,22 @@ import { useRouter } from "next/navigation";
 import ProjectCard from "../components/ProjectCard";
 import UserNavbar from "../components/navbar/UserNavbar";
 import { useCallback, useMemo, useState, useEffect } from "react";
+import type { ChangeEvent, FormEvent } from "react";
 import Charts from "../components/Charts";
 import useProjectStore, { Project } from "../../../store/useProjectStore";
 import Image from "next/image";
+
+type NewProjectForm = {
+    nombre: string;
+    descripcion: string;
+    estado: string;
+    prioridad: string;
+    progreso: string;
+    fechaInicio: string;
+    fechaFin: string;
+    equipo: string;
+    tareas: string;
+};
 
 export default function DashboardUser() {
     const { data: session, status } = useSession();
@@ -25,6 +38,24 @@ export default function DashboardUser() {
     const statusFilter = useProjectStore((s) => s.statusFilter);
     const setSearchTerm = useProjectStore((s) => s.setSearchTerm);
     const setStatusFilter = useProjectStore((s) => s.setStatusFilter);
+    const loadProjects = useProjectStore((s) => s.loadProjects);
+    const createProject = useProjectStore((s) => s.createProject);
+    const isLoadingProjects = useProjectStore((s) => s.isLoading);
+    const projectError = useProjectStore((s) => s.error);
+    const [showCreateModal, setShowCreateModal] = useState(false);
+    const [createError, setCreateError] = useState<string | null>(null);
+    const [isCreating, setIsCreating] = useState(false);
+    const [formData, setFormData] = useState<NewProjectForm>({
+        nombre: "",
+        descripcion: "",
+        estado: "Pendiente",
+        prioridad: "Media",
+        progreso: "0",
+        fechaInicio: "",
+        fechaFin: "",
+        equipo: "",
+        tareas: "",
+    });
 
     useEffect(() => {
         const hour = new Date().getHours();
@@ -32,6 +63,10 @@ export default function DashboardUser() {
         else if (hour < 18) setGreeting("Buenas tardes");
         else setGreeting("Buenas noches");
     }, []);
+
+    useEffect(() => {
+        void loadProjects();
+    }, [loadProjects]);
 
     // Efecto para la Galería (Slider automático)
     useEffect(() => {
@@ -51,6 +86,68 @@ export default function DashboardUser() {
         setStatusFilter(filters.status);
     }, [setSearchTerm, setStatusFilter]);
 
+    const resetForm = () => {
+        setFormData({
+            nombre: "",
+            descripcion: "",
+            estado: "Pendiente",
+            prioridad: "Media",
+            progreso: "0",
+            fechaInicio: "",
+            fechaFin: "",
+            equipo: "",
+            tareas: "",
+        });
+        setCreateError(null);
+    };
+
+    const handleCreateInputChange = (
+        event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    ) => {
+        const { name, value } = event.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+    };
+
+    const handleCreateProject = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        setCreateError(null);
+        setIsCreating(true);
+        try {
+            const equipo = formData.equipo
+                .split(",")
+                .map((item) => item.trim())
+                .filter(Boolean);
+            const tareas = formData.tareas
+                .split("\n")
+                .map((item) => item.trim())
+                .filter(Boolean)
+                .map((nombre, index) => ({
+                    id: index + 1,
+                    nombre,
+                    completado: false,
+                }));
+
+            await createProject({
+                nombre: formData.nombre,
+                descripcion: formData.descripcion,
+                estado: formData.estado,
+                prioridad: formData.prioridad,
+                progreso: Number(formData.progreso) || 0,
+                fechaInicio: formData.fechaInicio,
+                fechaFin: formData.fechaFin,
+                equipo,
+                tareas,
+            });
+
+            setShowCreateModal(false);
+            resetForm();
+        } catch (error) {
+            setCreateError(error instanceof Error ? error.message : "No se pudo crear el proyecto");
+        } finally {
+            setIsCreating(false);
+        }
+    };
+
     const Allprojects = useMemo(() => {
         let filtered = projects as Project[];
         if (statusFilter) {
@@ -68,7 +165,7 @@ export default function DashboardUser() {
     const stats = useMemo(() => {
         const total = projects.length;
         const completados = projects.filter((p: Project) => p.estado === 'Completado').length;
-        const enProgreso = projects.filter((p: Project) => p.estado === 'En Progreso').length;
+        const enProgreso = projects.filter((p: Project) => p.estado === 'En Progreso' || p.estado === 'En progreso').length;
         return { total, completados, enProgreso };
     }, [projects]);
 
@@ -166,11 +263,34 @@ export default function DashboardUser() {
                         {/* LISTA DE PROYECTOS */}
                         <div>
                             <div className="mb-6">
-                                <h2 className="text-2xl font-bold text-blue-950 mb-2">Galería de Proyectos</h2>
+                                <div className="flex items-center justify-between gap-3 mb-2">
+                                    <h2 className="text-2xl font-bold text-blue-950">Galería de Proyectos</h2>
+                                    <button
+                                        onClick={() => {
+                                            resetForm();
+                                            setShowCreateModal(true);
+                                        }}
+                                        className="px-4 py-2 rounded-full bg-[#FF7400] text-white text-sm font-semibold hover:bg-[#e46800] transition-colors"
+                                    >
+                                        Nuevo proyecto
+                                    </button>
+                                </div>
                                 <p className="text-slate-600 max-w-3xl">
                                     Tus proyectos filtrados por búsqueda.
                                 </p>
                             </div>
+
+                            {projectError && (
+                                <div className="mb-4 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+                                    {projectError}
+                                </div>
+                            )}
+
+                            {isLoadingProjects && (
+                                <div className="mb-6 rounded-xl border border-blue-100 bg-blue-50 p-4 text-sm text-blue-700">
+                                    Cargando proyectos desde la base de datos...
+                                </div>
+                            )}
 
                             {Allprojects.length > 0 ? (
                                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -272,6 +392,139 @@ export default function DashboardUser() {
                 </div>
 
             </main>
+
+            {showCreateModal && (
+                <div className="fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+                    <div className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 md:p-8">
+                        <div className="flex items-start justify-between mb-6">
+                            <div>
+                                <h3 className="text-2xl font-bold text-blue-950">Crear Proyecto</h3>
+                                <p className="text-sm text-slate-500 mt-1">Este proyecto se guardará en la base de datos.</p>
+                            </div>
+                            <button
+                                onClick={() => setShowCreateModal(false)}
+                                className="text-slate-400 hover:text-slate-700 text-xl leading-none"
+                                aria-label="Cerrar"
+                            >
+                                ×
+                            </button>
+                        </div>
+
+                        <form onSubmit={handleCreateProject} className="space-y-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <input
+                                    required
+                                    name="nombre"
+                                    value={formData.nombre}
+                                    onChange={handleCreateInputChange}
+                                    placeholder="Nombre del proyecto"
+                                    className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                                />
+                                <input
+                                    name="progreso"
+                                    type="number"
+                                    min={0}
+                                    max={100}
+                                    value={formData.progreso}
+                                    onChange={handleCreateInputChange}
+                                    placeholder="Progreso (0-100)"
+                                    className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                                />
+                            </div>
+
+                            <textarea
+                                required
+                                name="descripcion"
+                                value={formData.descripcion}
+                                onChange={handleCreateInputChange}
+                                placeholder="Descripción"
+                                rows={3}
+                                className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                            />
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <select
+                                    name="estado"
+                                    value={formData.estado}
+                                    onChange={handleCreateInputChange}
+                                    className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                                >
+                                    <option value="Pendiente">Pendiente</option>
+                                    <option value="En progreso">En progreso</option>
+                                    <option value="Completado">Completado</option>
+                                </select>
+                                <select
+                                    name="prioridad"
+                                    value={formData.prioridad}
+                                    onChange={handleCreateInputChange}
+                                    className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                                >
+                                    <option value="Baja">Baja</option>
+                                    <option value="Media">Media</option>
+                                    <option value="Alta">Alta</option>
+                                </select>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <input
+                                    required
+                                    name="fechaInicio"
+                                    type="date"
+                                    value={formData.fechaInicio}
+                                    onChange={handleCreateInputChange}
+                                    className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                                />
+                                <input
+                                    required
+                                    name="fechaFin"
+                                    type="date"
+                                    value={formData.fechaFin}
+                                    onChange={handleCreateInputChange}
+                                    className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                                />
+                            </div>
+
+                            <input
+                                name="equipo"
+                                value={formData.equipo}
+                                onChange={handleCreateInputChange}
+                                placeholder="Equipo (separado por comas)"
+                                className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                            />
+
+                            <textarea
+                                name="tareas"
+                                value={formData.tareas}
+                                onChange={handleCreateInputChange}
+                                placeholder="Tareas (una por línea)"
+                                rows={4}
+                                className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                            />
+
+                            {createError && (
+                                <p className="text-sm text-red-600">{createError}</p>
+                            )}
+
+                            <div className="flex items-center justify-end gap-3 pt-2">
+                                <button
+                                    type="button"
+                                    onClick={() => setShowCreateModal(false)}
+                                    className="px-4 py-2 rounded-lg border border-gray-200 text-slate-600 hover:bg-gray-50"
+                                >
+                                    Cancelar
+                                </button>
+                                <button
+                                    type="submit"
+                                    disabled={isCreating}
+                                    className="px-4 py-2 rounded-lg bg-blue-950 text-white hover:bg-blue-900 disabled:opacity-70"
+                                >
+                                    {isCreating ? "Guardando..." : "Guardar proyecto"}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
