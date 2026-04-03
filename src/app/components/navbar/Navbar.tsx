@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { useState } from "react";
 
@@ -17,10 +18,6 @@ const Navbar = () => {
     setIsMenuOpen(false);
     router.push("/login");
   };
-  const goToHome = () => {
-    setIsMenuOpen(false);
-    router.push("/");
-  };
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -34,7 +31,7 @@ const Navbar = () => {
             */}
       <nav className="fixed top-4 inset-x-0 z-50 mx-4 lg:mx-auto max-w-7xl h-[72px] rounded-[16px] border border-white/10 bg-blue-950/50 backdrop-blur-md shadow-lg transition-all duration-300">
         <div className="flex items-center justify-between h-full px-4 lg:px-6">
-          <button onClick={goToHome} className="flex items-center gap-3 group">
+          <Link href="/" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 group">
             <div className="relative overflow-hidden rounded-full border border-white/10">
               <Image
                 width={36}
@@ -47,7 +44,7 @@ const Navbar = () => {
             <span className="text-lg font-medium tracking-tight text-white group-hover:text-gray-300 transition-colors">
               Project Pulse
             </span>
-          </button>
+          </Link>
           <div className="hidden md:flex items-center gap-6">
             {pathname !== "/login" && (
               <button

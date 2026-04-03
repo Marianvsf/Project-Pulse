@@ -65,8 +65,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
+        suppressHydrationWarning
         className={`${outfit.variable} antialiased min-h-screen bg-gray-50 flex flex-col`}
       >
         <Providers>
