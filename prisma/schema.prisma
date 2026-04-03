@@ -11,6 +11,7 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
 }
 
 model User {
@@ -19,5 +20,20 @@ model User {
   hashedPassword String   // ¡Nunca guardamos la contraseña en texto plano!
   name           String?
   createdAt      DateTime @default(now())
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  nombre      String
+  descripcion String
+  estado      String   @default("Pendiente")
+  prioridad   String   @default("Media")
+  progreso    Int      @default(0)
+  tareas      Json
+  equipo      Json
+  fechaInicio DateTime
+  fechaFin    DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
