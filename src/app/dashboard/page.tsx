@@ -169,6 +169,12 @@ export default function DashboardUser() {
         return { total, completados, enProgreso };
     }, [projects]);
 
+    useEffect(() => {
+        if (status !== "loading" && !session) {
+            router.push("/login");
+        }
+    }, [session, status, router]);
+
     if (status === 'loading') {
         return (
             <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -183,7 +189,6 @@ export default function DashboardUser() {
     }
 
     if (!session) {
-        router.push('/login');
         return null;
     }
 
@@ -420,6 +425,7 @@ export default function DashboardUser() {
                                     placeholder="Nombre del proyecto"
                                     className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
                                 />
+                                <label>Progreso</label>
                                 <input
                                     name="progreso"
                                     type="number"
