@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import React, { useState, useRef, useEffect } from "react";
 import { ChevronLeftIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 interface Filters {
     status?: string;
@@ -38,8 +38,7 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
     };
 
     const handleLogout = async () => {
-        // await logout(); 
-        router.push("/login");
+        await signOut({ callbackUrl: "/login" });
     };
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
