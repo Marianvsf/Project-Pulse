@@ -1,70 +1,63 @@
+<h1 align="center">📊 Project-Pulse</h1>
 
-# Project-Pulse - Frontend
+<p align="center">
+  <strong>Gestión de proyectos inteligente: Monitoreo en tiempo real y análisis visual.</strong>
+  <br />
+  Dashboard de alto rendimiento construido con el stack más moderno de React.
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Next.js_15-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" />
+  <img src="https://img.shields.io/badge/React_19-61DAFB?style=for-the-badge&logo=react&logoColor=black" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS_v4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" />
+  <img src="https://img.shields.io/badge/Chart.js-FF6384?style=for-the-badge&logo=chartdotjs&logoColor=white" />
+</p>
+
+---
+
 ## 🚀 Descripción General
-Project-Pulse es una aplicación web diseñada para la gestión de proyectos, con una interfaz intuitiva y minimalista que permite a los usuarios visualizar y actualizar el progreso de sus proyectos. Este proyecto fue desarrollado como una prueba técnica para demostrar habilidades en Next.js, TypeScript, y Tailwind CSS, enfocándose en la arquitectura del código, la reutilización de componentes y la responsividad.
 
-Para su funcionamiento, la aplicación utiliza datos simulados (mock data) a través de archivos JSON, lo que elimina la necesidad de una base de datos real o un backend complejo. Este enfoque es ideal para demostraciones y para un desarrollo ágil del frontend, permitiendo simular operaciones de una API REST de manera local.
+**Project-Pulse** es una plataforma de gestión de proyectos diseñada para ofrecer claridad operativa. Con un enfoque en la **arquitectura limpia** y la **interactividad fluida**, permite a los usuarios rastrear el ciclo de vida de sus tareas mediante una interfaz minimalista.
+
+Este proyecto utiliza una arquitectura de **Mock Data (JSON)**, simulando el comportamiento de una API REST de grado de producción. Es una demostración técnica de manejo de estados, visualización de datos complejos y optimización de rendimiento en el lado del cliente.
+
+---
 
 ## ✨ Características Principales
--Interfaz de Usuario (UI): Una interfaz intuitiva y fácil de usar para la gestión de proyectos.
 
--Datos simulados: La aplicación carga los datos de los proyectos desde un archivo JSON, lo que simplifica el entorno de desarrollo y elimina la necesidad de una base de datos real.
+* **📈 Dashboard Analítico:** Visualización del progreso mediante gráficos dinámicos impulsados por **Chart.js**.
+* **🔄 Gestión de Estados (CRUD):** Flujo completo para visualizar y actualizar el ciclo de vida del proyecto (*To Do*, *In Progress*, *Done*).
+* **⚡ Arquitectura Next.js 15:** Aprovechamiento de las últimas optimizaciones de renderizado y estructuración de carpetas.
+* **🏗️ Mock API System:** Simulación de persistencia de datos mediante archivos JSON, permitiendo un desarrollo desacoplado y ágil.
+* **📱 Diseño Adaptativo:** Interfaz totalmente responsiva construida con **Tailwind CSS v4** para una experiencia consistente en cualquier dispositivo.
 
--Operaciones CRUD: Los usuarios pueden realizar las siguientes operaciones sobre los proyectos:
+---
 
--Visualizar: Ver los detalles de cada proyecto.
+## 🛠️ Stack Tecnológico
 
--Seguimiento del Progreso: Un sistema de estados permite actualizar el progreso de los proyectos (por ejemplo, Por hacer, En curso, Terminado).
+| Herramienta | Versión | Función Principal |
+| :--- | :--- | :--- |
+| **Next.js** | v15.4+ | Framework SSR/Static Generation y Routing. |
+| **React** | v19.0+ | Biblioteca base para UI interactiva. |
+| **Chart.js** | v5.3+ | Motor de renderizado de gráficas de progreso. |
+| **Tailwind CSS** | v4.0 | Estilizado basado en utilidades de última generación. |
+| **TypeScript** | Latest | Tipado estático para escalabilidad del código. |
 
-Tecnologías clave:
+---
 
-Frontend: Desarrollado con React para una experiencia de usuario dinámica.
+## 📂 Arquitectura y Reutilización
 
-Mock API: Utiliza un archivo JSON como "base de datos" para simular las peticiones del backend.
+El proyecto implementa el principio **DRY** y **Separation of Concerns**:
 
-## 🛠️ Tecnologías Utilizadas
+* **UI Components:** Componentes atómicos (Botones, Inputs, Badges) aislados.
+* **Features:** Módulos lógicos por funcionalidad (Gráficos, Listados de Proyectos).
+* **Hooks/Utils:** Lógica compartida para el filtrado de datos y cálculos de progreso.
 
-Next.js (v15.4.6)  - Framework de React para el desarrollo de aplicaciones web full-stack.
+---
 
-React (v19.1.0)  - Librería de JavaScript para construir interfaces de usuario.
+## 💻 Instalación y Configuración
 
-Chart.js (v5.3.0) - Libreriá de Gráficos de JavaScript.
-
-TypeScript - Lenguaje de programación que añade tipado estático a JavaScript, mejorando la robustez y el mantenimiento del código.
-
-Tailwind CSS (v4) - Framework CSS utility-first para un diseño rápido y flexible.
-Mock Data:
-
-JSON (para la simulación de datos)
-
-### Configuración y Ejecución del Proyecto
-Requisitos Previos
-Asegúrate de tener instalado Node.js en tu sistema.
-
-Instalación
-Clona el repositorio:
-
-git clone https://github.com/Marianvsf/Project-Pulse.git
-Navega al directorio del proyecto:
-
-cd Project-Pulse
-Instala las dependencias:
-
-npm install
-
-## Comandos de Ejecución
-El proyecto utiliza scripts de npm definidos en el archivo package.json para las siguientes tareas:
-
--npm run dev: Para iniciar la aplicación en modo de desarrollo. Este es el comando que debes usar para trabajar en el proyecto. La aplicación se iniciará en tu navegador por defecto en http://localhost:3000.
-
--npm run build: Para compilar y optimizar la aplicación para producción.
-
--npm start: Para iniciar el servidor de la aplicación en modo de producción, después de haberla compilado con npm run build.
-
--npm run lint: Para analizar el código en busca de errores y seguir las buenas prácticas con ESLint.
-
-## 🎨 Diseño y Responsividad
-El diseño de Project-Pulse se centra en una experiencia de usuario limpia y directa. Gracias al uso de Tailwind CSS, el proyecto es totalmente responsive, garantizando que la interfaz se adapte y funcione de manera óptima en una variedad de dispositivos y tamaños de pantalla, desde móviles hasta grandes monitores.
-
-## ♻️ Reutilización de Componentes
-Se ha priorizado la creación de componentes reutilizables para mantener un código limpio y eficiente, siguiendo la filosofía DRY (Don't Repeat Yourself)
+1. **Clonar el repositorio:**
+   ```bash
+   git clone [https://github.com/Marianvsf/Project-Pulse.git](https://github.com/Marianvsf/Project-Pulse.git)
+   cd Project-Pulse
