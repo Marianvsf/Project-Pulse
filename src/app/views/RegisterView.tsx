@@ -55,146 +55,137 @@ export default function RegisterView() {
     };
 
     return (
-        <>
+
+        <div className="flex flex-col md:flex-row">
             <Navbar />
+            <div className="w-full min-h-screen md:w-5/12 bg-blue-950 flex flex-col items-center justify-center text-center relative overflow-hidden">
+                {/* Círculo decorativo de fondo */}
+                <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-from),_transparent)] from-blue-900 opacity-50" />
 
-            {/* FONDO: bg-gray-100 como solicitaste */}
-            <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4 pt-24">
-
-                {/* TARJETA PRINCIPAL: Sombra suave y bordes redondeados estilo Navbar */}
-                <div className="w-full max-w-5xl bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col md:flex-row min-h-[600px]">
-
-                    {/* SECCIÓN IZQUIERDA (Branding): Mantiene el Azul del Navbar */}
-                    <div className="w-full md:w-5/12 bg-blue-950 flex flex-col items-center justify-center p-10 text-center relative overflow-hidden">
-                        {/* Círculo decorativo de fondo */}
-                        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-900 to-transparent opacity-50" />
-
-                        <div className="relative z-10 flex flex-col items-center">
-                            <div className="relative w-40 h-40 md:w-48 md:h-48 mb-6">
-                                <Image
-                                    className="object-contain"
-                                    src="/IconLogo.png"
-                                    alt="Logo"
-                                    fill
-                                    priority
-                                />
-                            </div>
-                            <h2 className="text-2xl font-bold text-white mb-2">Bienvenido a Project Pulse</h2>
-                            <p className="text-blue-200 text-sm max-w-xs">
-                                Gestiona tus proyectos de forma eficiente y colaborativa.
-                            </p>
-                        </div>
+                <div className="relative z-10 flex flex-col items-center">
+                    <div className="relative w-40 h-40 md:w-48 md:h-48 mb-6">
+                        <Image
+                            className="object-contain"
+                            src="/IconLogo.png"
+                            alt="Logo"
+                            fill
+                            priority
+                        />
                     </div>
-
-                    {/* SECCIÓN DERECHA (Formulario): Fondo Blanco Limpio */}
-                    <div className="w-full md:w-7/12 p-8 md:p-12 flex flex-col justify-center bg-white">
-                        <div className="max-w-md mx-auto w-full">
-                            <h1 className="text-3xl font-bold text-gray-900 mb-2">Crear Cuenta</h1>
-                            <p className="text-gray-500 mb-8 text-sm">Completa el formulario para comenzar.</p>
-
-                            <form onSubmit={handleSubmit} className="space-y-5">
-                                <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-1.5 ml-1">Nombre y Apellido</label>
-                                    <input
-                                        type="text"
-                                        placeholder="Ej. Juan Pérez"
-                                        value={name}
-                                        onChange={(e) => setName(e.target.value)}
-                                        className="w-full h-[50px] px-4 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#FF7400] focus:ring-1 focus:ring-[#FF7400] transition-all"
-                                        required
-                                    />
-                                </div>
-
-                                <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-1.5 ml-1">Correo electrónico</label>
-                                    <input
-                                        type="email"
-                                        placeholder="tucorreo@ejemplo.com"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        className="w-full h-[50px] px-4 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#FF7400] focus:ring-1 focus:ring-[#FF7400] transition-all"
-                                        required
-                                    />
-                                </div>
-
-                                <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-                                    <div>
-                                        <label className="block text-sm font-semibold text-gray-700 mb-1.5 ml-1">Contraseña</label>
-                                        <div className="relative">
-                                            <input
-                                                type={showPassword ? "text" : "password"}
-                                                placeholder="••••••••"
-                                                value={password}
-                                                onChange={(e) => setPassword(e.target.value)}
-                                                className="w-full h-[50px] px-4 pr-20 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#FF7400] focus:ring-1 focus:ring-[#FF7400] transition-all"
-                                                required
-                                            />
-                                            <button
-                                                type="button"
-                                                onClick={() => setShowPassword((prev) => !prev)}
-                                                className="absolute inset-y-0 right-0 px-4 text-sm font-medium text-[#FF7400] hover:text-[#e06500]"
-                                                aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
-                                            >
-                                                {showPassword ? "Ocultar" : "Mostrar"}
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-semibold text-gray-700 mb-1.5 ml-1">Confirmar</label>
-                                        <div className="relative">
-                                            <input
-                                                type={showConfirmPassword ? "text" : "password"}
-                                                placeholder="••••••••"
-                                                value={confirmPassword}
-                                                onChange={(e) => setConfirmPassword(e.target.value)}
-                                                className="w-full h-[50px] px-4 pr-20 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#FF7400] focus:ring-1 focus:ring-[#FF7400] transition-all"
-                                                required
-                                            />
-                                            <button
-                                                type="button"
-                                                onClick={() => setShowConfirmPassword((prev) => !prev)}
-                                                className="absolute inset-y-0 right-0 px-4 text-sm font-medium text-[#FF7400] hover:text-[#e06500]"
-                                                aria-label={showConfirmPassword ? "Ocultar confirmación de contraseña" : "Mostrar confirmación de contraseña"}
-                                            >
-                                                {showConfirmPassword ? "Ocultar" : "Mostrar"}
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {error && (
-                                    <div className="p-3 rounded-lg bg-red-50 text-red-600 border border-red-100 text-sm text-center">
-                                        {error}
-                                    </div>
-                                )}
-
-                                <button
-                                    type="submit"
-                                    disabled={isLoading}
-                                    className="w-full h-[50px] mt-4 bg-[#FF7400] hover:bg-[#e06500] text-white font-bold rounded-xl transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center"
-                                >
-                                    {isLoading ? (
-                                        <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                                    ) : (
-                                        "Registrarse"
-                                    )}
-                                </button>
-
-                                <p className="text-center text-sm text-gray-600 mt-6">
-                                    ¿Ya tienes cuenta?{" "}
-                                    <button
-                                        type="button"
-                                        onClick={goToLogin}
-                                        className="text-[#FF7400] font-semibold hover:underline"
-                                    >
-                                        Inicia sesión
-                                    </button>
-                                </p>
-                            </form>
-                        </div>
-                    </div>
+                    <h2 className="text-2xl font-bold text-white mb-2">Bienvenido a Project Pulse</h2>
+                    <p className="text-blue-200 text-sm max-w-xs">
+                        Gestiona tus proyectos de forma eficiente y colaborativa.
+                    </p>
                 </div>
             </div>
-        </>
+
+            {/* SECCIÓN DERECHA (Formulario): Fondo Blanco Limpio */}
+            <div className="w-full md:w-7/12 min-h-screen flex flex-col justify-center bg-white">
+                <div className="max-w-md mx-auto w-full">
+                    <h1 className="text-3xl font-bold text-gray-900 mb-2">Crear Cuenta</h1>
+                    <p className="text-gray-500 mb-8 text-sm">Completa el formulario para comenzar.</p>
+
+                    <form onSubmit={handleSubmit} className="space-y-5">
+                        <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-1.5 ml-1">Nombre y Apellido</label>
+                            <input
+                                type="text"
+                                placeholder="Ej. Juan Pérez"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                className="w-full h-[50px] px-4 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#FF7400] focus:ring-1 focus:ring-[#FF7400] transition-all"
+                                required
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-1.5 ml-1">Correo electrónico</label>
+                            <input
+                                type="email"
+                                placeholder="tucorreo@ejemplo.com"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className="w-full h-[50px] px-4 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#FF7400] focus:ring-1 focus:ring-[#FF7400] transition-all"
+                                required
+                            />
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-700 mb-1.5 ml-1">Contraseña</label>
+                                <div className="relative">
+                                    <input
+                                        type={showPassword ? "text" : "password"}
+                                        placeholder="••••••••"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        className="w-full h-[50px] px-4 pr-20 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#FF7400] focus:ring-1 focus:ring-[#FF7400] transition-all"
+                                        required
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword((prev) => !prev)}
+                                        className="absolute inset-y-0 right-0 px-4 text-sm font-medium text-[#FF7400] hover:text-[#e06500]"
+                                        aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                                    >
+                                        {showPassword ? "Ocultar" : "Mostrar"}
+                                    </button>
+                                </div>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-700 mb-1.5 ml-1">Confirmar</label>
+                                <div className="relative">
+                                    <input
+                                        type={showConfirmPassword ? "text" : "password"}
+                                        placeholder="••••••••"
+                                        value={confirmPassword}
+                                        onChange={(e) => setConfirmPassword(e.target.value)}
+                                        className="w-full h-[50px] px-4 pr-20 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#FF7400] focus:ring-1 focus:ring-[#FF7400] transition-all"
+                                        required
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowConfirmPassword((prev) => !prev)}
+                                        className="absolute inset-y-0 right-0 px-4 text-sm font-medium text-[#FF7400] hover:text-[#e06500]"
+                                        aria-label={showConfirmPassword ? "Ocultar confirmación de contraseña" : "Mostrar confirmación de contraseña"}
+                                    >
+                                        {showConfirmPassword ? "Ocultar" : "Mostrar"}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        {error && (
+                            <div className="p-3 rounded-lg bg-red-50 text-red-600 border border-red-100 text-sm text-center">
+                                {error}
+                            </div>
+                        )}
+
+                        <button
+                            type="submit"
+                            disabled={isLoading}
+                            className="w-full h-[50px] mt-4 bg-[#FF7400] hover:bg-[#e06500] text-white font-bold rounded-xl transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center"
+                        >
+                            {isLoading ? (
+                                <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                            ) : (
+                                "Registrarse"
+                            )}
+                        </button>
+
+                        <p className="text-center text-sm text-gray-600 mt-6">
+                            ¿Ya tienes cuenta?{" "}
+                            <button
+                                type="button"
+                                onClick={goToLogin}
+                                className="text-[#FF7400] font-semibold hover:underline"
+                            >
+                                Inicia sesión
+                            </button>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
     );
 }
