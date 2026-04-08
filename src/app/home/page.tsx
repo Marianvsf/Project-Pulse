@@ -105,6 +105,7 @@ const getFaqResponse = (question: string): string => {
 export default function HomePage() {
   const router = useRouter();
   const [currentSlide, setCurrentSlide] = useState<number>(0);
+  const [isFaqBotOpen, setIsFaqBotOpen] = useState<boolean>(false);
   const messageIdRef = useRef<number>(1);
   const [userQuestion, setUserQuestion] = useState<string>("");
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
@@ -451,90 +452,24 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Preguntas Frecuentes</h2>
-            <p className="text-slate-500">Lee respuestas rápidas o usa el bot para consultar en lenguaje natural.</p>
+            <p className="text-slate-500">Respuestas rápidas para las dudas más comunes.</p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-            <div className="space-y-4">
-              {faqEntries.slice(0, 3).map((faq) => (
-                <details
-                  key={faq.id}
-                  className="group bg-slate-50 rounded-2xl border border-slate-200/60 [&_summary::-webkit-details-marker]:hidden"
-                >
-                  <summary className="flex justify-between items-center font-bold cursor-pointer list-none p-6 text-slate-900">
-                    <span>{faq.question}</span>
-                    <span className="transition group-open:rotate-180">
-                      <svg fill="none" height="24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="24"><polyline points="6 9 12 15 18 9" /></svg>
-                    </span>
-                  </summary>
-                  <div className="text-slate-600 pb-6 px-6 leading-relaxed">{faq.answer}</div>
-                </details>
-              ))}
-            </div>
-
-            <div className="rounded-3xl border border-slate-200 bg-slate-900 text-white p-6 shadow-xl shadow-slate-900/20">
-              <div className="flex items-center justify-between gap-3 mb-5">
-                <div>
-                  <p className="font-bold text-lg">Bot FAQ</p>
-                  <p className="text-slate-300 text-sm">Respuestas instantáneas con base en tu centro de ayuda.</p>
-                </div>
-                <span className="inline-flex items-center gap-2 text-xs bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-full border border-emerald-300/30">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  En linea
-                </span>
-              </div>
-
-              <div className="bg-slate-800/80 border border-slate-700 rounded-2xl p-4 h-80 overflow-y-auto space-y-3">
-                {chatMessages.map((message) => (
-                  <div
-                    key={message.id}
-                    className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}
-                  >
-                    <div
-                      className={`max-w-[85%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${message.sender === "user"
-                          ? "bg-blue-500 text-white rounded-br-md"
-                          : "bg-slate-700 text-slate-100 rounded-bl-md"
-                        }`}
-                    >
-                      {message.text}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-4 flex flex-wrap gap-2">
-                {faqEntries.slice(0, 4).map((faq) => (
-                  <button
-                    key={`quick-${faq.id}`}
-                    onClick={() => sendFaqQuestion(faq.question)}
-                    className="text-xs px-3 py-2 rounded-full border border-slate-600 text-slate-200 hover:bg-slate-800 transition-colors"
-                  >
-                    {faq.question}
-                  </button>
-                ))}
-              </div>
-
-              <div className="mt-4 flex gap-2">
-                <input
-                  type="text"
-                  value={userQuestion}
-                  onChange={(event) => setUserQuestion(event.target.value)}
-                  onKeyDown={(event) => {
-                    if (event.key === "Enter") {
-                      sendFaqQuestion();
-                    }
-                  }}
-                  placeholder="Escribe tu pregunta..."
-                  className="flex-1 h-12 rounded-xl bg-slate-800 border border-slate-700 px-4 text-sm text-white placeholder:text-slate-400 focus:outline-none focus:border-blue-400"
-                />
-                <button
-                  onClick={() => sendFaqQuestion()}
-                  className="h-12 px-5 rounded-xl bg-[#FF7400] hover:bg-[#e66900] text-white font-semibold transition-colors"
-                >
-                  Enviar
-                </button>
-              </div>
-            </div>
+          <div className="space-y-4 max-w-3xl mx-auto">
+            {faqEntries.slice(0, 3).map((faq) => (
+              <details
+                key={faq.id}
+                className="group bg-slate-50 rounded-2xl border border-slate-200/60 [&_summary::-webkit-details-marker]:hidden"
+              >
+                <summary className="flex justify-between items-center font-bold cursor-pointer list-none p-6 text-slate-900">
+                  <span>{faq.question}</span>
+                  <span className="transition group-open:rotate-180">
+                    <svg fill="none" height="24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="24"><polyline points="6 9 12 15 18 9" /></svg>
+                  </span>
+                </summary>
+                <div className="text-slate-600 pb-6 px-6 leading-relaxed">{faq.answer}</div>
+              </details>
+            ))}
           </div>
         </div>
       </section>
@@ -610,6 +545,85 @@ export default function HomePage() {
           </div>
         </div>
       </footer>
+
+      <div className="fixed bottom-6 right-4 sm:right-6 z-[70] flex flex-col items-end gap-3">
+        {isFaqBotOpen && (
+          <div className="w-[calc(100vw-2rem)] max-w-sm rounded-3xl border border-slate-200 bg-slate-900 text-white p-5 shadow-2xl shadow-slate-900/40">
+            <div className="flex items-center justify-between gap-3 mb-4">
+              <div>
+                <p className="font-bold text-lg">Bot FAQ</p>
+                <p className="text-slate-300 text-xs">Preguntas frecuentes en tiempo real.</p>
+              </div>
+              <button
+                onClick={() => setIsFaqBotOpen(false)}
+                className="w-8 h-8 rounded-full bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors"
+                aria-label="Cerrar bot FAQ"
+              >
+                ×
+              </button>
+            </div>
+
+            <div className="bg-slate-800/80 border border-slate-700 rounded-2xl p-4 h-72 overflow-y-auto space-y-3">
+              {chatMessages.map((message) => (
+                <div
+                  key={message.id}
+                  className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}
+                >
+                  <div
+                    className={`max-w-[85%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${message.sender === "user"
+                        ? "bg-blue-500 text-white rounded-br-md"
+                        : "bg-slate-700 text-slate-100 rounded-bl-md"
+                      }`}
+                  >
+                    {message.text}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-3 flex flex-wrap gap-2">
+              {faqEntries.slice(0, 3).map((faq) => (
+                <button
+                  key={`sticky-quick-${faq.id}`}
+                  onClick={() => sendFaqQuestion(faq.question)}
+                  className="text-[11px] px-3 py-1.5 rounded-full border border-slate-600 text-slate-200 hover:bg-slate-800 transition-colors"
+                >
+                  {faq.question}
+                </button>
+              ))}
+            </div>
+
+            <div className="mt-4 flex gap-2">
+              <input
+                type="text"
+                value={userQuestion}
+                onChange={(event) => setUserQuestion(event.target.value)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") {
+                    sendFaqQuestion();
+                  }
+                }}
+                placeholder="Escribe tu pregunta..."
+                className="flex-1 h-11 rounded-xl bg-slate-800 border border-slate-700 px-4 text-sm text-white placeholder:text-slate-400 focus:outline-none focus:border-blue-400"
+              />
+              <button
+                onClick={() => sendFaqQuestion()}
+                className="h-11 px-4 rounded-xl bg-[#FF7400] hover:bg-[#e66900] text-white font-semibold transition-colors"
+              >
+                Enviar
+              </button>
+            </div>
+          </div>
+        )}
+
+        <button
+          onClick={() => setIsFaqBotOpen((prev) => !prev)}
+          className="h-14 px-5 rounded-full bg-[#FF7400] hover:bg-[#e66900] text-white font-bold shadow-xl shadow-orange-600/30 transition-all hover:scale-105"
+          aria-label={isFaqBotOpen ? "Ocultar bot FAQ" : "Abrir bot FAQ"}
+        >
+          {isFaqBotOpen ? "Cerrar FAQ" : "FAQ"}
+        </button>
+      </div>
     </div>
   );
 }
