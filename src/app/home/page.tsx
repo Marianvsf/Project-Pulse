@@ -3,12 +3,146 @@
 import { useRouter } from "next/navigation";
 import Navbar from "../components/navbar/Navbar";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+
+type FAQEntry = {
+  id: number;
+  question: string;
+  answer: string;
+  keywords: string[];
+};
+
+type ChatMessage = {
+  id: number;
+  sender: "bot" | "user";
+  text: string;
+};
+
+const faqEntries: FAQEntry[] = [
+  {
+    id: 1,
+    question: "¿Cómo funciona la seguridad y privacidad?",
+    answer:
+      "Usamos cifrado AES-256, backups automáticos diarios y controles de acceso por rol para proteger toda la información.",
+    keywords: ["seguridad", "privacidad", "cifrado", "datos", "backup"],
+  },
+  {
+    id: 2,
+    question: "¿Puedo cancelar mi plan en cualquier momento?",
+    answer:
+      "Sí. Puedes cancelar en cualquier momento desde tu cuenta, sin penalización ni contratos a largo plazo.",
+    keywords: ["cancelar", "plan", "suscripcion", "pago", "facturacion"],
+  },
+  {
+    id: 3,
+    question: "¿Se integra con otras herramientas?",
+    answer:
+      "Sí. Tenemos integración con Slack, Google Workspace, GitHub y más herramientas mediante API y Zapier.",
+    keywords: ["integracion", "slack", "github", "google", "zapier", "api"],
+  },
+  {
+    id: 4,
+    question: "¿Qué incluye el plan Starter?",
+    answer:
+      "El plan Starter incluye hasta 3 proyectos activos, tareas ilimitadas, colaboradores básicos y app móvil.",
+    keywords: ["starter", "gratis", "incluye", "proyectos", "tareas"],
+  },
+  {
+    id: 5,
+    question: "¿Qué incluye el plan Pro Team?",
+    answer:
+      "Pro Team incluye todo lo de Starter, más proyectos ilimitados, asistente IA, permisos avanzados y soporte prioritario 24/7.",
+    keywords: ["pro", "team", "precio", "planes", "soporte", "ia"],
+  },
+  {
+    id: 6,
+    question: "¿Cómo empiezo a usar Project Pulse?",
+    answer:
+      "Puedes crear una cuenta gratis, configurar tu primer proyecto y empezar a invitar miembros del equipo en pocos minutos.",
+    keywords: ["empezar", "registro", "cuenta", "crear", "inicio"],
+  },
+];
+
+const defaultBotAnswer =
+  "No encontré una respuesta exacta. Puedes preguntar sobre seguridad, planes, precios, integraciones o cancelación.";
+
+const normalizeText = (text: string) =>
+  text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim();
+
+const getFaqResponse = (question: string): string => {
+  const normalizedQuestion = normalizeText(question);
+
+  let bestMatch: FAQEntry | null = null;
+  let bestScore = 0;
+
+  for (const entry of faqEntries) {
+    const questionText = normalizeText(entry.question);
+    let score = 0;
+
+    if (normalizedQuestion.includes(questionText) || questionText.includes(normalizedQuestion)) {
+      score += 3;
+    }
+
+    for (const keyword of entry.keywords) {
+      if (normalizedQuestion.includes(keyword)) {
+        score += 2;
+      }
+    }
+
+    if (score > bestScore) {
+      bestScore = score;
+      bestMatch = entry;
+    }
+  }
+
+  return bestMatch && bestScore > 0 ? bestMatch.answer : defaultBotAnswer;
+};
 
 export default function HomePage() {
   const router = useRouter();
   const [currentSlide, setCurrentSlide] = useState<number>(0);
+  const messageIdRef = useRef<number>(1);
+  const [userQuestion, setUserQuestion] = useState<string>("");
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
+    {
+      id: 1,
+      sender: "bot",
+      text: "Hola. Soy tu bot de FAQ de Project Pulse. Pregúntame sobre planes, seguridad, integraciones o precios.",
+    },
+  ]);
   const images = ["/assets/fot1.jpg", "/assets/fot2.jpg", "/assets/fot3.jpg"];
+
+  const getNextMessageId = () => {
+    messageIdRef.current += 1;
+    return messageIdRef.current;
+  };
+
+  const sendFaqQuestion = (questionOverride?: string) => {
+    const question = (questionOverride ?? userQuestion).trim();
+
+    if (!question) {
+      return;
+    }
+
+    const userMessage: ChatMessage = {
+      id: getNextMessageId(),
+      sender: "user",
+      text: question,
+    };
+
+    const botMessage: ChatMessage = {
+      id: getNextMessageId(),
+      sender: "bot",
+      text: getFaqResponse(question),
+    };
+
+    setChatMessages((prev) => [...prev, userMessage, botMessage]);
+    setUserQuestion("");
+  };
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev === images.length - 1 ? 0 : prev + 1));
@@ -86,7 +220,7 @@ export default function HomePage() {
           </h1>
 
           <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Project-Pulse unifica tareas, equipos y cronogramas. La herramienta definitiva para dejar de "sobrevivir" al trabajo y empezar a liderarlo.
+            Project-Pulse unifica tareas, equipos y cronogramas. La herramienta definitiva para dejar de &quot;sobrevivir&quot; al trabajo y empezar a liderarlo.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -224,7 +358,7 @@ export default function HomePage() {
                 </li>
                 <li className="flex gap-4 text-slate-600">
                   <span className="text-red-400 mt-1">✗</span>
-                  <span>Hojas de Excel llamadas "Presupuesto_V3_FINAL_FINAL2.xlsx".</span>
+                  <span>Hojas de Excel llamadas &quot;Presupuesto_V3_FINAL_FINAL2.xlsx&quot;.</span>
                 </li>
                 <li className="flex gap-4 text-slate-600">
                   <span className="text-red-400 mt-1">✗</span>
@@ -314,51 +448,93 @@ export default function HomePage() {
 
       {/* --- FAQ SECTION --- */}
       <section className="py-24 bg-white">
-        <div className="max-w-3xl mx-auto px-6">
+        <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Preguntas Frecuentes</h2>
-            <p className="text-slate-500">Resolvemos tus dudas rápidamente.</p>
+            <p className="text-slate-500">Lee respuestas rápidas o usa el bot para consultar en lenguaje natural.</p>
           </div>
 
-          <div className="space-y-4">
-            {/* FAQ Item 1 */}
-            <details className="group bg-slate-50 rounded-2xl border border-slate-200/60 [&_summary::-webkit-details-marker]:hidden">
-              <summary className="flex justify-between items-center font-bold cursor-pointer list-none p-6 text-slate-900">
-                <span>¿Cómo funciona la seguridad y privacidad?</span>
-                <span className="transition group-open:rotate-180">
-                  <svg fill="none" height="24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="24"><polyline points="6 9 12 15 18 9" /></svg>
-                </span>
-              </summary>
-              <div className="text-slate-600 pb-6 px-6 leading-relaxed">
-                Utilizamos encriptación de grado bancario (AES-256) y realizamos backups diarios automáticos en múltiples ubicaciones geográficas para asegurar que nunca pierdas tu información.
-              </div>
-            </details>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+            <div className="space-y-4">
+              {faqEntries.slice(0, 3).map((faq) => (
+                <details
+                  key={faq.id}
+                  className="group bg-slate-50 rounded-2xl border border-slate-200/60 [&_summary::-webkit-details-marker]:hidden"
+                >
+                  <summary className="flex justify-between items-center font-bold cursor-pointer list-none p-6 text-slate-900">
+                    <span>{faq.question}</span>
+                    <span className="transition group-open:rotate-180">
+                      <svg fill="none" height="24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="24"><polyline points="6 9 12 15 18 9" /></svg>
+                    </span>
+                  </summary>
+                  <div className="text-slate-600 pb-6 px-6 leading-relaxed">{faq.answer}</div>
+                </details>
+              ))}
+            </div>
 
-            {/* FAQ Item 2 */}
-            <details className="group bg-slate-50 rounded-2xl border border-slate-200/60 [&_summary::-webkit-details-marker]:hidden">
-              <summary className="flex justify-between items-center font-bold cursor-pointer list-none p-6 text-slate-900">
-                <span>¿Puedo cancelar mi plan en cualquier momento?</span>
-                <span className="transition group-open:rotate-180">
-                  <svg fill="none" height="24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="24"><polyline points="6 9 12 15 18 9" /></svg>
+            <div className="rounded-3xl border border-slate-200 bg-slate-900 text-white p-6 shadow-xl shadow-slate-900/20">
+              <div className="flex items-center justify-between gap-3 mb-5">
+                <div>
+                  <p className="font-bold text-lg">Bot FAQ</p>
+                  <p className="text-slate-300 text-sm">Respuestas instantáneas con base en tu centro de ayuda.</p>
+                </div>
+                <span className="inline-flex items-center gap-2 text-xs bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-full border border-emerald-300/30">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  En linea
                 </span>
-              </summary>
-              <div className="text-slate-600 pb-6 px-6 leading-relaxed">
-                Absolutamente. No hay contratos a largo plazo ni letras pequeñas. Si decides que Project Pulse no es para ti, puedes cancelar tu suscripción con un solo clic.
               </div>
-            </details>
 
-            {/* FAQ Item 3 */}
-            <details className="group bg-slate-50 rounded-2xl border border-slate-200/60 [&_summary::-webkit-details-marker]:hidden">
-              <summary className="flex justify-between items-center font-bold cursor-pointer list-none p-6 text-slate-900">
-                <span>¿Se integra con otras herramientas que ya uso?</span>
-                <span className="transition group-open:rotate-180">
-                  <svg fill="none" height="24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="24"><polyline points="6 9 12 15 18 9" /></svg>
-                </span>
-              </summary>
-              <div className="text-slate-600 pb-6 px-6 leading-relaxed">
-                Sí, ofrecemos integraciones nativas con Slack, Google Workspace, GitHub, Figma y más de 50 herramientas a través de nuestra API y Zapier.
+              <div className="bg-slate-800/80 border border-slate-700 rounded-2xl p-4 h-80 overflow-y-auto space-y-3">
+                {chatMessages.map((message) => (
+                  <div
+                    key={message.id}
+                    className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}
+                  >
+                    <div
+                      className={`max-w-[85%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${message.sender === "user"
+                          ? "bg-blue-500 text-white rounded-br-md"
+                          : "bg-slate-700 text-slate-100 rounded-bl-md"
+                        }`}
+                    >
+                      {message.text}
+                    </div>
+                  </div>
+                ))}
               </div>
-            </details>
+
+              <div className="mt-4 flex flex-wrap gap-2">
+                {faqEntries.slice(0, 4).map((faq) => (
+                  <button
+                    key={`quick-${faq.id}`}
+                    onClick={() => sendFaqQuestion(faq.question)}
+                    className="text-xs px-3 py-2 rounded-full border border-slate-600 text-slate-200 hover:bg-slate-800 transition-colors"
+                  >
+                    {faq.question}
+                  </button>
+                ))}
+              </div>
+
+              <div className="mt-4 flex gap-2">
+                <input
+                  type="text"
+                  value={userQuestion}
+                  onChange={(event) => setUserQuestion(event.target.value)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                      sendFaqQuestion();
+                    }
+                  }}
+                  placeholder="Escribe tu pregunta..."
+                  className="flex-1 h-12 rounded-xl bg-slate-800 border border-slate-700 px-4 text-sm text-white placeholder:text-slate-400 focus:outline-none focus:border-blue-400"
+                />
+                <button
+                  onClick={() => sendFaqQuestion()}
+                  className="h-12 px-5 rounded-xl bg-[#FF7400] hover:bg-[#e66900] text-white font-semibold transition-colors"
+                >
+                  Enviar
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
