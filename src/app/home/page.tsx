@@ -571,8 +571,8 @@ export default function HomePage() {
                 >
                   <div
                     className={`max-w-[85%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${message.sender === "user"
-                        ? "bg-blue-500 text-white rounded-br-md"
-                        : "bg-slate-700 text-slate-100 rounded-bl-md"
+                      ? "bg-blue-500 text-white rounded-br-md"
+                      : "bg-slate-700 text-slate-100 rounded-bl-md"
                       }`}
                   >
                     {message.text}
@@ -618,10 +618,10 @@ export default function HomePage() {
 
         <button
           onClick={() => setIsFaqBotOpen((prev) => !prev)}
-          className="h-14 px-5 rounded-full bg-[#FF7400] hover:bg-[#e66900] text-white font-bold shadow-xl shadow-orange-600/30 transition-all hover:scale-105"
+          className="h-14 px-5 rounded-4xl bg-[#FF7400] hover:bg-[#e66900] text-white font-bold shadow-xl shadow-orange-600/30 transition-all hover:scale-105"
           aria-label={isFaqBotOpen ? "Ocultar bot FAQ" : "Abrir bot FAQ"}
         >
-          {isFaqBotOpen ? "Cerrar FAQ" : "FAQ"}
+          {isFaqBotOpen ? "×" : "?"}
         </button>
       </div>
     </div>
