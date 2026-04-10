@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 import Swal from "sweetalert2";
 import Navbar from "../components/navbar/Navbar"; // Asegúrate de importar el Navbar
 
@@ -99,9 +100,9 @@ export default function LoginView() {
                                     Contraseña
                                 </label>
                                 {/* Opcional: Link de recuperar contraseña */}
-                                <a href="#" className="text-xs text-[#FF7400] hover:underline font-medium">
+                                <Link href="/forgot-password" className="text-xs text-[#FF7400] hover:underline font-medium">
                                     ¿Olvidaste tu contraseña?
-                                </a>
+                                </Link>
                             </div>
                             <div className="relative">
                                 <input
