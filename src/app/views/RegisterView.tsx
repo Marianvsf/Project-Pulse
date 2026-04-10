@@ -124,11 +124,11 @@ export default function RegisterView() {
                                     />
                                     <button
                                         type="button"
-                                        onClick={() => setShowPassword((prev) => !prev)}
+                                        onClick={() => setShowConfirmPassword((prev) => !prev)}
                                         className="absolute inset-y-0 right-0 px-4 flex items-center text-[#FF7400] hover:text-[#e06500] transition-colors"
-                                        aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                                        aria-label={showConfirmPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
                                     >
-                                        {showPassword ? (
+                                        {showConfirmPassword ? (
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 fill="none"

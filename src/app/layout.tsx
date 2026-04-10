@@ -1,42 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Inter, Montserrat, Outfit, Plus_Jakarta_Sans, Poppins } from "next/font/google";
+import { Outfit } from "next/font/google";
 import "./styles/globals.css";
 import Providers from "./Providers";
 import { Footer } from "./components/Footer";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-poppins",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-poppins",
-});
-
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-plus-jakarta-sans",
-});
-
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-montserrat",
-});
 
 const outfit = Outfit({
   subsets: ["latin"],
