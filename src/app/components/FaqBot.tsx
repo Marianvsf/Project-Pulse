@@ -102,12 +102,12 @@ export default function FaqBot({ faqEntries }: FaqBotProps) {
     };
 
     return (
-        <div className="fixed bottom-6 right-4 sm:right-6 z-[70] flex flex-col items-end gap-3">
+        <div className="fixed bottom-4 right-3 left-3 sm:bottom-6 sm:left-auto sm:right-6 z-[70] flex flex-col items-end gap-3">
             {isFaqBotOpen && (
-                <div className="w-[calc(100vw-2rem)] max-w-sm rounded-3xl border border-slate-200 bg-slate-900 text-white p-5 shadow-2xl shadow-slate-900/40">
+                <div className="w-full max-w-sm rounded-3xl border border-slate-200 bg-slate-900 text-white p-4 sm:p-5 shadow-2xl shadow-slate-900/40">
                     <div className="flex items-center justify-between gap-3 mb-4">
                         <div>
-                            <p className="font-bold text-lg">Bot FAQ</p>
+                            <p className="font-bold text-base sm:text-lg">Bot FAQ</p>
                             <p className="text-slate-300 text-xs">Preguntas frecuentes en tiempo real.</p>
                         </div>
                         <button
@@ -119,14 +119,14 @@ export default function FaqBot({ faqEntries }: FaqBotProps) {
                         </button>
                     </div>
 
-                    <div className="bg-slate-800/80 border border-slate-700 rounded-2xl p-4 h-72 overflow-y-auto space-y-3">
+                    <div className="bg-slate-800/80 border border-slate-700 rounded-2xl p-3 sm:p-4 h-64 sm:h-72 overflow-y-auto space-y-3">
                         {chatMessages.map((message) => (
                             <div
                                 key={message.id}
                                 className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}
                             >
                                 <div
-                                    className={`max-w-[85%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${message.sender === "user"
+                                    className={`max-w-[88%] px-3 sm:px-4 py-3 rounded-2xl text-sm leading-relaxed break-words ${message.sender === "user"
                                         ? "bg-blue-500 text-white rounded-br-md"
                                         : "bg-slate-700 text-slate-100 rounded-bl-md"
                                         }`}
@@ -149,7 +149,7 @@ export default function FaqBot({ faqEntries }: FaqBotProps) {
                         ))}
                     </div>
 
-                    <div className="mt-4 flex gap-2">
+                    <div className="mt-4 flex flex-col sm:flex-row gap-2">
                         <input
                             type="text"
                             value={userQuestion}
@@ -160,11 +160,11 @@ export default function FaqBot({ faqEntries }: FaqBotProps) {
                                 }
                             }}
                             placeholder="Escribe tu pregunta..."
-                            className="flex-1 h-11 rounded-xl bg-slate-800 border border-slate-700 px-4 text-sm text-white placeholder:text-slate-400 focus:outline-none focus:border-blue-400"
+                            className="w-full flex-1 h-11 rounded-xl bg-slate-800 border border-slate-700 px-4 text-sm text-white placeholder:text-slate-400 focus:outline-none focus:border-blue-400"
                         />
                         <button
                             onClick={() => sendFaqQuestion()}
-                            className="h-11 px-4 rounded-xl bg-[#FF7400] hover:bg-[#e66900] text-white font-semibold transition-colors"
+                            className="h-11 w-full sm:w-auto px-4 rounded-xl bg-[#FF7400] hover:bg-[#e66900] text-white font-semibold transition-colors"
                         >
                             Enviar
                         </button>
@@ -172,11 +172,11 @@ export default function FaqBot({ faqEntries }: FaqBotProps) {
                 </div>
             )}
 
-            <div className="flex items-center gap-3">
+            <div className="flex w-full items-end justify-end gap-3">
                 {!isFaqBotOpen && (
-                    <div className="flex max-w-[calc(100vw-6.5rem)] items-center rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-lg shadow-slate-900/10">
+                    <div className="flex max-w-[calc(100vw-5.75rem)] items-center rounded-2xl border border-slate-200 bg-white px-3 py-3 sm:px-4 shadow-lg shadow-slate-900/10">
                         <span className="mr-2 flex h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                        <p className="text-xs font-semibold text-slate-800 sm:text-sm">
+                        <p className="text-[11px] leading-tight font-semibold text-slate-800 sm:text-sm">
                             ¿Tienes dudas? Chatea conmigo.
                         </p>
                     </div>
