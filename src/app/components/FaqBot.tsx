@@ -127,8 +127,8 @@ export default function FaqBot({ faqEntries }: FaqBotProps) {
                             >
                                 <div
                                     className={`max-w-[85%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${message.sender === "user"
-                                            ? "bg-blue-500 text-white rounded-br-md"
-                                            : "bg-slate-700 text-slate-100 rounded-bl-md"
+                                        ? "bg-blue-500 text-white rounded-br-md"
+                                        : "bg-slate-700 text-slate-100 rounded-bl-md"
                                         }`}
                                 >
                                     {message.text}
@@ -172,13 +172,22 @@ export default function FaqBot({ faqEntries }: FaqBotProps) {
                 </div>
             )}
 
-            <button
-                onClick={() => setIsFaqBotOpen((prev) => !prev)}
-                className="h-14 px-5 rounded-4xl bg-[#FF7400] hover:bg-[#e66900] text-white font-bold shadow-xl shadow-orange-600/30 transition-all hover:scale-105"
-                aria-label={isFaqBotOpen ? "Ocultar bot FAQ" : "Abrir bot FAQ"}
-            >
-                {isFaqBotOpen ? "×" : "?"}
-            </button>
+            <div className="flex items-center gap-3">
+                <div className="hidden sm:flex items-center rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-lg shadow-slate-900/10">
+                    <span className="mr-2 flex h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse" />
+                    <p className="text-sm font-semibold text-slate-800">
+                        ¿Tienes dudas? Chatea conmigo.
+                    </p>
+                </div>
+
+                <button
+                    onClick={() => setIsFaqBotOpen((prev) => !prev)}
+                    className="flex h-14 w-14 items-center justify-center rounded-full bg-[#FF7400] text-2xl font-bold text-white shadow-xl shadow-orange-600/30 transition-all hover:scale-105 hover:bg-[#e66900]"
+                    aria-label={isFaqBotOpen ? "Ocultar bot FAQ" : "Abrir bot FAQ"}
+                >
+                    {isFaqBotOpen ? "×" : "?"}
+                </button>
+            </div>
         </div>
     );
 }
