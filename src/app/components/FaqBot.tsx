@@ -173,12 +173,14 @@ export default function FaqBot({ faqEntries }: FaqBotProps) {
             )}
 
             <div className="flex items-center gap-3">
-                <div className="hidden sm:flex items-center rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-lg shadow-slate-900/10">
-                    <span className="mr-2 flex h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                    <p className="text-sm font-semibold text-slate-800">
-                        ¿Tienes dudas? Chatea conmigo.
-                    </p>
-                </div>
+                {!isFaqBotOpen && (
+                    <div className="flex max-w-[calc(100vw-6.5rem)] items-center rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-lg shadow-slate-900/10">
+                        <span className="mr-2 flex h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse" />
+                        <p className="text-xs font-semibold text-slate-800 sm:text-sm">
+                            ¿Tienes dudas? Chatea conmigo.
+                        </p>
+                    </div>
+                )}
 
                 <button
                     onClick={() => setIsFaqBotOpen((prev) => !prev)}
