@@ -83,7 +83,7 @@ export default function HomePage() {
       <div className="relative z-50">
         <Navbar />
       </div>
-      <header className="relative w-full h-[100vh] flex items-center justify-center overflow-hidden group">
+      <header className="relative w-full min-h-screen flex items-center justify-center overflow-hidden group">
         <div className="absolute inset-0 z-0">
           {images.map((image, index) => (
             <div
@@ -97,8 +97,8 @@ export default function HomePage() {
           ))}
         </div>
 
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20">
-          <div className="flex items-center gap-4 px-4 py-3 text-white">
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 w-full px-4 sm:px-0">
+          <div className="flex items-center justify-center gap-4 px-4 py-3 text-white">
             <div className="flex items-center gap-2">
               {images.map((_, index) => (
                 <button
@@ -130,50 +130,51 @@ export default function HomePage() {
         </button>
 
 
-        <div className="relative z-10 w-full max-w-4xl px-6 text-center text-white">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full border border-white/20 bg-white/10 backdrop-blur-md animate-in fade-in slide-in-from-top-4 duration-700">
+        <div className="relative z-10 w-full max-w-4xl px-4 sm:px-6 text-center text-white">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 sm:mb-8 rounded-full border border-white/20 bg-white/10 backdrop-blur-md animate-in fade-in slide-in-from-top-4 duration-700">
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-            <span className="text-sm font-medium">Gestión de proyectos v1.0</span>
+            <span className="text-xs sm:text-sm font-medium">Gestión de proyectos v1.0</span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
-            Tus proyectos, <br />
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight mb-5 sm:mb-6 leading-tight">
+            Tus proyectos,
+            <br className="hidden sm:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-indigo-200">
               en un solo latido.
             </span>
           </h1>
 
-          <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-10 leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed">
             Project-Pulse unifica tareas, equipos y cronogramas. La herramienta definitiva para dejar de &quot;sobrevivir&quot; al trabajo y empezar a liderarlo.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button onClick={() => router.push("/register")} className="h-14 w-full sm:w-60 bg-[#FF7400] hover:bg-[#e66900] text-white font-bold rounded-2xl transition-all hover:scale-105 shadow-lg shadow-orange-500/20">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4">
+            <button onClick={() => router.push("/register")} className="h-12 sm:h-14 w-full sm:w-60 bg-[#FF7400] hover:bg-[#e66900] text-white font-bold rounded-2xl transition-all hover:scale-105 shadow-lg shadow-orange-500/20">
               Empezar Gratis
             </button>
-            <button onClick={() => router.push("/login")} className="h-14 w-full sm:w-60 bg-white/10 border border-white/20 backdrop-blur-md text-white font-semibold rounded-2xl hover:bg-white/20 transition-all">
+            <button onClick={() => router.push("/login")} className="h-12 sm:h-14 w-full sm:w-60 bg-white/10 border border-white/20 backdrop-blur-md text-white font-semibold rounded-2xl hover:bg-white/20 transition-all">
               Ver Demo
             </button>
           </div>
         </div>
       </header>
 
-      <section className="relative -mt-12 z-30 px-6 max-w-6xl mx-auto">
-        <div className="bg-white rounded-3xl shadow-xl border border-slate-100 p-8 md:p-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 divide-x divide-slate-100">
-            <div className="text-center px-4">
+      <section className="relative -mt-10 sm:-mt-12 z-30 px-4 sm:px-6 max-w-6xl mx-auto">
+        <div className="bg-white rounded-3xl shadow-xl border border-slate-100 p-6 sm:p-8 md:p-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 md:divide-x divide-slate-100">
+            <div className="text-center px-2 sm:px-4">
               <p className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">+30%</p>
               <p className="text-slate-500 text-sm font-medium mt-2 uppercase tracking-wide">Eficiencia</p>
             </div>
-            <div className="text-center px-4">
+            <div className="text-center px-2 sm:px-4">
               <p className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">10k+</p>
               <p className="text-slate-500 text-sm font-medium mt-2 uppercase tracking-wide">Proyectos</p>
             </div>
-            <div className="text-center px-4">
+            <div className="text-center px-2 sm:px-4">
               <p className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">24/7</p>
               <p className="text-slate-500 text-sm font-medium mt-2 uppercase tracking-wide">Soporte</p>
             </div>
-            <div className="text-center px-4">
+            <div className="text-center px-2 sm:px-4">
               <p className="text-4xl md:text-5xl font-black text-[#FF7400] tracking-tight">4.9/5</p>
               <p className="text-slate-500 text-sm font-medium mt-2 uppercase tracking-wide">Rating</p>
             </div>
@@ -182,24 +183,24 @@ export default function HomePage() {
       </section>
 
       {/* --- BENTO GRID: FUNCIONALIDADES CLAVE --- */}
-      <section className="py-24 bg-gradient-to-b from-white to-slate-50 relative">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16 md:mb-20">
-            <h2 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-slate-900">Potencia tu flujo de trabajo</h2>
-            <p className="text-lg text-slate-500 max-w-2xl mx-auto">Diseñado para la velocidad, construido para la colaboración. Todo lo que necesitas en una interfaz limpia y sin distracciones.</p>
+      <section className="py-16 sm:py-24 bg-gradient-to-b from-white to-slate-50 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-12 sm:mb-16 md:mb-20">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 sm:mb-6 tracking-tight text-slate-900">Potencia tu flujo de trabajo</h2>
+            <p className="text-base sm:text-lg text-slate-500 max-w-2xl mx-auto">Diseñado para la velocidad, construido para la colaboración. Todo lo que necesitas en una interfaz limpia y sin distracciones.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
             {/* Tarjeta Grande 1 */}
-            <div className="md:col-span-2 bg-white p-10 rounded-[2.5rem] border border-slate-200/60 shadow-lg shadow-slate-200/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden relative group cursor-default">
+            <div className="md:col-span-2 bg-white p-6 sm:p-10 rounded-[2rem] sm:rounded-[2.5rem] border border-slate-200/60 shadow-lg shadow-slate-200/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden relative group cursor-default">
               <div className="relative z-10">
-                <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 text-blue-600">
+                <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center mb-5 sm:mb-6 text-blue-600">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
                 </div>
-                <h3 className="text-2xl font-bold mb-3 text-slate-900">Panel de Control Intuitivo</h3>
+                <h3 className="text-xl sm:text-2xl font-bold mb-3 text-slate-900">Panel de Control Intuitivo</h3>
                 <p className="text-slate-500 max-w-md leading-relaxed">Visualiza el progreso de tu equipo con métricas en tiempo real y dashboards que se adaptan a tu forma de trabajar.</p>
               </div>
-              <div className="mt-12 bg-slate-50 rounded-xl border border-slate-200/60 h-48 w-full group-hover:scale-[1.02] transition-transform duration-500 shadow-inner relative overflow-hidden">
+              <div className="mt-8 sm:mt-12 bg-slate-50 rounded-xl border border-slate-200/60 h-40 sm:h-48 w-full group-hover:scale-[1.02] transition-transform duration-500 shadow-inner relative overflow-hidden">
                 {/* Decoración abstracta para simular UI */}
                 <div className="absolute top-4 left-4 right-4 h-8 bg-white rounded-lg border border-slate-100 shadow-sm" />
                 <div className="absolute top-16 left-4 right-4 h-24 bg-white rounded-lg border border-slate-100 shadow-sm flex gap-4 p-4">
@@ -210,27 +211,27 @@ export default function HomePage() {
             </div>
 
             {/* Tarjeta Métrica IA */}
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-[2.5rem] p-10 text-white shadow-xl shadow-blue-900/20 flex flex-col items-center justify-center text-center relative overflow-hidden group hover:-translate-y-1 transition-all duration-300">
+            <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-10 text-white shadow-xl shadow-blue-900/20 flex flex-col items-center justify-center text-center relative overflow-hidden group hover:-translate-y-1 transition-all duration-300">
               <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700" />
-              <span className="text-7xl font-black mb-4 tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-blue-200">10x</span>
+              <span className="text-6xl sm:text-7xl font-black mb-4 tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-blue-200">10x</span>
               <h3 className="text-lg font-bold mb-2">Velocidad IA</h3>
               <p className="text-blue-100/80 text-sm leading-relaxed">Aceleración en la entrega de tareas repetitivas mediante nuestra inteligencia artificial integrada.</p>
             </div>
 
             {/* Tarjeta Automatización */}
-            <div className="bg-white p-10 rounded-[2.5rem] border border-slate-200/60 shadow-lg shadow-slate-200/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+            <div className="bg-white p-6 sm:p-10 rounded-[2rem] sm:rounded-[2.5rem] border border-slate-200/60 shadow-lg shadow-slate-200/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
               <div className="w-12 h-12 bg-orange-50 rounded-2xl flex items-center justify-center mb-6 text-[#FF7400]">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-slate-900">Piloto Automático</h3>
+              <h3 className="text-lg sm:text-xl font-bold mb-3 text-slate-900">Piloto Automático</h3>
               <p className="text-slate-500 leading-relaxed">Configura flujos de trabajo que se ejecutan solos. Asigna tareas basadas en estados sin mover un dedo.</p>
             </div>
 
             {/* Tarjeta Larga Inferior */}
-            <div className="md:col-span-2 bg-slate-900 rounded-[2.5rem] p-10 text-white flex flex-col md:flex-row items-center gap-10 shadow-2xl shadow-slate-900/30 overflow-hidden relative">
+            <div className="md:col-span-2 bg-slate-900 rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-10 text-white flex flex-col md:flex-row items-center gap-6 sm:gap-10 shadow-2xl shadow-slate-900/30 overflow-hidden relative">
               <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl" />
               <div className="flex-1 relative z-10">
-                <h3 className="text-2xl font-bold mb-3">Colaboración en tiempo real</h3>
+                <h3 className="text-xl sm:text-2xl font-bold mb-3">Colaboración en tiempo real</h3>
                 <p className="text-slate-400 leading-relaxed max-w-md">Menciones, hilos de comentarios y edición de documentos en vivo. Resuelve dudas sin salir de la plataforma y mantén el contexto siempre.</p>
               </div>
               <div className="relative z-10 bg-slate-800/50 p-6 rounded-3xl border border-slate-700/50 backdrop-blur-sm">
@@ -255,27 +256,27 @@ export default function HomePage() {
       </section>
 
       {/* --- SECCIÓN COMPARATIVA: ANTES Y DESPUÉS --- */}
-      <section className="py-24 bg-white relative overflow-hidden">
+      <section className="py-16 sm:py-24 bg-white relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-50 via-white to-white" />
-        <div className="max-w-6xl mx-auto px-6 relative z-10">
-          <div className="text-center mb-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+          <div className="text-center mb-12 sm:mb-16">
             <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4">La diferencia es evidente</h2>
-            <p className="text-slate-500 text-lg">Deja atrás las herramientas que te frenan.</p>
+            <p className="text-slate-500 text-base sm:text-lg">Deja atrás las herramientas que te frenan.</p>
           </div>
 
-          <div className="relative grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div className="relative grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-12 items-center">
             {/* Insignia VS central */}
             <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-white rounded-full items-center justify-center shadow-xl border border-slate-100 z-20 font-black text-slate-400">
               VS
             </div>
 
             {/* El Caos */}
-            <div className="bg-slate-50 rounded-[2rem] p-10 md:p-12 border border-slate-200/60">
+            <div className="bg-slate-50 rounded-[2rem] p-6 sm:p-10 md:p-12 border border-slate-200/60">
               <div className="w-12 h-12 bg-red-100 text-red-500 rounded-2xl flex items-center justify-center mb-8">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
               </div>
-              <h3 className="text-2xl font-bold text-slate-900 mb-8">El caos habitual</h3>
-              <ul className="space-y-6">
+              <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-8">El caos habitual</h3>
+              <ul className="space-y-5 sm:space-y-6">
                 <li className="flex gap-4 text-slate-600">
                   <span className="text-red-400 mt-1">✗</span>
                   <span>Buscando en hilos de Slack interminables de hace 3 días.</span>
@@ -292,14 +293,14 @@ export default function HomePage() {
             </div>
 
             {/* Con Project Pulse */}
-            <div className="bg-slate-900 rounded-[2rem] p-10 md:p-12 shadow-2xl shadow-slate-900/20 relative overflow-hidden">
+            <div className="bg-slate-900 rounded-[2rem] p-6 sm:p-10 md:p-12 shadow-2xl shadow-slate-900/20 relative overflow-hidden">
               <div className="absolute -right-20 -top-20 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl" />
               <div className="relative z-10">
                 <div className="w-12 h-12 bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-2xl flex items-center justify-center mb-8">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-8">Con Project Pulse</h3>
-                <ul className="space-y-6">
+                <h3 className="text-xl sm:text-2xl font-bold text-white mb-8">Con Project Pulse</h3>
+                <ul className="space-y-5 sm:space-y-6">
                   <li className="flex gap-4 text-slate-300">
                     <span className="text-blue-400 mt-1">✓</span>
                     <span>Una única fuente de verdad. Si está en Pulse, es la versión actual.</span>
@@ -320,14 +321,14 @@ export default function HomePage() {
       </section>
 
       {/* --- PRECIOS --- */}
-      <section className="py-24 bg-slate-50 border-t border-slate-200/50">
-        <div className="max-w-5xl mx-auto px-6 text-center">
+      <section className="py-16 sm:py-24 bg-slate-50 border-t border-slate-200/50">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center">
           <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4 tracking-tight">Planes simples y transparentes</h2>
-          <p className="text-slate-500 text-lg mb-16 max-w-2xl mx-auto">Empieza gratis, mejora cuando tu equipo lo necesite. Sin sorpresas.</p>
+          <p className="text-slate-500 text-base sm:text-lg mb-12 sm:mb-16 max-w-2xl mx-auto">Empieza gratis, mejora cuando tu equipo lo necesite. Sin sorpresas.</p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
             {/* Starter */}
-            <div className="bg-white p-10 md:p-12 rounded-[2.5rem] border border-slate-200/60 shadow-lg shadow-slate-200/20 hover:shadow-xl transition-all flex flex-col text-left">
+            <div className="bg-white p-6 sm:p-10 md:p-12 rounded-[2rem] sm:rounded-[2.5rem] border border-slate-200/60 shadow-lg shadow-slate-200/20 hover:shadow-xl transition-all flex flex-col text-left">
               <h3 className="text-2xl font-bold text-slate-900">Starter</h3>
               <p className="text-slate-500 mt-2 mb-6">Perfecto para individuos y pequeños proyectos.</p>
               <div className="text-5xl font-black text-slate-900 mb-2">$0</div>
@@ -343,7 +344,7 @@ export default function HomePage() {
             </div>
 
             {/* Pro */}
-            <div className="bg-slate-900 p-10 md:p-12 rounded-[2.5rem] text-white shadow-2xl shadow-blue-900/20 relative flex flex-col text-left overflow-hidden ring-1 ring-white/10">
+            <div className="bg-slate-900 p-6 sm:p-10 md:p-12 rounded-[2rem] sm:rounded-[2.5rem] text-white shadow-2xl shadow-blue-900/20 relative flex flex-col text-left overflow-hidden ring-1 ring-white/10">
               <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
               <div className="absolute top-8 right-8 bg-gradient-to-r from-[#FF7400] to-[#e66900] text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-lg">Más Popular</div>
 
@@ -371,11 +372,11 @@ export default function HomePage() {
       </section>
 
       {/* --- FAQ SECTION --- */}
-      <section className="py-24 bg-white">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-16">
+      <section className="py-16 sm:py-24 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-12 sm:mb-16">
             <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Preguntas Frecuentes</h2>
-            <p className="text-slate-500">Respuestas rápidas para las dudas más comunes.</p>
+            <p className="text-slate-500 text-sm sm:text-base">Respuestas rápidas para las dudas más comunes.</p>
           </div>
 
           <div className="space-y-4 max-w-3xl mx-auto">
@@ -384,13 +385,13 @@ export default function HomePage() {
                 key={faq.id}
                 className="group bg-slate-50 rounded-2xl border border-slate-200/60 [&_summary::-webkit-details-marker]:hidden"
               >
-                <summary className="flex justify-between items-center font-bold cursor-pointer list-none p-6 text-slate-900">
-                  <span>{faq.question}</span>
+                <summary className="flex justify-between items-center gap-4 font-bold cursor-pointer list-none p-5 sm:p-6 text-slate-900">
+                  <span className="text-sm sm:text-base">{faq.question}</span>
                   <span className="transition group-open:rotate-180">
                     <svg fill="none" height="24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="24"><polyline points="6 9 12 15 18 9" /></svg>
                   </span>
                 </summary>
-                <div className="text-slate-600 pb-6 px-6 leading-relaxed">{faq.answer}</div>
+                <div className="text-slate-600 pb-5 sm:pb-6 px-5 sm:px-6 leading-relaxed text-sm sm:text-base">{faq.answer}</div>
               </details>
             ))}
           </div>
@@ -398,23 +399,23 @@ export default function HomePage() {
       </section>
 
       {/* --- FINAL CTA --- */}
-      <section className="py-20 px-6 max-w-6xl mx-auto">
-        <div className="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 rounded-[3rem] p-12 md:p-20 text-center text-white relative overflow-hidden shadow-2xl shadow-blue-900/20 border border-slate-800">
+      <section className="py-16 sm:py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+        <div className="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 rounded-[2rem] sm:rounded-[3rem] p-8 sm:p-12 md:p-20 text-center text-white relative overflow-hidden shadow-2xl shadow-blue-900/20 border border-slate-800">
           {/* Elementos decorativos de fondo */}
           <div className="absolute top-0 left-0 w-full h-full opacity-30 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-400 to-transparent mix-blend-overlay" />
           <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#FF7400]/20 rounded-full blur-3xl" />
           <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl" />
 
           <div className="relative z-10">
-            <h2 className="text-4xl md:text-6xl font-black mb-6 tracking-tight">Eleva el ritmo de tu equipo</h2>
-            <p className="text-blue-100/80 mb-10 max-w-2xl mx-auto text-lg md:text-xl leading-relaxed">
+            <h2 className="text-3xl sm:text-4xl md:text-6xl font-black mb-5 sm:mb-6 tracking-tight">Eleva el ritmo de tu equipo</h2>
+            <p className="text-blue-100/80 mb-8 sm:mb-10 max-w-2xl mx-auto text-base sm:text-lg md:text-xl leading-relaxed">
               Únete a más de 10,000 profesionales que ya han dejado atrás el caos y han recuperado su tiempo. No necesitas tarjeta de crédito para empezar.
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <button onClick={() => router.push("/register")} className="bg-[#FF7400] text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-[#e66900] hover:scale-105 transition-all shadow-lg shadow-[#FF7400]/30">
+            <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
+              <button onClick={() => router.push("/register")} className="bg-[#FF7400] text-white px-8 py-4 rounded-2xl font-bold text-base sm:text-lg hover:bg-[#e66900] hover:scale-105 transition-all shadow-lg shadow-[#FF7400]/30">
                 Crear cuenta gratis
               </button>
-              <button onClick={() => router.push("/contact")} className="bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all">
+              <button onClick={() => router.push("/contact")} className="bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-4 rounded-2xl font-bold text-base sm:text-lg hover:bg-white/20 transition-all">
                 Hablar con ventas
               </button>
             </div>
@@ -423,9 +424,9 @@ export default function HomePage() {
       </section>
 
       {/* --- FOOTER MODERNO --- */}
-      <footer className="bg-white border-t border-slate-200/60 pt-16 pb-8">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
+      <footer className="bg-white border-t border-slate-200/60 pt-12 sm:pt-16 pb-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-12 sm:mb-16">
             <div className="col-span-2 md:col-span-1">
               <div className="font-black text-xl tracking-tight mb-4 flex items-center gap-2">
                 <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white">P</span>
