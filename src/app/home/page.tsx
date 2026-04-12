@@ -97,6 +97,22 @@ export default function HomePage() {
           ))}
         </div>
 
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20">
+          <div className="flex items-center gap-4 px-4 py-3 text-white">
+            <div className="flex items-center gap-2">
+              {images.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  aria-label={`Ir a la imagen ${index + 1}`}
+                  className={`h-3 w-3 rounded-full border border-white/60 transition-all duration-300 ${index === currentSlide ? "bg-white scale-110" : "bg-white/25 hover:bg-white/50"
+                    }`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+
         <button
           onClick={prevSlide}
           className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full text-white opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm"
@@ -113,17 +129,6 @@ export default function HomePage() {
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
         </button>
 
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-3">
-          {images.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentSlide(index)}
-              aria-label={`Ir a la imagen ${index + 1}`}
-              className={`h-2 rounded-full transition-all duration-300 ${index === currentSlide ? "w-8 bg-white" : "w-2 bg-white/50 hover:bg-white/80"
-                }`}
-            />
-          ))}
-        </div>
 
         <div className="relative z-10 w-full max-w-4xl px-6 text-center text-white">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full border border-white/20 bg-white/10 backdrop-blur-md animate-in fade-in slide-in-from-top-4 duration-700">
