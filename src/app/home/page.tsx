@@ -80,6 +80,31 @@ export default function HomePage() {
 
   return (
     <div className="relative bg-white font-sans antialiased text-slate-900 selection:bg-blue-200">
+      {/* INYECCIÓN DE CSS PARA ANIMACIONES DE IA */}
+      <style dangerouslySetInnerHTML={{
+        __html: `
+        @keyframes ai-glow-spin {
+          0% { transform: rotate(0deg) scale(1); filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.6)); }
+          50% { transform: rotate(180deg) scale(1.1); filter: drop-shadow(0 0 15px rgba(168, 85, 247, 0.9)); }
+          100% { transform: rotate(360deg) scale(1); filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.6)); }
+        }
+        @keyframes ai-scan-line {
+          0% { transform: translateY(-50px); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { transform: translateY(350px); opacity: 0; }
+        }
+        .ai-bg-gradient {
+          background-size: 200% 200%;
+          animation: ai-move-gradient 4s ease infinite;
+        }
+        @keyframes ai-move-gradient {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+      `}} />
+
       <div className="relative z-50">
         <Navbar />
       </div>
@@ -131,9 +156,13 @@ export default function HomePage() {
 
 
         <div className="relative z-10 w-full max-w-4xl px-4 sm:px-6 text-center text-white">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 sm:mb-8 rounded-full border border-white/20 bg-white/10 backdrop-blur-md animate-in fade-in slide-in-from-top-4 duration-700">
-            <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-            <span className="text-xs sm:text-sm font-medium">Gestión de proyectos v1.0</span>
+
+          {/* BADGE ANIMADO TIPO IA */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 sm:mb-8 rounded-full border border-indigo-400/30 bg-slate-900/60 backdrop-blur-md animate-in fade-in slide-in-from-top-4 duration-700 shadow-[0_0_20px_rgba(99,102,241,0.2)] hover:bg-slate-800/80 transition-all cursor-default">
+            <svg className="w-4 h-4 text-indigo-400" style={{ animation: 'ai-glow-spin 4s linear infinite' }} viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C12 7.52 16.48 12 22 12C16.48 12 12 16.48 12 22C12 16.48 7.52 12 2 12C7.52 12 12 7.52 12 2Z" />
+            </svg>
+            <span className="text-xs sm:text-sm font-medium text-indigo-100 tracking-wide">Gestión de proyectos potenciada por IA</span>
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight mb-5 sm:mb-6 leading-tight">
@@ -201,7 +230,6 @@ export default function HomePage() {
                 <p className="text-slate-500 max-w-md leading-relaxed">Visualiza el progreso de tu equipo con métricas en tiempo real y dashboards que se adaptan a tu forma de trabajar.</p>
               </div>
               <div className="mt-8 sm:mt-12 bg-slate-50 rounded-xl border border-slate-200/60 h-40 sm:h-48 w-full group-hover:scale-[1.02] transition-transform duration-500 shadow-inner relative overflow-hidden">
-                {/* Decoración abstracta para simular UI */}
                 <div className="absolute top-4 left-4 right-4 h-8 bg-white rounded-lg border border-slate-100 shadow-sm" />
                 <div className="absolute top-16 left-4 right-4 h-24 bg-white rounded-lg border border-slate-100 shadow-sm flex gap-4 p-4">
                   <div className="w-1/3 h-full bg-blue-50 rounded-md" />
@@ -210,12 +238,31 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Tarjeta Métrica IA */}
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-10 text-white shadow-xl shadow-blue-900/20 flex flex-col items-center justify-center text-center relative overflow-hidden group hover:-translate-y-1 transition-all duration-300">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700" />
-              <span className="text-6xl sm:text-7xl font-black mb-4 tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-blue-200">10x</span>
-              <h3 className="text-lg font-bold mb-2">Velocidad IA</h3>
-              <p className="text-blue-100/80 text-sm leading-relaxed">Aceleración en la entrega de tareas repetitivas mediante nuestra inteligencia artificial integrada.</p>
+            {/* TARJETA MÉTRICA IA - VERSIÓN ANIMADA */}
+            <div className="bg-slate-900 rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-10 text-white shadow-2xl flex flex-col items-center justify-center text-center relative overflow-hidden group hover:-translate-y-1 transition-all duration-300 border border-slate-800 hover:border-indigo-500/50">
+              {/* Fondo degradado dinámico */}
+              <div className="absolute inset-0 opacity-20 ai-bg-gradient bg-gradient-to-br from-indigo-600 via-purple-600 to-blue-600" />
+
+              {/* Orbes de luz traseros */}
+              <div className="absolute -top-10 -right-10 w-40 h-40 bg-indigo-500/30 rounded-full blur-3xl animate-[pulse_4s_cubic-bezier(0.4,0,0.6,1)_infinite]" />
+              <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-purple-500/30 rounded-full blur-3xl animate-[pulse_5s_cubic-bezier(0.4,0,0.6,1)_infinite_alternate]" />
+
+              {/* Láser de escaneo IA */}
+              <div className="absolute left-0 top-0 w-full h-[2px] bg-gradient-to-r from-transparent via-indigo-300 to-transparent shadow-[0_0_10px_rgba(165,180,252,0.8)] z-20 pointer-events-none" style={{ animation: 'ai-scan-line 3s linear infinite' }} />
+
+              {/* Núcleo IA Central */}
+              <div className="relative w-16 h-16 mb-4 flex items-center justify-center z-10 group-hover:scale-110 transition-transform duration-500">
+                <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full blur-md animate-pulse opacity-70" />
+                <div className="relative bg-slate-900 w-12 h-12 rounded-full border border-indigo-400/50 flex items-center justify-center shadow-[0_0_15px_rgba(99,102,241,0.5)]">
+                  <svg className="w-6 h-6 text-indigo-300" style={{ animation: 'ai-glow-spin 4s linear infinite' }} viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C12 7.52 16.48 12 22 12C16.48 12 12 16.48 12 22C12 16.48 7.52 12 2 12C7.52 12 12 7.52 12 2Z" />
+                  </svg>
+                </div>
+              </div>
+
+              <span className="relative z-10 text-6xl sm:text-7xl font-black mb-4 tracking-tighter bg-clip-text text-transparent ai-bg-gradient bg-gradient-to-r from-indigo-200 via-white to-purple-200">10x</span>
+              <h3 className="relative z-10 text-lg font-bold mb-2 text-indigo-100">Velocidad IA</h3>
+              <p className="relative z-10 text-indigo-200/70 text-sm leading-relaxed">Aceleración en la entrega de tareas mediante nuestra inteligencia artificial.</p>
             </div>
 
             {/* Tarjeta Automatización */}
@@ -343,28 +390,39 @@ export default function HomePage() {
               <button className="w-full py-4 rounded-2xl border-2 border-slate-200 text-slate-700 font-bold hover:border-slate-300 hover:bg-slate-50 transition-all">Empezar con Starter</button>
             </div>
 
-            {/* Pro */}
-            <div className="bg-slate-900 p-6 sm:p-10 md:p-12 rounded-[2rem] sm:rounded-[2.5rem] text-white shadow-2xl shadow-blue-900/20 relative flex flex-col text-left overflow-hidden ring-1 ring-white/10">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-              <div className="absolute top-8 right-8 bg-gradient-to-r from-[#FF7400] to-[#e66900] text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-lg">Más Popular</div>
+            {/* Pro - CON BORDE ANIMADO IA */}
+            <div className="p-[2px] rounded-[2rem] sm:rounded-[2.5rem] bg-gradient-to-br from-indigo-500 via-purple-500 to-[#FF7400] ai-bg-gradient shadow-2xl shadow-blue-900/20 relative group">
+              <div className="absolute top-8 right-8 bg-gradient-to-r from-[#FF7400] to-[#e66900] text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-lg z-20">Más Popular</div>
 
-              <div className="relative z-10 flex-1 flex flex-col">
-                <h3 className="text-2xl font-bold">Pro Team</h3>
-                <p className="text-slate-400 mt-2 mb-6">Para equipos que necesitan escalar su productividad.</p>
-                <div className="flex items-baseline gap-2 mb-2">
-                  <span className="text-5xl font-black">$15</span>
-                  <span className="text-slate-400">/usuario/mes</span>
+              <div className="bg-slate-900 p-6 sm:p-10 md:p-12 rounded-[calc(2rem-2px)] sm:rounded-[calc(2.5rem-2px)] text-white h-full relative flex flex-col text-left overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+
+                <div className="relative z-10 flex-1 flex flex-col">
+                  <h3 className="text-2xl font-bold flex items-center gap-2">
+                    Pro Team
+                  </h3>
+                  <p className="text-slate-400 mt-2 mb-6">Para equipos que necesitan escalar su productividad.</p>
+                  <div className="flex items-baseline gap-2 mb-2">
+                    <span className="text-5xl font-black">$15</span>
+                    <span className="text-slate-400">/usuario/mes</span>
+                  </div>
+                  <p className="text-sm font-medium text-slate-500 mb-8 uppercase tracking-wide">Facturado anualmente</p>
+
+                  <ul className="space-y-4 mb-10 flex-1">
+                    <li className="flex items-center gap-3 text-slate-300"><svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Todo lo de Starter, más:</li>
+                    <li className="flex items-center gap-3 text-slate-300"><svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Proyectos ilimitados</li>
+                    {/* RESALTANDO IA EN EL PLAN PRO */}
+                    <li className="flex items-center gap-3 text-indigo-200 font-semibold bg-indigo-900/30 p-2 -ml-2 rounded-lg border border-indigo-500/30">
+                      <svg className="w-5 h-5 text-indigo-400 animate-pulse" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C12 7.52 16.48 12 22 12C16.48 12 12 16.48 12 22C12 16.48 7.52 12 2 12C7.52 12 12 7.52 12 2Z" />
+                      </svg>
+                      Asistente de IA (100 prompts/mes)
+                    </li>
+                    <li className="flex items-center gap-3 text-slate-300"><svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Permisos avanzados</li>
+                    <li className="flex items-center gap-3 text-slate-300"><svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Soporte prioritario 24/7</li>
+                  </ul>
+                  <button className="w-full py-4 rounded-2xl bg-blue-600 text-white font-bold hover:bg-blue-500 transition-all shadow-lg shadow-blue-600/30 group-hover:shadow-indigo-500/25">Prueba gratuita de 14 días</button>
                 </div>
-                <p className="text-sm font-medium text-slate-500 mb-8 uppercase tracking-wide">Facturado anualmente</p>
-
-                <ul className="space-y-4 mb-10 flex-1">
-                  <li className="flex items-center gap-3 text-slate-300"><svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Todo lo de Starter, más:</li>
-                  <li className="flex items-center gap-3 text-slate-300"><svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Proyectos ilimitados</li>
-                  <li className="flex items-center gap-3 text-slate-300"><svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Asistente de IA (100 prompts/mes)</li>
-                  <li className="flex items-center gap-3 text-slate-300"><svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Permisos avanzados</li>
-                  <li className="flex items-center gap-3 text-slate-300"><svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Soporte prioritario 24/7</li>
-                </ul>
-                <button className="w-full py-4 rounded-2xl bg-blue-600 text-white font-bold hover:bg-blue-500 transition-all shadow-lg shadow-blue-600/30">Prueba gratuita de 14 días</button>
               </div>
             </div>
           </div>
@@ -401,7 +459,6 @@ export default function HomePage() {
       {/* --- FINAL CTA --- */}
       <section className="py-16 sm:py-20 px-4 sm:px-6 max-w-6xl mx-auto">
         <div className="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 rounded-[2rem] sm:rounded-[3rem] p-8 sm:p-12 md:p-20 text-center text-white relative overflow-hidden shadow-2xl shadow-blue-900/20 border border-slate-800">
-          {/* Elementos decorativos de fondo */}
           <div className="absolute top-0 left-0 w-full h-full opacity-30 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-400 to-transparent mix-blend-overlay" />
           <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#FF7400]/20 rounded-full blur-3xl" />
           <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl" />
