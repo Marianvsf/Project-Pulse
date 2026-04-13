@@ -50,32 +50,81 @@ export default function LoginView() {
     };
 
     return (
-        <div className="flex flex-col md:flex-row">
-            <Navbar />
-            <div className="w-full md:w-5/12 min-h-screen bg-blue-950 flex flex-col items-center justify-center p-10 text-center relative overflow-hidden">
-                {/* Decoración de fondo */}
-                <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-from),_transparent)] from-blue-900 opacity-50" />
+        <div className="flex flex-col md:flex-row min-h-screen">
+            {/* INYECCIÓN DE CSS PARA ANIMACIONES DE IA */}
+            <style dangerouslySetInnerHTML={{
+                __html: `
+                @keyframes ai-pulse-glow {
+                    0%, 100% { opacity: 0.4; transform: scale(1); }
+                    50% { opacity: 0.7; transform: scale(1.1); }
+                }
+                @keyframes ai-float {
+                    0%, 100% { transform: translateY(0px); }
+                    50% { transform: translateY(-10px); }
+                }
+                @keyframes ai-scan {
+                    0% { transform: translateY(-50px); opacity: 0; }
+                    20% { opacity: 1; }
+                    80% { opacity: 1; }
+                    100% { transform: translateY(180px); opacity: 0; }
+                }
+                @keyframes ai-spin-slow {
+                    from { transform: rotate(0deg); }
+                    to { transform: rotate(360deg); }
+                }
+            `}} />
 
-                <div className="relative z-10 flex flex-col items-center">
-                    <div className="relative w-40 h-40 mb-6 drop-shadow-2xl">
+            <div className="absolute top-0 w-full z-50">
+                <Navbar />
+            </div>
+
+            {/* LADO IZQUIERDO: Estilo IA (Panel oscuro animado) */}
+            <div className="w-full md:w-5/12 min-h-[50vh] md:min-h-screen bg-slate-900 flex flex-col items-center justify-center p-10 text-center relative overflow-hidden border-b md:border-b-0 md:border-r border-slate-800 pt-24 md:pt-10">
+                {/* Fondo degradado base */}
+                <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-indigo-900 via-slate-900 to-slate-900 mix-blend-overlay" />
+
+                {/* Orbes flotantes animados */}
+                <div className="absolute top-1/4 left-1/4 w-48 h-48 bg-indigo-600/20 rounded-full blur-[60px]" style={{ animation: 'ai-pulse-glow 6s ease-in-out infinite' }} />
+                <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-purple-600/20 rounded-full blur-[80px]" style={{ animation: 'ai-pulse-glow 5s ease-in-out infinite alternate' }} />
+
+                <div className="relative z-10 flex flex-col items-center" style={{ animation: 'ai-float 6s ease-in-out infinite' }}>
+                    {/* Contenedor del Logo con escáner IA */}
+                    <div className="relative w-40 h-40 mb-8 rounded-2xl p-4 bg-white/5 border border-white/10 backdrop-blur-sm shadow-[0_0_30px_rgba(99,102,241,0.15)] group">
+                        {/* Línea láser de escaneo */}
+                        <div className="absolute inset-0 overflow-hidden rounded-2xl z-20 pointer-events-none">
+                            <div className="w-full h-[2px] bg-indigo-400/80 shadow-[0_0_15px_rgba(129,140,248,1)]" style={{ animation: 'ai-scan 3s linear infinite' }} />
+                        </div>
+
                         <Image
-                            className="object-contain"
+                            className="object-contain drop-shadow-2xl relative z-10 transition-transform duration-500 group-hover:scale-105"
                             src="/IconLogo.png"
                             alt="Logo Project Pulse"
                             fill
                             priority
                         />
                     </div>
-                    <h2 className="text-2xl font-bold text-white mb-2">¡Hola de nuevo!</h2>
-                    <p className="text-blue-200 text-sm">
-                        Ingresa a tu panel para continuar gestionando tus proyectos.
+
+                    <h2 className="text-3xl font-black text-white mb-3 tracking-tight">¡Hola de nuevo!</h2>
+                    <p className="text-indigo-200/80 text-sm md:text-base max-w-xs leading-relaxed">
+                        Ingresa a tu entorno seguro y continúa impulsando el ritmo de tus proyectos.
                     </p>
                 </div>
             </div>
 
             {/* LADO DERECHO: Formulario (Blanco) */}
-            <div className="w-full md:w-7/12 p-8 md:p-12 flex flex-col justify-center bg-white">
+            <div className="w-full md:w-7/12 p-8 md:p-12 flex flex-col justify-center bg-white relative pt-12 md:pt-12">
                 <div className="max-w-sm mx-auto w-full">
+
+                    {/* Badge sutil de seguridad IA */}
+                    <div className="flex justify-center mb-6">
+                        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-50 border border-slate-200 text-xs font-medium text-slate-500">
+                            <svg className="w-3.5 h-3.5 text-indigo-500" style={{ animation: 'ai-spin-slow 4s linear infinite' }} viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C12 7.52 16.48 12 22 12C16.48 12 12 16.48 12 22C12 16.48 7.52 12 2 12C7.52 12 12 7.52 12 2Z" />
+                            </svg>
+                            Conexión Segura
+                        </div>
+                    </div>
+
                     <h1 className="text-3xl font-bold text-center text-gray-900 mb-2">Iniciar Sesión</h1>
                     <p className="text-gray-500 mb-8 text-center text-sm">Introduce tus credenciales para acceder.</p>
 
