@@ -97,7 +97,7 @@ export default function HomePage() {
           ))}
         </div>
 
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 w-full px-4 sm:px-0">
+        <div className="absolute bottom-55 left-1/2 -translate-x-1/2 z-20 w-full px-4 sm:px-0">
           <div className="flex items-center justify-center gap-4 px-4 py-3 text-white">
             <div className="flex items-center gap-2">
               {images.map((_, index) => (
