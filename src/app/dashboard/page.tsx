@@ -14,9 +14,18 @@ import CreateProjectModal from "../views/CreateProjectModal";
 export default function DashboardUser() {
     const { data: session, status } = useSession();
     const router = useRouter();
-    const [greeting, setGreeting] = useState("Hola");
+    const [greeting, setGreeting] = useState("");
     const [currentSlide, setCurrentSlide] = useState(0);
     const [showCreateModal, setShowCreateModal] = useState(false);
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+        const hour = new Date().getHours();
+        if (hour < 12) setGreeting("Buenos días");
+        else if (hour < 18) setGreeting("Buenas tardes");
+        else setGreeting("Buenas noches");
+    }, []);
 
     const galleryImages = [
         "/assets/fot1.jpg",
@@ -32,13 +41,6 @@ export default function DashboardUser() {
     const loadProjects = useProjectStore((s) => s.loadProjects);
     const isLoadingProjects = useProjectStore((s) => s.isLoading);
     const projectError = useProjectStore((s) => s.error);
-
-    useEffect(() => {
-        const hour = new Date().getHours();
-        if (hour < 12) setGreeting("Buenos días");
-        else if (hour < 18) setGreeting("Buenas tardes");
-        else setGreeting("Buenas noches");
-    }, []);
 
     useEffect(() => {
         void loadProjects();
@@ -116,7 +118,8 @@ export default function DashboardUser() {
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
                     <div>
                         <h1 className="text-2xl md:text-4xl font-bold text-blue-950 mb-2 tracking-tight">
-                            {greeting}, <span className="text-[#FF7400]">{capitalize(session.user?.name)}</span>
+                            {isMounted ? greeting : " "},
+                            <span className="text-[#FF7400]"> {capitalize(session.user?.name)}.</span>
                         </h1>
                         <p className="text-slate-600 max-w-2xl text-lg">
                             Bienvenido a tu panel. Aquí tienes el resumen de tus proyectos.
