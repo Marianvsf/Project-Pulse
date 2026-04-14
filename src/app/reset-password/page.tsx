@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import Navbar from "../components/navbar/Navbar";
@@ -9,7 +9,7 @@ type ResetPasswordResponse = {
     message: string;
 };
 
-function ResetPasswordContent() {
+export default function ResetPasswordPage() {
     const searchParams = useSearchParams();
     const router = useRouter();
     const token = useMemo(() => searchParams.get("token") || "", [searchParams]);
@@ -148,13 +148,5 @@ function ResetPasswordContent() {
                 </div>
             </div>
         </div>
-    );
-}
-
-export default function ResetPasswordPage() {
-    return (
-        <Suspense fallback={<div className="min-h-screen bg-white" />}>
-            <ResetPasswordContent />
-        </Suspense>
     );
 }
