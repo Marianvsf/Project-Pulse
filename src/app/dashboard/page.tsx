@@ -17,6 +17,10 @@ export default function DashboardUser() {
     const [greeting, setGreeting] = useState("");
     const [currentSlide, setCurrentSlide] = useState(0);
     const [showCreateModal, setShowCreateModal] = useState(false);
+    const [editingProjectId, setEditingProjectId] = useState<string | null>(null);
+    const [editingStatus, setEditingStatus] = useState<string>("");
+    const [isSavingStatus, setIsSavingStatus] = useState(false);
+    const [statusUpdateError, setStatusUpdateError] = useState<string | null>(null);
     const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
@@ -38,6 +42,7 @@ export default function DashboardUser() {
     const statusFilter = useProjectStore((s) => s.statusFilter);
     const setSearchTerm = useProjectStore((s) => s.setSearchTerm);
     const setStatusFilter = useProjectStore((s) => s.setStatusFilter);
+    const setProjects = useProjectStore((s) => s.setProjects);
     const loadProjects = useProjectStore((s) => s.loadProjects);
     const isLoadingProjects = useProjectStore((s) => s.isLoading);
     const projectError = useProjectStore((s) => s.error);
@@ -57,6 +62,68 @@ export default function DashboardUser() {
     const capitalize = (name?: string | null) => {
         if (!name) return undefined;
         return name.charAt(0).toUpperCase() + name.slice(1);
+    };
+
+    const getStatusOptions = (currentStatus?: string) => {
+        const baseOptions = ["Pendiente", "En progreso", "Completado"];
+        if (currentStatus && !baseOptions.includes(currentStatus)) {
+            return [currentStatus, ...baseOptions];
+        }
+        return baseOptions;
+    };
+
+    const startEditingStatus = (project: Project) => {
+        setEditingProjectId(project.id);
+        setEditingStatus(project.estado);
+        setStatusUpdateError(null);
+    };
+
+    const cancelEditingStatus = () => {
+        setEditingProjectId(null);
+        setEditingStatus("");
+        setStatusUpdateError(null);
+    };
+
+    const saveProjectStatus = async (projectId: string) => {
+        setIsSavingStatus(true);
+        setStatusUpdateError(null);
+
+        try {
+            const response = await fetch(`/api/projects/${projectId}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ estado: editingStatus }),
+            });
+
+            const data = (await response.json()) as {
+                message?: string;
+                project?: Project;
+            };
+
+            if (!response.ok || !data.project) {
+                throw new Error(data.message || "No se pudo actualizar el estado");
+            }
+
+            const updatedProject: Project = {
+                ...data.project,
+                tareas: Array.isArray(data.project.tareas) ? data.project.tareas : [],
+                equipo: Array.isArray(data.project.equipo) ? data.project.equipo : [],
+            };
+
+            setProjects(
+                projects.map((project) =>
+                    project.id === projectId ? updatedProject : project,
+                ),
+            );
+            setEditingProjectId(null);
+            setEditingStatus("");
+        } catch (error) {
+            setStatusUpdateError(
+                error instanceof Error ? error.message : "No se pudo actualizar el estado",
+            );
+        } finally {
+            setIsSavingStatus(false);
+        }
     };
 
     const handleSearch = useCallback((searchTerm: string, filters: { status?: string }) => {
@@ -214,7 +281,7 @@ export default function DashboardUser() {
                             {Allprojects.length > 0 ? (
                                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                                     {Allprojects.map((project) => (
-                                        <div key={project.id} className="group hover:-translate-y-1 transition-transform duration-300">
+                                        <div key={project.id} className="group relative hover:-translate-y-1 transition-transform duration-300">
                                             <ProjectCard
                                                 id={project.id}
                                                 nombre={project.nombre}
@@ -223,6 +290,68 @@ export default function DashboardUser() {
                                                 descripcion={project.descripcion}
                                                 fechaFin={project.fechaFin}
                                             />
+
+                                            <button
+                                                type="button"
+                                                onClick={() => startEditingStatus(project)}
+                                                className="absolute right-4 top-4 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-blue-700 shadow-sm ring-1 ring-blue-100 transition-all hover:bg-blue-50 hover:text-blue-800"
+                                            >
+                                                Cambiar estado
+                                            </button>
+
+                                            {editingProjectId === project.id && (
+                                                <div className="mt-3 rounded-2xl border border-blue-100 bg-white p-4 shadow-lg shadow-blue-100/50">
+                                                    <div className="flex items-center justify-between gap-3 mb-3">
+                                                        <div>
+                                                            <p className="text-sm font-semibold text-slate-900">Editar estado</p>
+                                                            <p className="text-xs text-slate-500">Ajuste rápido sin abrir el detalle.</p>
+                                                        </div>
+                                                        <button
+                                                            type="button"
+                                                            onClick={cancelEditingStatus}
+                                                            className="text-xs font-semibold text-slate-400 hover:text-slate-600"
+                                                        >
+                                                            Cerrar
+                                                        </button>
+                                                    </div>
+
+                                                    <select
+                                                        value={editingStatus}
+                                                        onChange={(event) => setEditingStatus(event.target.value)}
+                                                        className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm outline-none transition-all focus:border-transparent focus:bg-white focus:ring-2 focus:ring-blue-500"
+                                                    >
+                                                        {getStatusOptions(project.estado).map((option) => (
+                                                            <option key={option} value={option}>
+                                                                {option}
+                                                            </option>
+                                                        ))}
+                                                    </select>
+
+                                                    <div className="mt-3 flex items-center justify-end gap-2">
+                                                        <button
+                                                            type="button"
+                                                            onClick={cancelEditingStatus}
+                                                            className="rounded-xl px-4 py-2 text-sm font-semibold text-slate-600 transition-colors hover:bg-slate-100"
+                                                        >
+                                                            Cancelar
+                                                        </button>
+                                                        <button
+                                                            type="button"
+                                                            disabled={isSavingStatus}
+                                                            onClick={() => void saveProjectStatus(project.id)}
+                                                            className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70"
+                                                        >
+                                                            {isSavingStatus ? "Guardando..." : "Guardar"}
+                                                        </button>
+                                                    </div>
+
+                                                    {statusUpdateError && (
+                                                        <p className="mt-3 rounded-xl bg-red-50 px-3 py-2 text-xs font-medium text-red-700">
+                                                            {statusUpdateError}
+                                                        </p>
+                                                    )}
+                                                </div>
+                                            )}
                                         </div>
                                     ))}
                                 </div>
