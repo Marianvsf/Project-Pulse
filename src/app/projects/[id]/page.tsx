@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, use } from "react";
+import { useEffect, useState, use, type ChangeEvent, type FormEvent } from "react";
 import Link from "next/link";
 import UserNavbar from "@/app/components/navbar/UserNavbar";
 import {
@@ -12,7 +12,11 @@ import {
   ArrowLeft,
   ChevronRight,
   ClipboardList,
-  Target
+  Target,
+  PencilLine,
+  Plus,
+  Trash2,
+  Save,
 } from "lucide-react";
 
 // --- Interfaces ---
@@ -33,6 +37,49 @@ interface ProjectDetailsPageProps {
   params: Promise<{ id: string }>;
 }
 
+type TaskFormItem = {
+  id: number;
+  nombre: string;
+  completado: boolean;
+};
+
+type ProjectFormState = {
+  nombre: string;
+  descripcion: string;
+  estado: string;
+  prioridad: string;
+  progreso: string;
+  fechaInicio: string;
+  fechaFin: string;
+  equipo: string;
+  tareas: TaskFormItem[];
+};
+
+const toDateInputValue = (value?: string) => {
+  if (!value) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  return date.toISOString().slice(0, 10);
+};
+
+const projectToFormState = (project: Project): ProjectFormState => ({
+  nombre: project.nombre,
+  descripcion: project.descripcion,
+  estado: project.estado,
+  prioridad: project.prioridad,
+  progreso: String(project.progreso ?? 0),
+  fechaInicio: toDateInputValue(project.fechaInicio),
+  fechaFin: toDateInputValue(project.fechaFin),
+  equipo: Array.isArray(project.equipo) ? project.equipo.join(", ") : "",
+  tareas: Array.isArray(project.tareas)
+    ? project.tareas.map((task) => ({
+      id: Number(task.id),
+      nombre: task.nombre,
+      completado: Boolean(task.completado),
+    }))
+    : [],
+});
+
 // --- Componente Principal (Manejo de Params Next.js 15) ---
 export default function ProjectDetailsPage({ params }: ProjectDetailsPageProps) {
   const resolvedParams = use(params);
@@ -46,6 +93,10 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const [formData, setFormData] = useState<ProjectFormState | null>(null);
 
   useEffect(() => {
     const loadProject = async () => {
@@ -83,6 +134,139 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
       loadProject();
     }
   }, [projectId]);
+
+  useEffect(() => {
+    if (project) {
+      setFormData(projectToFormState(project));
+    }
+  }, [project]);
+
+  const handleFieldChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+  ) => {
+    const { name, value } = event.target;
+
+    setFormData((current) => {
+      if (!current) return current;
+      return {
+        ...current,
+        [name]: value,
+      };
+    });
+  };
+
+  const updateTask = (taskId: number, field: keyof TaskFormItem, value: string | boolean) => {
+    setFormData((current) => {
+      if (!current) return current;
+
+      return {
+        ...current,
+        tareas: current.tareas.map((task) =>
+          task.id === taskId ? { ...task, [field]: value } : task,
+        ),
+      };
+    });
+  };
+
+  const addTask = () => {
+    setFormData((current) => {
+      if (!current) return current;
+
+      const nextTaskId =
+        current.tareas.length > 0
+          ? Math.max(...current.tareas.map((task) => task.id)) + 1
+          : 1;
+
+      return {
+        ...current,
+        tareas: [...current.tareas, { id: nextTaskId, nombre: "", completado: false }],
+      };
+    });
+  };
+
+  const removeTask = (taskId: number) => {
+    setFormData((current) => {
+      if (!current) return current;
+
+      return {
+        ...current,
+        tareas: current.tareas.filter((task) => task.id !== taskId),
+      };
+    });
+  };
+
+  const handleCancelEdit = () => {
+    if (project) {
+      setFormData(projectToFormState(project));
+    }
+    setSaveError(null);
+    setIsEditing(false);
+  };
+
+  const handleSaveProject = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!formData) {
+      return;
+    }
+
+    setIsSaving(true);
+    setSaveError(null);
+
+    try {
+      const payload = {
+        nombre: formData.nombre.trim(),
+        descripcion: formData.descripcion.trim(),
+        estado: formData.estado,
+        prioridad: formData.prioridad,
+        progreso: Number(formData.progreso) || 0,
+        fechaInicio: formData.fechaInicio,
+        fechaFin: formData.fechaFin,
+        equipo: formData.equipo
+          .split(",")
+          .map((item) => item.trim())
+          .filter(Boolean),
+        tareas: formData.tareas
+          .map((task) => ({
+            id: task.id,
+            nombre: task.nombre.trim(),
+            completado: task.completado,
+          }))
+          .filter((task) => task.nombre.length > 0),
+      };
+
+      const response = await fetch(`/api/projects/${projectId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = (await response.json()) as {
+        message?: string;
+        project?: Project;
+      };
+
+      if (!response.ok || !data.project) {
+        throw new Error(data.message || "No se pudo actualizar el proyecto");
+      }
+
+      const updatedProject: Project = {
+        ...data.project,
+        tareas: Array.isArray(data.project.tareas) ? data.project.tareas : [],
+        equipo: Array.isArray(data.project.equipo) ? data.project.equipo : [],
+      };
+
+      setProject(updatedProject);
+      setFormData(projectToFormState(updatedProject));
+      setIsEditing(false);
+    } catch (err) {
+      setSaveError(err instanceof Error ? err.message : "No se pudo actualizar el proyecto");
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   const formatDate = (s?: string) => {
     if (!s) return '-- --';
@@ -170,24 +354,226 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
               </h1>
             </div>
 
-            {/* Widget de Progreso */}
-            <div className="bg-white p-5 rounded-[2rem] shadow-sm border border-slate-100 flex items-center gap-5">
-              <div className="text-right">
-                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Status Actual</p>
-                <p className="text-3xl font-black text-slate-800 leading-none">{project.progreso}%</p>
-              </div>
-              <div className="w-16 h-16 relative flex items-center justify-center">
-                <svg className="w-full h-full transform -rotate-90">
-                  <circle cx="32" cy="32" r="28" stroke="currentColor" strokeWidth="5" fill="transparent" className="text-slate-100" />
-                  <circle cx="32" cy="32" r="28" stroke="currentColor" strokeWidth="5" fill="transparent"
-                    strokeDasharray={175.9} strokeDashoffset={175.9 - (175.9 * project.progreso) / 100}
-                    className="text-blue-600 transition-all duration-1000 ease-in-out" strokeLinecap="round" />
-                </svg>
-                <div className="absolute w-2 h-2 bg-blue-600 rounded-full" />
+            <div className="flex flex-col items-stretch gap-3">
+              {!isEditing ? (
+                <button
+                  type="button"
+                  onClick={() => setIsEditing(true)}
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-blue-100 bg-white px-4 py-2 text-sm font-semibold text-blue-700 shadow-sm transition-all hover:border-blue-200 hover:bg-blue-50"
+                >
+                  <PencilLine size={16} />
+                  Editar proyecto
+                </button>
+              ) : (
+                <div className="inline-flex items-center justify-center gap-2 rounded-full border border-amber-100 bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-700 shadow-sm">
+                  Modo edición activo
+                </div>
+              )}
+
+              <div className="bg-white p-5 rounded-[2rem] shadow-sm border border-slate-100 flex items-center gap-5">
+                <div className="text-right">
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Status Actual</p>
+                  <p className="text-3xl font-black text-slate-800 leading-none">{project.progreso}%</p>
+                </div>
+                <div className="w-16 h-16 relative flex items-center justify-center">
+                  <svg className="w-full h-full transform -rotate-90">
+                    <circle cx="32" cy="32" r="28" stroke="currentColor" strokeWidth="5" fill="transparent" className="text-slate-100" />
+                    <circle cx="32" cy="32" r="28" stroke="currentColor" strokeWidth="5" fill="transparent"
+                      strokeDasharray={175.9} strokeDashoffset={175.9 - (175.9 * project.progreso) / 100}
+                      className="text-blue-600 transition-all duration-1000 ease-in-out" strokeLinecap="round" />
+                  </svg>
+                  <div className="absolute w-2 h-2 bg-blue-600 rounded-full" />
+                </div>
               </div>
             </div>
           </div>
         </header>
+
+        {isEditing && formData && (
+          <section className="mb-8 bg-white rounded-[2.5rem] p-8 md:p-10 shadow-sm border border-blue-100">
+            <form onSubmit={handleSaveProject} className="space-y-8">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                  <h2 className="text-2xl font-black text-slate-900">Editar proyecto</h2>
+                  <p className="text-sm text-slate-500 mt-1">Puedes modificar todos los datos desde este formulario.</p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={handleCancelEdit}
+                    className="px-5 py-2.5 rounded-xl text-slate-600 font-semibold hover:bg-slate-100 transition-all"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isSaving}
+                    className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 font-semibold text-white shadow-lg shadow-blue-200 transition-all hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70"
+                  >
+                    {isSaving ? (
+                      <span className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                    ) : (
+                      <Save size={16} />
+                    )}
+                    Guardar cambios
+                  </button>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
+                <div className="xl:col-span-2 space-y-2">
+                  <label className="block text-sm font-semibold text-slate-700">Nombre</label>
+                  <input
+                    name="nombre"
+                    value={formData.nombre}
+                    onChange={handleFieldChange}
+                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none transition-all focus:border-transparent focus:bg-white focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-sm font-semibold text-slate-700">Estado</label>
+                  <select
+                    name="estado"
+                    value={formData.estado}
+                    onChange={handleFieldChange}
+                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none transition-all focus:border-transparent focus:bg-white focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="En progreso">En progreso</option>
+                    <option value="Completado">Completado</option>
+                  </select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-sm font-semibold text-slate-700">Prioridad</label>
+                  <select
+                    name="prioridad"
+                    value={formData.prioridad}
+                    onChange={handleFieldChange}
+                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none transition-all focus:border-transparent focus:bg-white focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="Baja">Baja</option>
+                    <option value="Media">Media</option>
+                    <option value="Alta">Alta</option>
+                  </select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-sm font-semibold text-slate-700">Progreso (%)</label>
+                  <input
+                    name="progreso"
+                    type="number"
+                    min={0}
+                    max={100}
+                    value={formData.progreso}
+                    onChange={handleFieldChange}
+                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none transition-all focus:border-transparent focus:bg-white focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-sm font-semibold text-slate-700">Fecha de inicio</label>
+                  <input
+                    name="fechaInicio"
+                    type="date"
+                    value={formData.fechaInicio}
+                    onChange={handleFieldChange}
+                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none transition-all focus:border-transparent focus:bg-white focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-sm font-semibold text-slate-700">Fecha límite</label>
+                  <input
+                    name="fechaFin"
+                    type="date"
+                    value={formData.fechaFin}
+                    onChange={handleFieldChange}
+                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none transition-all focus:border-transparent focus:bg-white focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-slate-700">Descripción</label>
+                <textarea
+                  name="descripcion"
+                  rows={4}
+                  value={formData.descripcion}
+                  onChange={handleFieldChange}
+                  className="w-full resize-none rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none transition-all focus:border-transparent focus:bg-white focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex items-center justify-between gap-4">
+                  <label className="block text-sm font-semibold text-slate-700">Equipo</label>
+                  <span className="text-xs font-medium text-slate-400">Separado por comas</span>
+                </div>
+                <input
+                  name="equipo"
+                  value={formData.equipo}
+                  onChange={handleFieldChange}
+                  className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none transition-all focus:border-transparent focus:bg-white focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex items-center justify-between gap-4">
+                  <label className="block text-sm font-semibold text-slate-700">Tareas</label>
+                  <button
+                    type="button"
+                    onClick={addTask}
+                    className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-slate-800"
+                  >
+                    <Plus size={16} />
+                    Añadir tarea
+                  </button>
+                </div>
+
+                <div className="space-y-3">
+                  {formData.tareas.length > 0 ? (
+                    formData.tareas.map((task) => (
+                      <div key={task.id} className="flex items-start gap-4 rounded-2xl border border-slate-100 bg-slate-50/80 p-4">
+                        <input
+                          type="checkbox"
+                          checked={task.completado}
+                          onChange={(event) => updateTask(task.id, "completado", event.target.checked)}
+                          className="mt-3 h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                        />
+                        <input
+                          value={task.nombre}
+                          onChange={(event) => updateTask(task.id, "nombre", event.target.value)}
+                          placeholder="Nombre de la tarea"
+                          className={`flex-1 rounded-xl border px-4 py-3 text-sm outline-none transition-all focus:border-transparent focus:bg-white focus:ring-2 focus:ring-blue-500 ${task.completado ? "border-emerald-200 bg-white text-slate-500 line-through" : "border-slate-200 bg-white text-slate-800"}`}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removeTask(task.id)}
+                          className="rounded-xl border border-transparent p-3 text-slate-400 transition-all hover:bg-white hover:text-rose-500"
+                          aria-label="Eliminar tarea"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-4 py-6 text-center text-sm text-slate-400">
+                      No hay tareas. Puedes añadir la primera con el botón superior.
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {saveError && (
+                <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                  {saveError}
+                </div>
+              )}
+            </form>
+          </section>
+        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
@@ -224,8 +610,8 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
               <div className="grid gap-4">
                 {project.tareas.length > 0 ? project.tareas.map((tarea) => (
                   <div key={tarea.id} className={`group flex items-center gap-5 p-5 rounded-2xl border transition-all ${tarea.completado
-                      ? 'bg-slate-50 border-transparent'
-                      : 'bg-white border-slate-100 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-500/5'
+                    ? 'bg-slate-50 border-transparent'
+                    : 'bg-white border-slate-100 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-500/5'
                     }`}>
                     <div className={`w-7 h-7 rounded-xl border-2 flex items-center justify-center shrink-0 transition-colors ${tarea.completado ? 'bg-emerald-500 border-emerald-500' : 'border-slate-200'
                       }`}>
