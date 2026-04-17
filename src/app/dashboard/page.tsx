@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import ProjectCard from "../components/ProjectCard";
 import UserNavbar from "../components/navbar/UserNavbar";
-import { useCallback, useMemo, useState, useEffect } from "react";
+import { useCallback, useMemo, useState, useEffect, useRef } from "react";
 import Charts from "../components/Charts";
 import useProjectStore, { Project } from "../../../store/useProjectStore";
 import Image from "next/image";
@@ -22,6 +22,7 @@ export default function DashboardUser() {
     const [isSavingStatus, setIsSavingStatus] = useState(false);
     const [statusUpdateError, setStatusUpdateError] = useState<string | null>(null);
     const [isMounted, setIsMounted] = useState(false);
+    const projectsSectionRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         setIsMounted(true);
@@ -63,6 +64,8 @@ export default function DashboardUser() {
         if (!name) return undefined;
         return name.charAt(0).toUpperCase() + name.slice(1);
     };
+
+    const normalizeStatus = useCallback((status: string) => status.trim().toLowerCase(), []);
 
     const getStatusOptions = (currentStatus?: string) => {
         const baseOptions = ["Pendiente", "En progreso", "Completado"];
@@ -131,10 +134,17 @@ export default function DashboardUser() {
         setStatusFilter(filters.status);
     }, [setSearchTerm, setStatusFilter]);
 
+    const applyStatusAndFocusProjects = useCallback((status?: string) => {
+        setSearchTerm("");
+        setStatusFilter(status);
+        projectsSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, [setSearchTerm, setStatusFilter]);
+
     const Allprojects = useMemo(() => {
         let filtered = projects as Project[];
         if (statusFilter) {
-            filtered = filtered.filter((project) => project.estado === statusFilter);
+            const normalizedFilter = normalizeStatus(statusFilter);
+            filtered = filtered.filter((project) => normalizeStatus(project.estado) === normalizedFilter);
         }
         if (searchTerm) {
             filtered = filtered.filter((project: Project) =>
@@ -142,15 +152,15 @@ export default function DashboardUser() {
             );
         }
         return filtered;
-    }, [projects, searchTerm, statusFilter]);
+    }, [projects, searchTerm, statusFilter, normalizeStatus]);
 
     // Cálculo rápido de estadísticas
     const stats = useMemo(() => {
         const total = projects.length;
-        const completados = projects.filter((p: Project) => p.estado === 'Completado').length;
-        const enProgreso = projects.filter((p: Project) => p.estado === 'En Progreso' || p.estado === 'En progreso').length;
+        const completados = projects.filter((p: Project) => normalizeStatus(p.estado) === "completado").length;
+        const enProgreso = projects.filter((p: Project) => normalizeStatus(p.estado) === "en progreso").length;
         return { total, completados, enProgreso };
-    }, [projects]);
+    }, [projects, normalizeStatus]);
 
     useEffect(() => {
         if (status !== "loading" && !session) {
@@ -205,7 +215,11 @@ export default function DashboardUser() {
 
                         {/* TARJETAS DE ESTADÍSTICAS */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div className="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4 hover:shadow-md transition-shadow">
+                            <button
+                                type="button"
+                                onClick={() => applyStatusAndFocusProjects(undefined)}
+                                className="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4 hover:shadow-md transition-shadow text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-300"
+                            >
                                 <div className="p-3 bg-blue-50 text-blue-600 rounded-lg">
                                     <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
                                 </div>
@@ -213,8 +227,12 @@ export default function DashboardUser() {
                                     <p className="text-slate-500 text-sm font-medium">Total Proyectos</p>
                                     <h3 className="text-2xl font-bold text-blue-950">{stats.total}</h3>
                                 </div>
-                            </div>
-                            <div className="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4 hover:shadow-md transition-shadow">
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => applyStatusAndFocusProjects("En progreso")}
+                                className="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4 hover:shadow-md transition-shadow text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-300"
+                            >
                                 <div className="p-3 bg-orange-50 text-orange-500 rounded-lg">
                                     <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                                 </div>
@@ -222,8 +240,12 @@ export default function DashboardUser() {
                                     <p className="text-slate-500 text-sm font-medium">En Progreso</p>
                                     <h3 className="text-2xl font-bold text-blue-950">{stats.enProgreso}</h3>
                                 </div>
-                            </div>
-                            <div className="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4 hover:shadow-md transition-shadow">
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => applyStatusAndFocusProjects("Completado")}
+                                className="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4 hover:shadow-md transition-shadow text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-300"
+                            >
                                 <div className="p-3 bg-green-50 text-green-600 rounded-lg">
                                     <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                                 </div>
@@ -231,7 +253,7 @@ export default function DashboardUser() {
                                     <p className="text-slate-500 text-sm font-medium">Completados</p>
                                     <h3 className="text-2xl font-bold text-blue-950">{stats.completados}</h3>
                                 </div>
-                            </div>
+                            </button>
                         </div>
 
                         {/* GRÁFICAS */}
@@ -250,7 +272,7 @@ export default function DashboardUser() {
                         </div>
 
                         {/* LISTA DE PROYECTOS */}
-                        <div>
+                        <div ref={projectsSectionRef}>
                             <div className="mb-6">
                                 <div className="flex items-center justify-between gap-3 mb-2">
                                     <h2 className="text-2xl font-bold text-blue-950">Galería de Proyectos</h2>
@@ -294,7 +316,7 @@ export default function DashboardUser() {
                                             <button
                                                 type="button"
                                                 onClick={() => startEditingStatus(project)}
-                                                className="absolute right-4 top-4 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-blue-700 shadow-sm ring-1 ring-blue-100 transition-all hover:bg-blue-50 hover:text-blue-800"
+                                                className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-blue-700 shadow-sm ring-1 ring-blue-100 transition-all hover:bg-blue-50 hover:text-blue-800"
                                             >
                                                 Cambiar estado
                                             </button>
