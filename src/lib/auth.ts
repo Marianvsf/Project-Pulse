@@ -4,6 +4,12 @@ import bcrypt from "bcryptjs";
 import prisma from "@/lib/prisma";
 import { SESSION_MAX_AGE_SECONDS } from "@/lib/session";
 
+const nextAuthSecret =
+  process.env.NEXTAUTH_SECRET
+  || (process.env.NODE_ENV === "development"
+    ? "project-pulse-dev-only-secret-change-in-production"
+    : undefined);
+
 export const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
@@ -52,5 +58,5 @@ export const authOptions: AuthOptions = {
   jwt: {
     maxAge: SESSION_MAX_AGE_SECONDS,
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: nextAuthSecret,
 };
