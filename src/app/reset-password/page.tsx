@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { Suspense, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import Navbar from "../components/navbar/Navbar";
@@ -10,6 +10,14 @@ type ResetPasswordResponse = {
 };
 
 export default function ResetPasswordPage() {
+    return (
+        <Suspense fallback={<ResetPasswordFallback />}>
+            <ResetPasswordContent />
+        </Suspense>
+    );
+}
+
+function ResetPasswordContent() {
     const searchParams = useSearchParams();
     const router = useRouter();
     const token = useMemo(() => searchParams.get("token") || "", [searchParams]);
@@ -147,6 +155,14 @@ export default function ResetPasswordPage() {
                     </form>
                 </div>
             </div>
+        </div>
+    );
+}
+
+function ResetPasswordFallback() {
+    return (
+        <div className="min-h-screen bg-white flex items-center justify-center">
+            <p className="text-sm text-gray-500">Cargando...</p>
         </div>
     );
 }
