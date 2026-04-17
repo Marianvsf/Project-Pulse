@@ -27,6 +27,12 @@ interface UserNavbarProps {
     showSearchAndFilter?: boolean;
 }
 
+interface FilterContentProps {
+    filters: Filters;
+    onFilterChange: (key: keyof Filters, value: string) => void;
+    onClear: () => void;
+}
+
 const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) => {
     const router = useRouter();
     const { data: session } = useSession();
@@ -218,7 +224,7 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
 };
 
 // Subcomponente para no repetir el contenido de los filtros
-const FilterContent = ({ filters, onFilterChange, onClear }: any) => (
+const FilterContent = ({ filters, onFilterChange, onClear }: FilterContentProps) => (
     <>
         {[
             { id: 'En progreso', icon: Activity, label: 'En progreso', color: 'text-amber-400' },
