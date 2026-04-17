@@ -3,6 +3,8 @@
 import { signOut, useSession } from "next-auth/react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
+    SESSION_ACTIVE_USER_WINDOW_MS,
+    SESSION_ACTIVITY_REFRESH_THROTTLE_MS,
     SESSION_WARNING_WINDOW_MS,
 } from "@/lib/session";
 
@@ -29,6 +31,9 @@ export default function SessionTimeoutManager() {
     const [remaining, setRemaining] = useState(0);
     const [isExtending, setIsExtending] = useState(false);
     const warnedForExpiryRef = useRef<string | null>(null);
+    const lastUserActivityAtRef = useRef(Date.now());
+    const lastAutoRefreshAtRef = useRef(0);
+    const isAutoRefreshingRef = useRef(false);
 
     const expiresAt = useMemo(() => {
         if (!session?.expires) {
@@ -70,6 +75,90 @@ export default function SessionTimeoutManager() {
 
         return () => window.clearInterval(interval);
     }, [expiresAt, session?.expires, status]);
+
+    useEffect(() => {
+        if (status !== "authenticated") {
+            return;
+        }
+
+        const markActivity = () => {
+            lastUserActivityAtRef.current = Date.now();
+        };
+
+        const markVisibleActivity = () => {
+            if (document.visibilityState === "visible") {
+                markActivity();
+            }
+        };
+
+        const events: Array<keyof WindowEventMap> = [
+            "click",
+            "keydown",
+            "mousemove",
+            "scroll",
+            "touchstart",
+            "focus",
+        ];
+
+        events.forEach((eventName) => {
+            window.addEventListener(eventName, markActivity, { passive: true });
+        });
+        document.addEventListener("visibilitychange", markVisibleActivity);
+
+        return () => {
+            events.forEach((eventName) => {
+                window.removeEventListener(eventName, markActivity);
+            });
+            document.removeEventListener("visibilitychange", markVisibleActivity);
+        };
+    }, [status]);
+
+    useEffect(() => {
+        if (status !== "authenticated" || expiresAt === null) {
+            return;
+        }
+
+        const tryAutoRefresh = async () => {
+            const now = Date.now();
+            const timeLeft = expiresAt - now;
+
+            if (timeLeft <= 0) {
+                return;
+            }
+
+            const isUserRecentlyActive =
+                now - lastUserActivityAtRef.current <= SESSION_ACTIVE_USER_WINDOW_MS;
+            const isWithinWarningWindow = timeLeft <= SESSION_WARNING_WINDOW_MS;
+            const hasPassedThrottleWindow =
+                now - lastAutoRefreshAtRef.current >= SESSION_ACTIVITY_REFRESH_THROTTLE_MS;
+
+            if (
+                !isUserRecentlyActive
+                || !isWithinWarningWindow
+                || !hasPassedThrottleWindow
+                || isAutoRefreshingRef.current
+            ) {
+                return;
+            }
+
+            isAutoRefreshingRef.current = true;
+            try {
+                await update();
+                lastAutoRefreshAtRef.current = Date.now();
+                warnedForExpiryRef.current = null;
+                setIsWarningOpen(false);
+            } finally {
+                isAutoRefreshingRef.current = false;
+            }
+        };
+
+        void tryAutoRefresh();
+        const interval = window.setInterval(() => {
+            void tryAutoRefresh();
+        }, 5000);
+
+        return () => window.clearInterval(interval);
+    }, [expiresAt, status, update]);
 
     const handleExtendSession = async () => {
         setIsExtending(true);
