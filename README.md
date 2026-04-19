@@ -1,63 +1,166 @@
-<h1 align="center">📊 Project-Pulse</h1>
+# Project-Pulse
 
-<p align="center">
-  <strong>Gestión de proyectos inteligente: Monitoreo en tiempo real y análisis visual.</strong>
-  <br />
-  Dashboard de alto rendimiento construido con el stack más moderno de React.
-</p>
+Aplicacion web para gestion de proyectos con autenticacion por credenciales, recuperacion de contraseña y panel de seguimiento.
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Next.js_15-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" />
-  <img src="https://img.shields.io/badge/React_19-61DAFB?style=for-the-badge&logo=react&logoColor=black" />
-  <img src="https://img.shields.io/badge/Tailwind_CSS_v4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" />
-  <img src="https://img.shields.io/badge/Chart.js-FF6384?style=for-the-badge&logo=chartdotjs&logoColor=white" />
-</p>
+## Estado actual del proyecto
 
----
+Este repositorio ya no funciona solo con mock data. Actualmente usa:
 
-## 🚀 Descripción General
+- Next.js 15 (App Router) con React 19 y TypeScript
+- NextAuth (Credentials Provider) con sesiones JWT
+- Prisma ORM con SQLite local
+- API Routes en Next.js para autenticacion y proyectos
+- Zustand para estado de proyectos en cliente
+- Chart.js + react-chartjs-2 para visualizaciones
 
-**Project-Pulse** es una plataforma de gestión de proyectos diseñada para ofrecer claridad operativa. Con un enfoque en la **arquitectura limpia** y la **interactividad fluida**, permite a los usuarios rastrear el ciclo de vida de sus tareas mediante una interfaz minimalista.
+## Funcionalidades principales
 
-Este proyecto utiliza una arquitectura de **Mock Data (JSON)**, simulando el comportamiento de una API REST de grado de producción. Es una demostración técnica de manejo de estados, visualización de datos complejos y optimización de rendimiento en el lado del cliente.
+- Registro e inicio de sesion con contraseña hasheada (bcryptjs)
+- Recuperacion de contraseña con token temporal (hash SHA-256)
+- Dashboard con tarjetas y graficos de avance
+- CRUD de proyectos desde endpoints internos
+- Formularios de creacion/edicion de proyecto
+- Expiracion y manejo de sesion en frontend
 
----
+## Stack tecnologico
 
-## ✨ Características Principales
+| Tecnologia                   | Uso                                         |
+| ---------------------------- | ------------------------------------------- |
+| Next.js 15                   | Framework fullstack (frontend + API routes) |
+| React 19                     | UI                                          |
+| TypeScript                   | Tipado estatico                             |
+| NextAuth 4                   | Autenticacion y sesiones                    |
+| Prisma 6                     | Acceso a base de datos                      |
+| SQLite                       | Base local de desarrollo                    |
+| Tailwind CSS 4               | Estilos                                     |
+| Zustand 5                    | Estado global en cliente                    |
+| Chart.js 4 + react-chartjs-2 | Graficas                                    |
 
-* **📈 Dashboard Analítico:** Visualización del progreso mediante gráficos dinámicos impulsados por **Chart.js**.
-* **🔄 Gestión de Estados (CRUD):** Flujo completo para visualizar y actualizar el ciclo de vida del proyecto (*To Do*, *In Progress*, *Done*).
-* **⚡ Arquitectura Next.js 15:** Aprovechamiento de las últimas optimizaciones de renderizado y estructuración de carpetas.
-* **🏗️ Mock API System:** Simulación de persistencia de datos mediante archivos JSON, permitiendo un desarrollo desacoplado y ágil.
-* **📱 Diseño Adaptativo:** Interfaz totalmente responsiva construida con **Tailwind CSS v4** para una experiencia consistente en cualquier dispositivo.
+## Estructura relevante
 
----
+```text
+src/
+  app/
+    api/
+      auth/
+        [...nextauth]/route.ts
+        register/route.ts
+        forgot-password/route.ts
+        reset-password/route.ts
+      projects/
+        route.ts
+        [id]/route.ts
+    dashboard/
+    login/
+    register/
+    forgot-password/
+    reset-password/
+    projects/[id]/
+  lib/
+    auth.ts
+    prisma.ts
+    session.ts
+prisma/
+  schema.prisma
+  migrations/
+```
 
-## 🛠️ Stack Tecnológico
+## Modelo de datos (Prisma)
 
-| Herramienta | Versión | Función Principal |
-| :--- | :--- | :--- |
-| **Next.js** | v15.4+ | Framework SSR/Static Generation y Routing. |
-| **React** | v19.0+ | Biblioteca base para UI interactiva. |
-| **Chart.js** | v5.3+ | Motor de renderizado de gráficas de progreso. |
-| **Tailwind CSS** | v4.0 | Estilizado basado en utilidades de última generación. |
-| **TypeScript** | Latest | Tipado estático para escalabilidad del código. |
+### User
 
----
+- id
+- email (unique)
+- hashedPassword
+- resetPasswordToken (nullable)
+- resetPasswordExpiresAt (nullable)
+- name (nullable)
+- createdAt
 
-## 📂 Arquitectura y Reutilización
+### Project
 
-El proyecto implementa el principio **DRY** y **Separation of Concerns**:
+- id
+- nombre
+- descripcion
+- estado
+- prioridad
+- progreso (0-100)
+- tareas (Json)
+- equipo (Json)
+- fechaInicio
+- fechaFin
+- createdAt
+- updatedAt
 
-* **UI Components:** Componentes atómicos (Botones, Inputs, Badges) aislados.
-* **Features:** Módulos lógicos por funcionalidad (Gráficos, Listados de Proyectos).
-* **Hooks/Utils:** Lógica compartida para el filtrado de datos y cálculos de progreso.
+## Requisitos
 
----
+- Node.js 20+
+- npm 10+
 
-## 💻 Instalación y Configuración
+## Configuracion local
 
-1. **Clonar el repositorio:**
-   ```bash
-   git clone [https://github.com/Marianvsf/Project-Pulse.git](https://github.com/Marianvsf/Project-Pulse.git)
-   cd Project-Pulse
+1. Instalar dependencias:
+
+```bash
+npm install
+```
+
+2. Crear archivo `.env.local` con estas variables:
+
+```bash
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=pon-un-secreto-largo-y-unico
+```
+
+Nota: en desarrollo existe un fallback de secreto para NextAuth, pero en entornos reales debes configurar `NEXTAUTH_SECRET`.
+
+3. Aplicar migraciones y generar cliente Prisma:
+
+```bash
+npx prisma migrate dev
+```
+
+4. Levantar el proyecto:
+
+```bash
+npm run dev
+```
+
+5. Abrir en navegador:
+
+```text
+http://localhost:3000
+```
+
+## Scripts disponibles
+
+- `npm run dev`: inicia entorno de desarrollo
+- `npm run build`: genera cliente Prisma y compila Next.js
+- `npm run start`: ejecuta la build en modo produccion
+- `npm run lint`: corre reglas de lint
+
+## Endpoints API
+
+### Auth
+
+- `POST /api/auth/register`
+- `POST /api/auth/forgot-password`
+- `POST /api/auth/reset-password`
+- `GET|POST /api/auth/[...nextauth]`
+
+### Projects
+
+- `GET /api/projects`
+- `POST /api/projects`
+- `GET /api/projects/:id`
+- `PATCH /api/projects/:id`
+
+## Notas de desarrollo
+
+- El cliente Prisma se genera en `src/generated/prisma`.
+- Si ajustas reglas de ESLint, manten ignorado `src/generated/**` por ser codigo generado.
+- El log de `forgot-password` imprime la URL de reseteo en desarrollo para pruebas locales.
+
+## Licencia
+
+Uso academico y de aprendizaje.
