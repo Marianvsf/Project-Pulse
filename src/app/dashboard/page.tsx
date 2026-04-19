@@ -129,6 +129,11 @@ export default function DashboardUser() {
         }
     };
 
+    const currentEditingProject = useMemo(
+        () => projects.find((project) => project.id === editingProjectId) ?? null,
+        [projects, editingProjectId],
+    );
+
     const handleSearch = useCallback((searchTerm: string, filters: { status?: string }) => {
         setSearchTerm(searchTerm);
         setStatusFilter(filters.status);
@@ -316,64 +321,11 @@ export default function DashboardUser() {
                                             <button
                                                 type="button"
                                                 onClick={() => startEditingStatus(project)}
-                                                className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-blue-700 shadow-sm ring-1 ring-blue-100 transition-all hover:bg-blue-50 hover:text-blue-800"
+                                                className="absolute left-5 top-40 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-blue-700 shadow-sm ring-1 ring-blue-100 transition-all hover:bg-blue-50 hover:text-blue-800"
                                             >
                                                 Cambiar estado
                                             </button>
 
-                                            {editingProjectId === project.id && (
-                                                <div className="mt-3 rounded-2xl border border-blue-100 bg-white p-4 shadow-lg shadow-blue-100/50">
-                                                    <div className="flex items-center justify-between gap-3 mb-3">
-                                                        <div>
-                                                            <p className="text-sm font-semibold text-slate-900">Editar estado</p>
-                                                            <p className="text-xs text-slate-500">Ajuste rápido sin abrir el detalle.</p>
-                                                        </div>
-                                                        <button
-                                                            type="button"
-                                                            onClick={cancelEditingStatus}
-                                                            className="text-xs font-semibold text-slate-400 hover:text-slate-600"
-                                                        >
-                                                            Cerrar
-                                                        </button>
-                                                    </div>
-
-                                                    <select
-                                                        value={editingStatus}
-                                                        onChange={(event) => setEditingStatus(event.target.value)}
-                                                        className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm outline-none transition-all focus:border-transparent focus:bg-white focus:ring-2 focus:ring-blue-500"
-                                                    >
-                                                        {getStatusOptions(project.estado).map((option) => (
-                                                            <option key={option} value={option}>
-                                                                {option}
-                                                            </option>
-                                                        ))}
-                                                    </select>
-
-                                                    <div className="mt-3 flex items-center justify-end gap-2">
-                                                        <button
-                                                            type="button"
-                                                            onClick={cancelEditingStatus}
-                                                            className="rounded-xl px-4 py-2 text-sm font-semibold text-slate-600 transition-colors hover:bg-slate-100"
-                                                        >
-                                                            Cancelar
-                                                        </button>
-                                                        <button
-                                                            type="button"
-                                                            disabled={isSavingStatus}
-                                                            onClick={() => void saveProjectStatus(project.id)}
-                                                            className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70"
-                                                        >
-                                                            {isSavingStatus ? "Guardando..." : "Guardar"}
-                                                        </button>
-                                                    </div>
-
-                                                    {statusUpdateError && (
-                                                        <p className="mt-3 rounded-xl bg-red-50 px-3 py-2 text-xs font-medium text-red-700">
-                                                            {statusUpdateError}
-                                                        </p>
-                                                    )}
-                                                </div>
-                                            )}
                                         </div>
                                     ))}
                                 </div>
@@ -466,6 +418,64 @@ export default function DashboardUser() {
             {/* Renderizado condicional del modal externo */}
             {showCreateModal && (
                 <CreateProjectModal onClose={() => setShowCreateModal(false)} />
+            )}
+
+            {currentEditingProject && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 p-4">
+                    <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl">
+                        <div className="mb-4 flex items-start justify-between gap-3">
+                            <div>
+                                <p className="text-sm font-semibold text-slate-900">Editar estado</p>
+                                <p className="mt-1 text-xs text-slate-500">
+                                    {currentEditingProject.nombre}
+                                </p>
+                            </div>
+                            <button
+                                type="button"
+                                onClick={cancelEditingStatus}
+                                className="rounded-lg px-2 py-1 text-xs font-semibold text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-700"
+                            >
+                                Cerrar
+                            </button>
+                        </div>
+
+                        <select
+                            value={editingStatus}
+                            onChange={(event) => setEditingStatus(event.target.value)}
+                            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm outline-none transition-all focus:border-transparent focus:bg-white focus:ring-2 focus:ring-blue-500"
+                        >
+                            {getStatusOptions(currentEditingProject.estado).map((option) => (
+                                <option key={option} value={option}>
+                                    {option}
+                                </option>
+                            ))}
+                        </select>
+
+                        {statusUpdateError && (
+                            <p className="mt-3 rounded-xl bg-red-50 px-3 py-2 text-xs font-medium text-red-700">
+                                {statusUpdateError}
+                            </p>
+                        )}
+
+                        <div className="mt-5 flex items-center justify-end gap-2">
+                            <button
+                                type="button"
+                                onClick={cancelEditingStatus}
+                                className="rounded-xl px-4 py-2 text-sm font-semibold text-slate-600 transition-colors hover:bg-slate-100"
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                type="button"
+                                disabled={isSavingStatus}
+                                onClick={() => void saveProjectStatus(currentEditingProject.id)}
+                                className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70"
+                            >
+                                {isSavingStatus ? "Guardando..." : "Guardar"}
+                            </button>
+                        </div>
+                    </div>
+                </div>
             )}
 
         </div>
