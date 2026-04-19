@@ -85,8 +85,8 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
             <nav className="fixed top-4 inset-x-0 z-50 mx-4 lg:mx-auto max-w-7xl h-16 md:h-[72px] rounded-2xl border border-white/20 bg-slate-950/60 backdrop-blur-xl shadow-2xl transition-all duration-300">
                 <div className="flex items-center justify-between h-full px-3 md:px-6">
 
-                    {/* IZQUIERDA: Back y Logo */}
-                    <div className="flex items-center gap-2 md:gap-4">
+                    {/* IZQUIERDA: Back y Logo (Ancho fijo en LG para centrar el medio) */}
+                    <div className="flex items-center gap-2 md:gap-4 flex-none lg:w-64">
                         <button
                             onClick={() => router.back()}
                             className="p-2 text-white/70 hover:bg-white/10 hover:text-white rounded-xl transition-all active:scale-90"
@@ -94,15 +94,15 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
                             <ChevronLeft size={22} />
                         </button>
 
-                        <div className="relative w-8 h-8 hidden lg:block shrink-0">
+                        <div className="relative w-8 h-8 hidden sm:block shrink-0">
                             <Image fill src="/Logo.png" className="object-contain" alt="Logo" />
                         </div>
                     </div>
 
                     {/* CENTRO: Buscador Desktop (Solo visible en LG+) */}
                     {showSearchAndFilter && (
-                        <div className="hidden lg:flex items-center gap-2 flex-1 max-w-md px-4">
-                            <div className="flex items-center gap-3 bg-white/5 border border-white/10 px-4 py-2 rounded-xl w-full focus-within:bg-white/10 focus-within:ring-2 focus-within:ring-blue-500/50 transition-all">
+                        <div className="hidden lg:flex items-center justify-center flex-1 px-4">
+                            <div className="flex items-center gap-3 bg-white/5 border border-white/10 px-4 py-2 rounded-xl w-full max-w-md focus-within:bg-white/10 focus-within:ring-2 focus-within:ring-blue-500/50 transition-all">
                                 <Search size={18} className="text-white/40" />
                                 <input
                                     type="text"
@@ -115,11 +115,11 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
                         </div>
                     )}
 
-                    {/* DERECHA: Acciones y Perfil */}
-                    <div className="flex items-center gap-1 md:gap-3">
+                    {/* DERECHA: Acciones y Perfil (Ancho fijo en LG para equilibrar) */}
+                    <div className="flex items-center justify-end gap-1 md:gap-3 flex-none lg:w-64">
                         {showSearchAndFilter && (
                             <>
-                                {/* Icono lupa - visible hasta LG */}
+                                {/* Icono lupa - visible en móvil y tablet (oculto en LG cuando aparece la barra) */}
                                 <button
                                     onClick={() => setShowMobileSearch(true)}
                                     className="lg:hidden p-2.5 text-white/70 hover:bg-white/10 rounded-xl"
@@ -127,7 +127,7 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
                                     <Search size={20} />
                                 </button>
 
-                                {/* Filtro Desktop - Oculto en móviles (se mueve al modal de búsqueda) */}
+                                {/* Filtro Desktop */}
                                 <div className="hidden md:block relative" ref={filterMenuRef}>
                                     <button
                                         onClick={() => setShowFilterMenu(!showFilterMenu)}
@@ -139,7 +139,6 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
 
                                     {showFilterMenu && (
                                         <div className="absolute top-14 right-0 w-64 rounded-2xl bg-slate-900 border border-white/10 shadow-2xl p-2 animate-in fade-in zoom-in-95">
-                                            {/* Contenido del filtro igual al tuyo */}
                                             <FilterContent filters={filters} onFilterChange={handleFilterChange} onClear={clearFilters} />
                                         </div>
                                     )}
@@ -159,7 +158,7 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
                                     <User size={18} className="text-white" />
                                 </div>
                                 <div className="text-left hidden sm:block">
-                                    <p className="text-xs font-bold text-white leading-tight truncate max-w-[80px]">
+                                    <p className="text-xs font-bold text-white leading-tight truncate max-w-[100px]">
                                         {session?.user?.name || "Usuario"}
                                     </p>
                                 </div>
@@ -181,7 +180,7 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
                 </div>
             </nav>
 
-            {/* BÚSQUEDA MÓVIL OPTIMIZADA */}
+            {/* BÚSQUEDA MÓVIL Y TABLET */}
             {showMobileSearch && (
                 <div className="fixed inset-0 z-[70] bg-slate-950 p-4 lg:hidden animate-in slide-in-from-bottom-5 duration-300">
                     <div className="flex flex-col gap-6 max-w-2xl mx-auto">
@@ -223,7 +222,6 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
     );
 };
 
-// Subcomponente para no repetir el contenido de los filtros
 const FilterContent = ({ filters, onFilterChange, onClear }: FilterContentProps) => (
     <>
         {[
