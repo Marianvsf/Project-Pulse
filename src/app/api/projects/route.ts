@@ -25,6 +25,15 @@ const isValidDate = (value?: string) => {
   return !Number.isNaN(date.getTime());
 };
 
+const calculateProgressFromTasks = (tasks?: TaskItem[]) => {
+  if (!Array.isArray(tasks) || tasks.length === 0) {
+    return null;
+  }
+
+  const completedTasks = tasks.filter((task) => task.completado).length;
+  return Math.round((completedTasks / tasks.length) * 100);
+};
+
 export async function GET() {
   try {
     const projects = await prisma.project.findMany({
@@ -55,6 +64,16 @@ export async function POST(request: Request) {
       fechaInicio,
       fechaFin,
     } = body;
+    const normalizedTasks = Array.isArray(tareas)
+      ? tareas
+          .map((task) => ({
+            id: Number(task.id),
+            nombre: String(task.nombre ?? "").trim(),
+            completado: Boolean(task.completado),
+          }))
+          .filter((task) => task.nombre.length > 0)
+      : [];
+    const progressFromTasks = calculateProgressFromTasks(normalizedTasks);
 
     if (!nombre || !descripcion || !fechaInicio || !fechaFin) {
       return NextResponse.json(
@@ -78,8 +97,10 @@ export async function POST(request: Request) {
         descripcion,
         estado,
         prioridad,
-        progreso: Math.min(Math.max(Number(progreso) || 0, 0), 100),
-        tareas,
+        progreso:
+          progressFromTasks ??
+          Math.min(Math.max(Number(progreso) || 0, 0), 100),
+        tareas: normalizedTasks,
         equipo,
         fechaInicio: new Date(fechaInicio),
         fechaFin: new Date(fechaFin),
