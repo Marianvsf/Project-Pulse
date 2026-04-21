@@ -26,6 +26,15 @@ const isValidDate = (value?: string) => {
   return !Number.isNaN(date.getTime());
 };
 
+const calculateProgressFromTasks = (tasks?: TaskItem[]) => {
+  if (!Array.isArray(tasks) || tasks.length === 0) {
+    return null;
+  }
+
+  const completedTasks = tasks.filter((task) => task.completado).length;
+  return Math.round((completedTasks / tasks.length) * 100);
+};
+
 const clampProgress = (value?: number) => {
   const progress = Number(value);
   if (Number.isNaN(progress)) return 0;
@@ -35,7 +44,7 @@ const clampProgress = (value?: number) => {
 const normalizeTextArray = (value?: string[]) =>
   Array.isArray(value) ? value.map((item) => item.trim()).filter(Boolean) : [];
 
-const normalizeTasks = (value?: TaskItem[]) =>
+const normalizeTasks = (value?: unknown) =>
   Array.isArray(value)
     ? value
         .map((task) => ({
@@ -96,11 +105,14 @@ export async function PATCH(
     const descripcion = body.descripcion?.trim() || existingProject.descripcion;
     const estado = body.estado?.trim() || existingProject.estado;
     const prioridad = body.prioridad?.trim() || existingProject.prioridad;
-    const progreso = clampProgress(body.progreso ?? existingProject.progreso);
     const tareas =
       body.tareas !== undefined
         ? normalizeTasks(body.tareas)
-        : existingProject.tareas;
+        : normalizeTasks(existingProject.tareas);
+    const progressFromTasks = calculateProgressFromTasks(tareas);
+    const progreso =
+      progressFromTasks ??
+      clampProgress(body.progreso ?? existingProject.progreso);
     const equipo =
       body.equipo !== undefined
         ? normalizeTextArray(body.equipo)
