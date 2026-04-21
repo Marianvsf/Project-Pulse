@@ -62,12 +62,21 @@ const toDateInputValue = (value?: string) => {
   return date.toISOString().slice(0, 10);
 };
 
+const calculateProgressFromTasks = (tasks?: { completado: boolean }[]) => {
+  if (!Array.isArray(tasks) || tasks.length === 0) {
+    return null;
+  }
+
+  const completedTasks = tasks.filter((task) => task.completado).length;
+  return Math.round((completedTasks / tasks.length) * 100);
+};
+
 const projectToFormState = (project: Project): ProjectFormState => ({
   nombre: project.nombre,
   descripcion: project.descripcion,
   estado: project.estado,
   prioridad: project.prioridad,
-  progreso: String(project.progreso ?? 0),
+  progreso: String(calculateProgressFromTasks(project.tareas) ?? project.progreso ?? 0),
   fechaInicio: toDateInputValue(project.fechaInicio),
   fechaFin: toDateInputValue(project.fechaFin),
   equipo: Array.isArray(project.equipo) ? project.equipo.join(", ") : "",
@@ -159,11 +168,16 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
     setFormData((current) => {
       if (!current) return current;
 
+      const updatedTasks = current.tareas.map((task) =>
+        task.id === taskId ? { ...task, [field]: value } : task,
+      );
+      const derivedProgress = calculateProgressFromTasks(updatedTasks);
+      const fallbackProgress = Number(current.progreso) || 0;
+
       return {
         ...current,
-        tareas: current.tareas.map((task) =>
-          task.id === taskId ? { ...task, [field]: value } : task,
-        ),
+        tareas: updatedTasks,
+        progreso: String(derivedProgress ?? fallbackProgress),
       };
     });
   };
@@ -176,10 +190,14 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
         current.tareas.length > 0
           ? Math.max(...current.tareas.map((task) => task.id)) + 1
           : 1;
+      const nextTasks = [...current.tareas, { id: nextTaskId, nombre: "", completado: false }];
+      const derivedProgress = calculateProgressFromTasks(nextTasks);
+      const fallbackProgress = Number(current.progreso) || 0;
 
       return {
         ...current,
-        tareas: [...current.tareas, { id: nextTaskId, nombre: "", completado: false }],
+        tareas: nextTasks,
+        progreso: String(derivedProgress ?? fallbackProgress),
       };
     });
   };
@@ -188,9 +206,14 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
     setFormData((current) => {
       if (!current) return current;
 
+      const updatedTasks = current.tareas.filter((task) => task.id !== taskId);
+      const derivedProgress = calculateProgressFromTasks(updatedTasks);
+      const fallbackProgress = Number(current.progreso) || 0;
+
       return {
         ...current,
-        tareas: current.tareas.filter((task) => task.id !== taskId),
+        tareas: updatedTasks,
+        progreso: String(derivedProgress ?? fallbackProgress),
       };
     });
   };
@@ -219,7 +242,7 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
         descripcion: formData.descripcion.trim(),
         estado: formData.estado,
         prioridad: formData.prioridad,
-        progreso: Number(formData.progreso) || 0,
+        progreso: calculateProgressFromTasks(formData.tareas) ?? (Number(formData.progreso) || 0),
         fechaInicio: formData.fechaInicio,
         fechaFin: formData.fechaFin,
         equipo: formData.equipo
@@ -286,6 +309,21 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
       default: return 'bg-emerald-100 text-emerald-700 border-emerald-200';
     }
   };
+
+  const displayedProgress = (() => {
+    const sourceTasks = isEditing && formData ? formData.tareas : project?.tareas ?? [];
+    const progressFromTasks = calculateProgressFromTasks(sourceTasks);
+
+    if (progressFromTasks !== null) {
+      return progressFromTasks;
+    }
+
+    if (isEditing && formData) {
+      return Number(formData.progreso) || 0;
+    }
+
+    return project?.progreso ?? 0;
+  })();
 
   // --- Estados de Carga (Skeleton) ---
   if (loading) {
@@ -373,13 +411,13 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
               <div className="bg-white p-5 rounded-[2rem] shadow-sm border border-slate-100 flex items-center gap-5">
                 <div className="text-right">
                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Status Actual</p>
-                  <p className="text-3xl font-black text-slate-800 leading-none">{project.progreso}%</p>
+                  <p className="text-3xl font-black text-slate-800 leading-none">{displayedProgress}%</p>
                 </div>
                 <div className="w-16 h-16 relative flex items-center justify-center">
                   <svg className="w-full h-full transform -rotate-90">
                     <circle cx="32" cy="32" r="28" stroke="currentColor" strokeWidth="5" fill="transparent" className="text-slate-100" />
                     <circle cx="32" cy="32" r="28" stroke="currentColor" strokeWidth="5" fill="transparent"
-                      strokeDasharray={175.9} strokeDashoffset={175.9 - (175.9 * project.progreso) / 100}
+                      strokeDasharray={175.9} strokeDashoffset={175.9 - (175.9 * displayedProgress) / 100}
                       className="text-blue-600 transition-all duration-1000 ease-in-out" strokeLinecap="round" />
                   </svg>
                   <div className="absolute w-2 h-2 bg-blue-600 rounded-full" />
