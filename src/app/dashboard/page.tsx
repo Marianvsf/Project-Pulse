@@ -403,7 +403,7 @@ export default function DashboardUser() {
                             <div className="bg-blue-950 rounded-2xl p-6 text-white shadow-lg">
                                 <h3 className="font-bold text-lg mb-2">¿Necesitas ayuda?</h3>
                                 <p className="text-blue-200 text-sm mb-4">Contacta con soporte técnico si tienes dudas con tu panel.</p>
-                                <button className="w-full py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm font-medium transition-colors border border-white/10">
+                                <button onClick={() => router.push('/support')} className="w-full py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm font-medium transition-colors border border-white/10">
                                     Contactar Soporte
                                 </button>
                             </div>
