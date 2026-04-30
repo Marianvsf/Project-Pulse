@@ -5,6 +5,19 @@ import Navbar from "../components/navbar/Navbar";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import FaqBot from "../components/FaqBot";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Sparkles,
+  LayoutDashboard,
+  Zap,
+  Users,
+  CheckCircle2,
+  XCircle,
+  ArrowRight,
+  ChevronDown,
+  Bot
+} from "lucide-react";
 
 type FAQEntry = {
   id: number;
@@ -14,48 +27,12 @@ type FAQEntry = {
 };
 
 const faqEntries: FAQEntry[] = [
-  {
-    id: 1,
-    question: "¿Cómo funciona la seguridad y privacidad?",
-    answer:
-      "Usamos cifrado AES-256, backups automáticos diarios y controles de acceso por rol para proteger toda la información.",
-    keywords: ["seguridad", "privacidad", "cifrado", "datos", "backup"],
-  },
-  {
-    id: 2,
-    question: "¿Puedo cancelar mi plan en cualquier momento?",
-    answer:
-      "Sí. Puedes cancelar en cualquier momento desde tu cuenta, sin penalización ni contratos a largo plazo.",
-    keywords: ["cancelar", "plan", "suscripcion", "pago", "facturacion"],
-  },
-  {
-    id: 3,
-    question: "¿Se integra con otras herramientas?",
-    answer:
-      "Sí. Tenemos integración con Slack, Google Workspace, GitHub y más herramientas mediante API y Zapier.",
-    keywords: ["integracion", "slack", "github", "google", "zapier", "api"],
-  },
-  {
-    id: 4,
-    question: "¿Qué incluye el plan Starter?",
-    answer:
-      "El plan Starter incluye hasta 3 proyectos activos, tareas ilimitadas, colaboradores básicos y app móvil.",
-    keywords: ["starter", "gratis", "incluye", "proyectos", "tareas"],
-  },
-  {
-    id: 5,
-    question: "¿Qué incluye el plan Pro Team?",
-    answer:
-      "Pro Team incluye todo lo de Starter, más proyectos ilimitados, asistente IA, permisos avanzados y soporte prioritario 24/7.",
-    keywords: ["pro", "team", "precio", "planes", "soporte", "ia"],
-  },
-  {
-    id: 6,
-    question: "¿Cómo empiezo a usar Project Pulse?",
-    answer:
-      "Puedes crear una cuenta gratis, configurar tu primer proyecto y empezar a invitar miembros del equipo en pocos minutos.",
-    keywords: ["empezar", "registro", "cuenta", "crear", "inicio"],
-  },
+  { id: 1, question: "¿Cómo funciona la seguridad y privacidad?", answer: "Usamos cifrado AES-256, backups automáticos diarios y controles de acceso por rol.", keywords: ["seguridad", "privacidad", "cifrado"] },
+  { id: 2, question: "¿Puedo cancelar mi plan en cualquier momento?", answer: "Sí. Puedes cancelar en cualquier momento desde tu cuenta, sin penalizaciones.", keywords: ["cancelar", "plan"] },
+  { id: 3, question: "¿Se integra con otras herramientas?", answer: "Sí. Tenemos integración nativa con Slack, Google Workspace, GitHub y más herramientas mediante API.", keywords: ["integracion", "slack", "github"] },
+  { id: 4, question: "¿Qué incluye el plan Starter?", answer: "El plan Starter incluye hasta 3 proyectos activos, tareas ilimitadas, colaboradores básicos y app móvil.", keywords: ["starter", "gratis"] },
+  { id: 5, question: "¿Qué incluye el plan Pro Team?", answer: "Pro Team incluye todo lo de Starter, más proyectos ilimitados, asistente IA, permisos avanzados y soporte prioritario.", keywords: ["pro", "team", "ia"] },
+  { id: 6, question: "¿Cómo empiezo a usar Project Pulse?", answer: "Crea una cuenta gratis, configura tu primer proyecto e invita a tu equipo en pocos minutos.", keywords: ["empezar", "registro"] },
 ];
 
 export default function HomePage() {
@@ -63,238 +40,200 @@ export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const images = ["/assets/fot1.jpg", "/assets/fot2.jpg", "/assets/fot3.jpg"];
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  };
+  const nextSlide = () => setCurrentSlide((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  const prevSlide = () => setCurrentSlide((prev) => (prev === 0 ? images.length - 1 : prev - 1));
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-    }, 5000);
+    const interval = setInterval(nextSlide, 6000);
     return () => clearInterval(interval);
-  }, [images.length, currentSlide]);
+  }, [images.length]);
 
   return (
-    <div className="relative bg-white font-sans antialiased text-slate-900 selection:bg-blue-200">
-      {/* INYECCIÓN DE CSS PARA ANIMACIONES DE IA */}
+    <div className="relative bg-[#fafafa] font-sans antialiased text-slate-900 selection:bg-indigo-200 selection:text-indigo-900">
+
+      {/* INYECCIÓN DE CSS PARA ANIMACIONES AVANZADAS */}
       <style dangerouslySetInnerHTML={{
         __html: `
-        @keyframes ai-glow-spin {
-          0% { transform: rotate(0deg) scale(1); filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.6)); }
-          50% { transform: rotate(180deg) scale(1.1); filter: drop-shadow(0 0 15px rgba(168, 85, 247, 0.9)); }
-          100% { transform: rotate(360deg) scale(1); filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.6)); }
+        @keyframes blob {
+          0% { transform: translate(0px, 0px) scale(1); }
+          33% { transform: translate(30px, -50px) scale(1.1); }
+          66% { transform: translate(-20px, 20px) scale(0.9); }
+          100% { transform: translate(0px, 0px) scale(1); }
         }
-        @keyframes ai-scan-line {
-          0% { transform: translateY(-50px); opacity: 0; }
-          10% { opacity: 1; }
-          90% { opacity: 1; }
-          100% { transform: translateY(350px); opacity: 0; }
-        }
-        .ai-bg-gradient {
-          background-size: 200% 200%;
-          animation: ai-move-gradient 4s ease infinite;
-        }
-        @keyframes ai-move-gradient {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
+        .animate-blob { animation: blob 7s infinite; }
+        .animation-delay-2000 { animation-delay: 2s; }
+        .animation-delay-4000 { animation-delay: 4s; }
+        .glass-panel { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.5); }
       `}} />
 
       <div className="relative z-50">
         <Navbar />
       </div>
+
+      {/* --- HERO SECTION --- */}
       <header className="relative w-full min-h-screen flex items-center justify-center overflow-hidden group">
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 bg-slate-950">
           {images.map((image, index) => (
             <div
               key={index}
-              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentSlide ? "opacity-100" : "opacity-0"
+              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0"
                 }`}
             >
-              <Image src={image} alt="Hero Background" fill className="object-cover" priority={index === 0} />
-              <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-[1px]" />
+              <Image
+                src={image}
+                alt="Hero Background"
+                fill
+                className={`object-cover transition-transform duration-[10000ms] ease-linear ${index === currentSlide ? "scale-110" : "scale-100"}`}
+                priority={index === 0}
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-900/60 to-[#fafafa] mix-blend-multiply" />
             </div>
           ))}
         </div>
 
-        <div className="absolute bottom-55 left-1/2 -translate-x-1/2 z-20 w-full px-4 sm:px-0">
-          <div className="flex items-center justify-center gap-4 px-4 py-3 text-white">
-            <div className="flex items-center gap-2">
-              {images.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentSlide(index)}
-                  aria-label={`Ir a la imagen ${index + 1}`}
-                  className={`h-3 w-3 rounded-full border border-white/60 transition-all duration-300 ${index === currentSlide ? "bg-white scale-110" : "bg-white/25 hover:bg-white/50"
-                    }`}
-                />
-              ))}
-            </div>
-          </div>
+        {/* Controles del Carrusel */}
+        <div className="absolute bottom-32 sm:bottom-12 left-1/2 -translate-x-1/2 z-30 flex items-center gap-3">
+          {images.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`h-1.5 rounded-full transition-all duration-500 ${index === currentSlide ? "w-8 bg-white" : "w-2 bg-white/30 hover:bg-white/50"
+                }`}
+            />
+          ))}
         </div>
 
-        <button
-          onClick={prevSlide}
-          className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full text-white opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm"
-          aria-label="Imagen anterior"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+        <button onClick={prevSlide} className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full text-white/50 hover:text-white hover:bg-white/10 opacity-0 group-hover:opacity-100 transition-all backdrop-blur-md border border-transparent hover:border-white/10">
+          <ChevronLeft size={28} />
+        </button>
+        <button onClick={nextSlide} className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full text-white/50 hover:text-white hover:bg-white/10 opacity-0 group-hover:opacity-100 transition-all backdrop-blur-md border border-transparent hover:border-white/10">
+          <ChevronRight size={28} />
         </button>
 
-        <button
-          onClick={nextSlide}
-          className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full text-white opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm"
-          aria-label="Siguiente imagen"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-        </button>
-
-
-        <div className="relative z-10 w-full max-w-4xl px-4 sm:px-6 text-center text-white">
-
-          {/* BADGE ANIMADO TIPO IA */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 sm:mb-8 rounded-full border border-indigo-400/30 bg-slate-900/60 backdrop-blur-md animate-in fade-in slide-in-from-top-4 duration-700 shadow-[0_0_20px_rgba(99,102,241,0.2)] hover:bg-slate-800/80 transition-all cursor-default">
-            <svg className="w-4 h-4 text-indigo-400" style={{ animation: 'ai-glow-spin 4s linear infinite' }} viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2C12 7.52 16.48 12 22 12C16.48 12 12 16.48 12 22C12 16.48 7.52 12 2 12C7.52 12 12 7.52 12 2Z" />
-            </svg>
-            <span className="text-xs sm:text-sm font-medium text-indigo-100 tracking-wide">Gestión de proyectos potenciada por IA</span>
+        {/* Contenido Hero */}
+        <div className="relative z-20 w-full max-w-5xl px-4 sm:px-6 text-center text-white mt-16">
+          <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full border border-indigo-500/30 bg-indigo-500/10 backdrop-blur-xl animate-in fade-in slide-in-from-bottom-4 duration-1000 shadow-[0_0_30px_rgba(99,102,241,0.15)] cursor-default">
+            <Sparkles className="w-4 h-4 text-indigo-400 animate-pulse" />
+            <span className="text-sm font-semibold text-indigo-200 tracking-wide">Gestión potenciada por Inteligencia Artificial</span>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight mb-5 sm:mb-6 leading-tight">
+          <h1 className="text-5xl sm:text-6xl md:text-8xl font-extrabold tracking-tighter mb-6 leading-[1.1]">
             Tus proyectos,
             <br className="hidden sm:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-indigo-200">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-indigo-200 to-indigo-400">
               en un solo latido.
             </span>
           </h1>
 
-          <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed">
-            Project-Pulse unifica tareas, equipos y cronogramas. La herramienta definitiva para dejar de &quot;sobrevivir&quot; al trabajo y empezar a liderarlo.
+          <p className="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed font-medium">
+            Project-Pulse unifica tareas, equipos y cronogramas. La herramienta definitiva para dejar de "sobrevivir" al trabajo y empezar a liderarlo.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4">
-            <button onClick={() => router.push("/register")} className="h-12 sm:h-14 w-full sm:w-60 bg-[#FF7400] hover:bg-[#e66900] text-white font-bold rounded-2xl transition-all hover:scale-105 shadow-lg shadow-orange-500/20">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <button onClick={() => router.push("/register")} className="group h-14 w-full sm:w-auto px-8 bg-white hover:bg-slate-50 text-slate-900 font-bold rounded-full transition-all duration-300 hover:scale-105 shadow-[0_0_40px_rgba(255,255,255,0.3)] flex items-center justify-center gap-2">
               Empezar Gratis
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </button>
-            <button onClick={() => router.push("/login")} className="h-12 sm:h-14 w-full sm:w-60 bg-white/10 border border-white/20 backdrop-blur-md text-white font-semibold rounded-2xl hover:bg-white/20 transition-all">
-              Ver Demo
+            <button onClick={() => router.push("/login")} className="h-14 w-full sm:w-auto px-8 bg-white/5 border border-white/10 backdrop-blur-md text-white font-semibold rounded-full hover:bg-white/10 transition-all flex items-center justify-center">
+              Ver Demo Interactiva
             </button>
           </div>
         </div>
       </header>
 
-      <section className="relative -mt-10 sm:-mt-12 z-30 px-4 sm:px-6 max-w-6xl mx-auto">
-        <div className="bg-white rounded-3xl shadow-xl border border-slate-100 p-6 sm:p-8 md:p-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 md:divide-x divide-slate-100">
-            <div className="text-center px-2 sm:px-4">
-              <p className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">+30%</p>
-              <p className="text-slate-500 text-sm font-medium mt-2 uppercase tracking-wide">Eficiencia</p>
+      {/* --- STATS OVERLAP --- */}
+      <section className="relative z-30 px-4 sm:px-6 max-w-5xl mx-auto -mt-16 sm:-mt-20">
+        <div className="glass-panel rounded-3xl shadow-2xl p-6 sm:p-10 flex flex-wrap justify-around gap-8 text-center divide-x divide-slate-200/50">
+          {[
+            { value: "+30%", label: "Eficiencia" },
+            { value: "10k+", label: "Proyectos activos" },
+            { value: "24/7", label: "Soporte experto" },
+            { value: "4.9/5", label: "Satisfacción" },
+          ].map((stat, i) => (
+            <div key={i} className="flex-1 min-w-[120px] px-4">
+              <p className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">{stat.value}</p>
+              <p className="text-slate-500 text-xs sm:text-sm font-semibold mt-1 uppercase tracking-wider">{stat.label}</p>
             </div>
-            <div className="text-center px-2 sm:px-4">
-              <p className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">10k+</p>
-              <p className="text-slate-500 text-sm font-medium mt-2 uppercase tracking-wide">Proyectos</p>
-            </div>
-            <div className="text-center px-2 sm:px-4">
-              <p className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">24/7</p>
-              <p className="text-slate-500 text-sm font-medium mt-2 uppercase tracking-wide">Soporte</p>
-            </div>
-            <div className="text-center px-2 sm:px-4">
-              <p className="text-4xl md:text-5xl font-black text-[#FF7400] tracking-tight">4.9/5</p>
-              <p className="text-slate-500 text-sm font-medium mt-2 uppercase tracking-wide">Rating</p>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
-      {/* --- BENTO GRID: FUNCIONALIDADES CLAVE --- */}
-      <section className="py-16 sm:py-24 bg-gradient-to-b from-white to-slate-50 relative">
+      {/* --- BENTO GRID --- */}
+      <section className="py-24 sm:py-32 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-12 sm:mb-16 md:mb-20">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 sm:mb-6 tracking-tight text-slate-900">Potencia tu flujo de trabajo</h2>
-            <p className="text-base sm:text-lg text-slate-500 max-w-2xl mx-auto">Diseñado para la velocidad, construido para la colaboración. Todo lo que necesitas en una interfaz limpia y sin distracciones.</p>
+          <div className="text-center mb-16 md:mb-24">
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-slate-900">Potencia tu flujo de trabajo</h2>
+            <p className="text-lg text-slate-500 max-w-2xl mx-auto">Diseñado para la velocidad, construido para la colaboración. Todo lo que necesitas en una interfaz limpia y sin distracciones.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-            {/* Tarjeta Grande 1 */}
-            <div className="md:col-span-2 bg-white p-6 sm:p-10 rounded-[2rem] sm:rounded-[2.5rem] border border-slate-200/60 shadow-lg shadow-slate-200/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden relative group cursor-default">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            {/* Panel de Control */}
+            <div className="md:col-span-2 bg-white p-8 sm:p-10 rounded-[2.5rem] border border-slate-200 shadow-xl shadow-slate-200/40 hover:-translate-y-1 transition-transform duration-500 flex flex-col justify-between overflow-hidden relative group">
               <div className="relative z-10">
-                <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center mb-5 sm:mb-6 text-blue-600">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 text-blue-600 border border-blue-100">
+                  <LayoutDashboard size={28} strokeWidth={1.5} />
                 </div>
-                <h3 className="text-xl sm:text-2xl font-bold mb-3 text-slate-900">Panel de Control Intuitivo</h3>
-                <p className="text-slate-500 max-w-md leading-relaxed">Visualiza el progreso de tu equipo con métricas en tiempo real y dashboards que se adaptan a tu forma de trabajar.</p>
+                <h3 className="text-2xl font-bold mb-3 text-slate-900 tracking-tight">Panel de Control Intuitivo</h3>
+                <p className="text-slate-500 max-w-md leading-relaxed text-lg">Visualiza el progreso con métricas en tiempo real que se adaptan a tu forma de trabajar.</p>
               </div>
-              <div className="mt-8 sm:mt-12 bg-slate-50 rounded-xl border border-slate-200/60 h-40 sm:h-48 w-full group-hover:scale-[1.02] transition-transform duration-500 shadow-inner relative overflow-hidden">
-                <div className="absolute top-4 left-4 right-4 h-8 bg-white rounded-lg border border-slate-100 shadow-sm" />
-                <div className="absolute top-16 left-4 right-4 h-24 bg-white rounded-lg border border-slate-100 shadow-sm flex gap-4 p-4">
-                  <div className="w-1/3 h-full bg-blue-50 rounded-md" />
-                  <div className="w-2/3 h-full bg-slate-50 rounded-md" />
+              <div className="mt-12 bg-slate-50 rounded-2xl border border-slate-200 h-48 w-full group-hover:scale-[1.03] transition-transform duration-700 shadow-inner relative overflow-hidden p-4 flex flex-col gap-3">
+                <div className="h-6 w-1/3 bg-slate-200 rounded-md animate-pulse" />
+                <div className="flex-1 flex gap-3">
+                  <div className="w-1/4 h-full bg-blue-100/50 rounded-xl border border-blue-200/50" />
+                  <div className="w-3/4 h-full bg-white rounded-xl border border-slate-200 shadow-sm" />
                 </div>
               </div>
             </div>
 
-            {/* TARJETA MÉTRICA IA - VERSIÓN ANIMADA */}
-            <div className="bg-slate-900 rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-10 text-white shadow-2xl flex flex-col items-center justify-center text-center relative overflow-hidden group hover:-translate-y-1 transition-all duration-300 border border-slate-800 hover:border-indigo-500/50">
-              {/* Fondo degradado dinámico */}
-              <div className="absolute inset-0 opacity-20 ai-bg-gradient bg-gradient-to-br from-indigo-600 via-purple-600 to-blue-600" />
+            {/* AI Speed Card */}
+            <div className="bg-[#09090b] p-8 sm:p-10 rounded-[2.5rem] text-white shadow-2xl flex flex-col items-center justify-center text-center relative overflow-hidden group hover:-translate-y-1 transition-transform duration-500">
+              <div className="absolute top-0 -left-4 w-72 h-72 bg-indigo-500 rounded-full mix-blend-multiply filter blur-[128px] opacity-40 group-hover:opacity-60 transition-opacity" />
+              <div className="absolute top-0 -right-4 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-[128px] opacity-40 group-hover:opacity-60 transition-opacity" />
 
-              {/* Orbes de luz traseros */}
-              <div className="absolute -top-10 -right-10 w-40 h-40 bg-indigo-500/30 rounded-full blur-3xl animate-[pulse_4s_cubic-bezier(0.4,0,0.6,1)_infinite]" />
-              <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-purple-500/30 rounded-full blur-3xl animate-[pulse_5s_cubic-bezier(0.4,0,0.6,1)_infinite_alternate]" />
-
-              {/* Láser de escaneo IA */}
-              <div className="absolute left-0 top-0 w-full h-[2px] bg-gradient-to-r from-transparent via-indigo-300 to-transparent shadow-[0_0_10px_rgba(165,180,252,0.8)] z-20 pointer-events-none" style={{ animation: 'ai-scan-line 3s linear infinite' }} />
-
-              {/* Núcleo IA Central */}
-              <div className="relative w-16 h-16 mb-4 flex items-center justify-center z-10 group-hover:scale-110 transition-transform duration-500">
-                <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full blur-md animate-pulse opacity-70" />
-                <div className="relative bg-slate-900 w-12 h-12 rounded-full border border-indigo-400/50 flex items-center justify-center shadow-[0_0_15px_rgba(99,102,241,0.5)]">
-                  <svg className="w-6 h-6 text-indigo-300" style={{ animation: 'ai-glow-spin 4s linear infinite' }} viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2C12 7.52 16.48 12 22 12C16.48 12 12 16.48 12 22C12 16.48 7.52 12 2 12C7.52 12 12 7.52 12 2Z" />
-                  </svg>
+              <div className="relative w-20 h-20 mb-6 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500 to-purple-500 rounded-full blur-xl opacity-50 animate-pulse" />
+                <div className="relative bg-slate-900 w-16 h-16 rounded-full border border-indigo-500/50 flex items-center justify-center shadow-inner">
+                  <Zap className="text-indigo-400 w-8 h-8" />
                 </div>
               </div>
-
-              <span className="relative z-10 text-6xl sm:text-7xl font-black mb-4 tracking-tighter bg-clip-text text-transparent ai-bg-gradient bg-gradient-to-r from-indigo-200 via-white to-purple-200">10x</span>
-              <h3 className="relative z-10 text-lg font-bold mb-2 text-indigo-100">Velocidad IA</h3>
-              <p className="relative z-10 text-indigo-200/70 text-sm leading-relaxed">Aceleración en la entrega de tareas mediante nuestra inteligencia artificial.</p>
+              <span className="relative z-10 text-7xl font-black mb-2 tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-white/50">10x</span>
+              <h3 className="relative z-10 text-xl font-bold text-indigo-200 mb-2 tracking-tight">Velocidad IA</h3>
+              <p className="relative z-10 text-slate-400 text-sm leading-relaxed">Aceleración en la entrega de tareas mediante nuestra inteligencia artificial.</p>
             </div>
 
-            {/* Tarjeta Automatización */}
-            <div className="bg-white p-6 sm:p-10 rounded-[2rem] sm:rounded-[2.5rem] border border-slate-200/60 shadow-lg shadow-slate-200/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-              <div className="w-12 h-12 bg-orange-50 rounded-2xl flex items-center justify-center mb-6 text-[#FF7400]">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+            {/* Piloto Automático */}
+            <div className="bg-white p-8 sm:p-10 rounded-[2.5rem] border border-slate-200 shadow-xl shadow-slate-200/40 hover:-translate-y-1 transition-transform duration-500">
+              <div className="w-14 h-14 bg-orange-50 rounded-2xl flex items-center justify-center mb-6 text-orange-500 border border-orange-100">
+                <Bot size={28} strokeWidth={1.5} />
               </div>
-              <h3 className="text-lg sm:text-xl font-bold mb-3 text-slate-900">Piloto Automático</h3>
+              <h3 className="text-xl font-bold mb-3 text-slate-900 tracking-tight">Piloto Automático</h3>
               <p className="text-slate-500 leading-relaxed">Configura flujos de trabajo que se ejecutan solos. Asigna tareas basadas en estados sin mover un dedo.</p>
             </div>
 
-            {/* Tarjeta Larga Inferior */}
-            <div className="md:col-span-2 bg-slate-900 rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-10 text-white flex flex-col md:flex-row items-center gap-6 sm:gap-10 shadow-2xl shadow-slate-900/30 overflow-hidden relative">
-              <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl" />
+            {/* Colaboración */}
+            <div className="md:col-span-2 bg-slate-900 rounded-[2.5rem] p-8 sm:p-10 text-white flex flex-col md:flex-row items-center gap-10 shadow-2xl overflow-hidden relative">
+              <div className="absolute -right-20 -bottom-20 w-96 h-96 bg-blue-600/20 rounded-full blur-[100px]" />
               <div className="flex-1 relative z-10">
-                <h3 className="text-xl sm:text-2xl font-bold mb-3">Colaboración en tiempo real</h3>
-                <p className="text-slate-400 leading-relaxed max-w-md">Menciones, hilos de comentarios y edición de documentos en vivo. Resuelve dudas sin salir de la plataforma y mantén el contexto siempre.</p>
+                <div className="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center mb-6 text-blue-400 backdrop-blur-md">
+                  <Users size={28} strokeWidth={1.5} />
+                </div>
+                <h3 className="text-2xl font-bold mb-3 tracking-tight">Colaboración en tiempo real</h3>
+                <p className="text-slate-400 leading-relaxed text-lg">Menciones, hilos de comentarios y edición en vivo. Resuelve dudas sin salir de la plataforma.</p>
               </div>
-              <div className="relative z-10 bg-slate-800/50 p-6 rounded-3xl border border-slate-700/50 backdrop-blur-sm">
-                <div className="flex -space-x-4 mb-4">
-                  {['JM', 'AR', 'LC', 'FT'].map((initials, i) => (
-                    <div key={i} className={`w-12 h-12 rounded-full border-4 border-slate-900 flex items-center justify-center text-sm font-bold shadow-lg ${i === 0 ? 'bg-blue-500' : i === 1 ? 'bg-emerald-500' : i === 2 ? 'bg-orange-500' : 'bg-purple-500'
-                      }`}>
-                      {initials}
+              <div className="relative z-10 w-full md:w-auto bg-white/5 p-6 rounded-3xl border border-white/10 backdrop-blur-md">
+                <div className="flex -space-x-4 mb-6">
+                  {['JM', 'AR', 'LC'].map((init, i) => (
+                    <div key={i} className="w-14 h-14 rounded-full border-4 border-slate-900 flex items-center justify-center text-sm font-bold shadow-lg bg-gradient-to-br from-indigo-500 to-purple-500">
+                      {init}
                     </div>
                   ))}
-                  <div className="w-12 h-12 rounded-full border-4 border-slate-900 bg-slate-700 flex items-center justify-center text-sm font-bold text-slate-300 shadow-lg">
+                  <div className="w-14 h-14 rounded-full border-4 border-slate-900 bg-slate-800 flex items-center justify-center text-sm font-bold text-slate-300 shadow-lg">
                     +3
                   </div>
                 </div>
-                <div className="h-2 w-32 bg-slate-700 rounded-full overflow-hidden">
-                  <div className="w-2/3 h-full bg-green-400 rounded-full animate-pulse" />
+                <div className="h-3 w-40 bg-white/10 rounded-full overflow-hidden">
+                  <div className="w-2/3 h-full bg-blue-500 rounded-full animate-pulse" />
                 </div>
               </div>
             </div>
@@ -302,126 +241,104 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* --- SECCIÓN COMPARATIVA: ANTES Y DESPUÉS --- */}
-      <section className="py-16 sm:py-24 bg-white relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-50 via-white to-white" />
+      {/* --- COMPARATIVA --- */}
+      <section className="py-24 bg-white relative border-y border-slate-200/50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
-          <div className="text-center mb-12 sm:mb-16">
-            <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4">La diferencia es evidente</h2>
-            <p className="text-slate-500 text-base sm:text-lg">Deja atrás las herramientas que te frenan.</p>
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6 tracking-tight">La diferencia es evidente</h2>
+            <p className="text-slate-500 text-lg">Deja atrás las herramientas que te frenan.</p>
           </div>
 
-          <div className="relative grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-12 items-center">
-            {/* Insignia VS central */}
-            <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-white rounded-full items-center justify-center shadow-xl border border-slate-100 z-20 font-black text-slate-400">
+          <div className="relative grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 items-stretch">
+            {/* VS Badge */}
+            <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-white rounded-full items-center justify-center shadow-xl border border-slate-200 z-20 font-black text-slate-300 text-xl">
               VS
             </div>
 
-            {/* El Caos */}
-            <div className="bg-slate-50 rounded-[2rem] p-6 sm:p-10 md:p-12 border border-slate-200/60">
-              <div className="w-12 h-12 bg-red-100 text-red-500 rounded-2xl flex items-center justify-center mb-8">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
-              </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-8">El caos habitual</h3>
-              <ul className="space-y-5 sm:space-y-6">
-                <li className="flex gap-4 text-slate-600">
-                  <span className="text-red-400 mt-1">✗</span>
-                  <span>Buscando en hilos de Slack interminables de hace 3 días.</span>
-                </li>
-                <li className="flex gap-4 text-slate-600">
-                  <span className="text-red-400 mt-1">✗</span>
-                  <span>Hojas de Excel llamadas &quot;Presupuesto_V3_FINAL_FINAL2.xlsx&quot;.</span>
-                </li>
-                <li className="flex gap-4 text-slate-600">
-                  <span className="text-red-400 mt-1">✗</span>
-                  <span>Reuniones de sincronización de 1 hora que podrían ser un mail.</span>
-                </li>
+            {/* Caos */}
+            <div className="bg-slate-50 rounded-[2.5rem] p-10 border border-slate-200">
+              <h3 className="text-2xl font-bold text-slate-900 mb-8 flex items-center gap-3">
+                <XCircle className="text-red-400" size={28} />
+                El caos habitual
+              </h3>
+              <ul className="space-y-6">
+                {["Buscando en hilos de Slack interminables de hace 3 días.", "Hojas de Excel llamadas 'Presupuesto_V3_FINAL.xlsx'.", "Reuniones de sincronización de 1 hora que podrían ser un mail."].map((text, i) => (
+                  <li key={i} className="flex gap-4 text-slate-600 text-lg leading-relaxed">
+                    <span className="text-red-400 mt-1 flex-shrink-0">✗</span>
+                    <span>{text}</span>
+                  </li>
+                ))}
               </ul>
             </div>
 
-            {/* Con Project Pulse */}
-            <div className="bg-slate-900 rounded-[2rem] p-6 sm:p-10 md:p-12 shadow-2xl shadow-slate-900/20 relative overflow-hidden">
-              <div className="absolute -right-20 -top-20 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl" />
-              <div className="relative z-10">
-                <div className="w-12 h-12 bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-2xl flex items-center justify-center mb-8">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-white mb-8">Con Project Pulse</h3>
-                <ul className="space-y-5 sm:space-y-6">
-                  <li className="flex gap-4 text-slate-300">
-                    <span className="text-blue-400 mt-1">✓</span>
-                    <span>Una única fuente de verdad. Si está en Pulse, es la versión actual.</span>
+            {/* Pulse */}
+            <div className="bg-[#09090b] rounded-[2.5rem] p-10 shadow-2xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/20 rounded-full blur-[80px]" />
+              <h3 className="relative z-10 text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                <CheckCircle2 className="text-indigo-400" size={28} />
+                Con Project Pulse
+              </h3>
+              <ul className="relative z-10 space-y-6">
+                {["Una única fuente de verdad. Si está en Pulse, es la actual.", "Notificaciones inteligentes que solo avisan cuando es necesario.", "Claridad absoluta sobre quién hace qué y para cuándo."].map((text, i) => (
+                  <li key={i} className="flex gap-4 text-slate-300 text-lg leading-relaxed">
+                    <CheckCircle2 className="text-indigo-400 mt-1 flex-shrink-0" size={20} />
+                    <span>{text}</span>
                   </li>
-                  <li className="flex gap-4 text-slate-300">
-                    <span className="text-blue-400 mt-1">✓</span>
-                    <span>Notificaciones inteligentes que solo te avisan cuando es necesario.</span>
-                  </li>
-                  <li className="flex gap-4 text-slate-300">
-                    <span className="text-blue-400 mt-1">✓</span>
-                    <span>Claridad absoluta sobre quién hace qué y para cuándo.</span>
-                  </li>
-                </ul>
-              </div>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
       </section>
 
       {/* --- PRECIOS --- */}
-      <section className="py-16 sm:py-24 bg-slate-50 border-t border-slate-200/50">
+      <section className="py-24 bg-[#fafafa]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4 tracking-tight">Planes simples y transparentes</h2>
-          <p className="text-slate-500 text-base sm:text-lg mb-12 sm:mb-16 max-w-2xl mx-auto">Empieza gratis, mejora cuando tu equipo lo necesite. Sin sorpresas.</p>
+          <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6 tracking-tight">Planes simples y transparentes</h2>
+          <p className="text-slate-500 text-lg mb-16">Empieza gratis, mejora cuando tu equipo lo necesite.</p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto items-center">
             {/* Starter */}
-            <div className="bg-white p-6 sm:p-10 md:p-12 rounded-[2rem] sm:rounded-[2.5rem] border border-slate-200/60 shadow-lg shadow-slate-200/20 hover:shadow-xl transition-all flex flex-col text-left">
+            <div className="bg-white p-10 rounded-[2.5rem] border border-slate-200 shadow-xl shadow-slate-200/20 text-left">
               <h3 className="text-2xl font-bold text-slate-900">Starter</h3>
-              <p className="text-slate-500 mt-2 mb-6">Perfecto para individuos y pequeños proyectos.</p>
-              <div className="text-5xl font-black text-slate-900 mb-2">$0</div>
-              <p className="text-sm font-medium text-slate-400 mb-8 uppercase tracking-wide">Gratis para siempre</p>
+              <p className="text-slate-500 mt-2 mb-8">Perfecto para individuos y pequeños proyectos.</p>
+              <div className="text-6xl font-black text-slate-900 mb-2">$0</div>
+              <p className="text-sm font-semibold text-slate-400 mb-10 uppercase tracking-wider">Gratis para siempre</p>
 
-              <ul className="space-y-4 mb-10 flex-1">
-                <li className="flex items-center gap-3 text-slate-600"><svg className="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Hasta 3 proyectos activos</li>
-                <li className="flex items-center gap-3 text-slate-600"><svg className="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Tareas ilimitadas</li>
-                <li className="flex items-center gap-3 text-slate-600"><svg className="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Colaboradores básicos</li>
-                <li className="flex items-center gap-3 text-slate-600"><svg className="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> App móvil</li>
+              <ul className="space-y-5 mb-10">
+                {["Hasta 3 proyectos activos", "Tareas ilimitadas", "Colaboradores básicos", "App móvil"].map((item, i) => (
+                  <li key={i} className="flex items-center gap-3 text-slate-600 font-medium">
+                    <CheckCircle2 className="text-slate-300" size={20} /> {item}
+                  </li>
+                ))}
               </ul>
-              <button className="w-full py-4 rounded-2xl border-2 border-slate-200 text-slate-700 font-bold hover:border-slate-300 hover:bg-slate-50 transition-all">Empezar con Starter</button>
+              <button className="w-full py-4 rounded-full border-2 border-slate-200 text-slate-700 font-bold hover:border-slate-300 hover:bg-slate-50 transition-all">Empezar con Starter</button>
             </div>
 
-            {/* Pro - CON BORDE ANIMADO IA */}
-            <div className="p-[2px] rounded-[2rem] sm:rounded-[2.5rem] bg-gradient-to-br from-indigo-500 via-purple-500 to-[#FF7400] ai-bg-gradient shadow-2xl shadow-blue-900/20 relative group">
-              <div className="absolute top-8 right-8 bg-gradient-to-r from-[#FF7400] to-[#e66900] text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-lg z-20">Más Popular</div>
+            {/* Pro */}
+            <div className="relative p-[2px] rounded-[2.5rem] bg-gradient-to-br from-indigo-500 via-purple-500 to-blue-500 shadow-2xl shadow-indigo-500/20 hover:shadow-indigo-500/40 transition-shadow duration-500">
+              <div className="absolute -top-4 right-8 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-xs font-bold px-4 py-2 rounded-full uppercase tracking-widest shadow-lg z-20">Más Popular</div>
 
-              <div className="bg-slate-900 p-6 sm:p-10 md:p-12 rounded-[calc(2rem-2px)] sm:rounded-[calc(2.5rem-2px)] text-white h-full relative flex flex-col text-left overflow-hidden">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-
-                <div className="relative z-10 flex-1 flex flex-col">
-                  <h3 className="text-2xl font-bold flex items-center gap-2">
-                    Pro Team
-                  </h3>
-                  <p className="text-slate-400 mt-2 mb-6">Para equipos que necesitan escalar su productividad.</p>
+              <div className="bg-slate-950 p-10 rounded-[calc(2.5rem-2px)] text-left h-full relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/20 rounded-full blur-[80px]" />
+                <div className="relative z-10">
+                  <h3 className="text-2xl font-bold text-white flex items-center gap-2">Pro Team <Sparkles className="text-indigo-400 w-5 h-5" /></h3>
+                  <p className="text-slate-400 mt-2 mb-8">Para equipos que necesitan escalar su productividad.</p>
                   <div className="flex items-baseline gap-2 mb-2">
-                    <span className="text-5xl font-black">$15</span>
-                    <span className="text-slate-400">/usuario/mes</span>
+                    <span className="text-6xl font-black text-white">$15</span>
+                    <span className="text-slate-500">/mes</span>
                   </div>
-                  <p className="text-sm font-medium text-slate-500 mb-8 uppercase tracking-wide">Facturado anualmente</p>
+                  <p className="text-sm font-semibold text-slate-500 mb-10 uppercase tracking-wider">Facturado anualmente</p>
 
-                  <ul className="space-y-4 mb-10 flex-1">
-                    <li className="flex items-center gap-3 text-slate-300"><svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Todo lo de Starter, más:</li>
-                    <li className="flex items-center gap-3 text-slate-300"><svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Proyectos ilimitados</li>
-                    {/* RESALTANDO IA EN EL PLAN PRO */}
-                    <li className="flex items-center gap-3 text-indigo-200 font-semibold bg-indigo-900/30 p-2 -ml-2 rounded-lg border border-indigo-500/30">
-                      <svg className="w-5 h-5 text-indigo-400 animate-pulse" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2C12 7.52 16.48 12 22 12C16.48 12 12 16.48 12 22C12 16.48 7.52 12 2 12C7.52 12 12 7.52 12 2Z" />
-                      </svg>
-                      Asistente de IA (100 prompts/mes)
+                  <ul className="space-y-5 mb-10">
+                    <li className="flex items-center gap-3 text-slate-300 font-medium"><CheckCircle2 className="text-indigo-500" size={20} /> Todo lo de Starter</li>
+                    <li className="flex items-center gap-3 text-slate-300 font-medium"><CheckCircle2 className="text-indigo-500" size={20} /> Proyectos ilimitados</li>
+                    <li className="flex items-center gap-3 text-indigo-300 font-medium bg-indigo-500/10 p-2.5 -ml-2.5 rounded-xl border border-indigo-500/20">
+                      <Zap className="text-indigo-400" size={20} /> Asistente de IA (100 prompts)
                     </li>
-                    <li className="flex items-center gap-3 text-slate-300"><svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Permisos avanzados</li>
-                    <li className="flex items-center gap-3 text-slate-300"><svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Soporte prioritario 24/7</li>
+                    <li className="flex items-center gap-3 text-slate-300 font-medium"><CheckCircle2 className="text-indigo-500" size={20} /> Soporte prioritario 24/7</li>
                   </ul>
-                  <button className="w-full py-4 rounded-2xl bg-blue-600 text-white font-bold hover:bg-blue-500 transition-all shadow-lg shadow-blue-600/30 group-hover:shadow-indigo-500/25">Prueba gratuita de 14 días</button>
+                  <button className="w-full py-4 rounded-full bg-white text-slate-900 font-bold hover:bg-slate-100 transition-transform hover:scale-[1.02] active:scale-95">Prueba gratuita de 14 días</button>
                 </div>
               </div>
             </div>
@@ -430,26 +347,22 @@ export default function HomePage() {
       </section>
 
       {/* --- FAQ SECTION --- */}
-      <section className="py-16 sm:py-24 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-12 sm:mb-16">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Preguntas Frecuentes</h2>
-            <p className="text-slate-500 text-sm sm:text-base">Respuestas rápidas para las dudas más comunes.</p>
+      <section className="py-24 bg-white border-t border-slate-200/50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">Preguntas Frecuentes</h2>
           </div>
 
-          <div className="space-y-4 max-w-3xl mx-auto">
-            {faqEntries.slice(0, 3).map((faq) => (
-              <details
-                key={faq.id}
-                className="group bg-slate-50 rounded-2xl border border-slate-200/60 [&_summary::-webkit-details-marker]:hidden"
-              >
-                <summary className="flex justify-between items-center gap-4 font-bold cursor-pointer list-none p-5 sm:p-6 text-slate-900">
-                  <span className="text-sm sm:text-base">{faq.question}</span>
-                  <span className="transition group-open:rotate-180">
-                    <svg fill="none" height="24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="24"><polyline points="6 9 12 15 18 9" /></svg>
-                  </span>
+          <div className="space-y-4">
+            {faqEntries.slice(0, 4).map((faq) => (
+              <details key={faq.id} className="group bg-white rounded-2xl border border-slate-200 hover:border-slate-300 transition-colors [&_summary::-webkit-details-marker]:hidden shadow-sm">
+                <summary className="flex justify-between items-center gap-4 font-bold cursor-pointer p-6 text-slate-900 text-lg">
+                  {faq.question}
+                  <ChevronDown className="text-slate-400 transition-transform duration-300 group-open:rotate-180" size={24} />
                 </summary>
-                <div className="text-slate-600 pb-5 sm:pb-6 px-5 sm:px-6 leading-relaxed text-sm sm:text-base">{faq.answer}</div>
+                <div className="text-slate-600 pb-6 px-6 leading-relaxed text-base border-t border-slate-100 pt-4 mt-2">
+                  {faq.answer}
+                </div>
               </details>
             ))}
           </div>
@@ -457,22 +370,20 @@ export default function HomePage() {
       </section>
 
       {/* --- FINAL CTA --- */}
-      <section className="py-16 sm:py-20 px-4 sm:px-6 max-w-6xl mx-auto">
-        <div className="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 rounded-[2rem] sm:rounded-[3rem] p-8 sm:p-12 md:p-20 text-center text-white relative overflow-hidden shadow-2xl shadow-blue-900/20 border border-slate-800">
-          <div className="absolute top-0 left-0 w-full h-full opacity-30 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-400 to-transparent mix-blend-overlay" />
-          <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#FF7400]/20 rounded-full blur-3xl" />
-          <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl" />
+      <section className="py-24 px-4 sm:px-6 max-w-6xl mx-auto">
+        <div className="bg-[#09090b] rounded-[3rem] p-12 md:p-24 text-center text-white relative overflow-hidden shadow-2xl">
+          <div className="absolute top-0 left-0 w-full h-full opacity-40 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-indigo-500/30 via-transparent to-transparent" />
 
-          <div className="relative z-10">
-            <h2 className="text-3xl sm:text-4xl md:text-6xl font-black mb-5 sm:mb-6 tracking-tight">Eleva el ritmo de tu equipo</h2>
-            <p className="text-blue-100/80 mb-8 sm:mb-10 max-w-2xl mx-auto text-base sm:text-lg md:text-xl leading-relaxed">
-              Únete a más de 10,000 profesionales que ya han dejado atrás el caos y han recuperado su tiempo. No necesitas tarjeta de crédito para empezar.
+          <div className="relative z-10 max-w-3xl mx-auto">
+            <h2 className="text-4xl md:text-6xl font-black mb-8 tracking-tighter">Eleva el ritmo de tu equipo</h2>
+            <p className="text-slate-400 mb-12 text-lg md:text-xl leading-relaxed">
+              Únete a miles de profesionales que ya han dejado atrás el caos. No necesitas tarjeta de crédito para empezar.
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
-              <button onClick={() => router.push("/register")} className="bg-[#FF7400] text-white px-8 py-4 rounded-2xl font-bold text-base sm:text-lg hover:bg-[#e66900] hover:scale-105 transition-all shadow-lg shadow-[#FF7400]/30">
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <button onClick={() => router.push("/register")} className="bg-white text-slate-900 px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition-all shadow-[0_0_30px_rgba(255,255,255,0.2)]">
                 Crear cuenta gratis
               </button>
-              <button onClick={() => router.push("/contact")} className="bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-4 rounded-2xl font-bold text-base sm:text-lg hover:bg-white/20 transition-all">
+              <button onClick={() => router.push("/contact")} className="bg-white/10 backdrop-blur-md border border-white/10 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white/20 transition-all">
                 Hablar con ventas
               </button>
             </div>
@@ -480,53 +391,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* --- FOOTER MODERNO --- */}
-      <footer className="bg-white border-t border-slate-200/60 pt-12 sm:pt-16 pb-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-12 sm:mb-16">
-            <div className="col-span-2 md:col-span-1">
-              <div className="font-black text-xl tracking-tight mb-4 flex items-center gap-2">
-                <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white">P</span>
-                Project Pulse
-              </div>
-              <p className="text-slate-500 text-sm leading-relaxed max-w-xs">
-                La herramienta definitiva para unificar tareas, equipos y cronogramas en un solo latido.
-              </p>
-            </div>
-
-            <div>
-              <h4 className="font-bold text-slate-900 mb-4">Producto</h4>
-              <ul className="space-y-3 text-sm text-slate-500">
-                <li><a href="#" className="hover:text-blue-600 transition-colors">Características</a></li>
-                <li><a href="#" className="hover:text-blue-600 transition-colors">Precios</a></li>
-                <li><a href="#" className="hover:text-blue-600 transition-colors">Integraciones</a></li>
-                <li><a href="#" className="hover:text-blue-600 transition-colors">Changelog</a></li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-bold text-slate-900 mb-4">Recursos</h4>
-              <ul className="space-y-3 text-sm text-slate-500">
-                <li><a href="#" className="hover:text-blue-600 transition-colors">Blog</a></li>
-                <li><a href="#" className="hover:text-blue-600 transition-colors">Guías</a></li>
-                <li><a href="#" className="hover:text-blue-600 transition-colors">Centro de ayuda</a></li>
-                <li><a href="#" className="hover:text-blue-600 transition-colors">Comunidad</a></li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-bold text-slate-900 mb-4">Empresa</h4>
-              <ul className="space-y-3 text-sm text-slate-500">
-                <li><a href="#" className="hover:text-blue-600 transition-colors">Sobre nosotros</a></li>
-                <li><a href="#" className="hover:text-blue-600 transition-colors">Empleo</a></li>
-                <li><a href="#" className="hover:text-blue-600 transition-colors">Privacidad</a></li>
-                <li><a href="#" className="hover:text-blue-600 transition-colors">Términos</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </footer>
-
+      {/* Footer y Bot */}
       <FaqBot faqEntries={faqEntries} />
     </div>
   );
