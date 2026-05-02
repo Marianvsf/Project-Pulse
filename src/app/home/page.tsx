@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import Navbar from "../components/navbar/Navbar";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import FaqBot from "../components/FaqBot";
 import {
   ChevronLeft,
@@ -40,13 +40,18 @@ export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const images = ["/assets/fot1.jpg", "/assets/fot2.jpg", "/assets/fot3.jpg"];
 
-  const nextSlide = () => setCurrentSlide((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  const prevSlide = () => setCurrentSlide((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  const nextSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  }, [images.length]);
+
+  const prevSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  }, [images.length]);
 
   useEffect(() => {
     const interval = setInterval(nextSlide, 6000);
     return () => clearInterval(interval);
-  }, [images.length]);
+  }, [nextSlide]);
 
   return (
     <div className="relative bg-[#fafafa] font-sans antialiased text-slate-900 selection:bg-indigo-200 selection:text-indigo-900">
@@ -125,8 +130,9 @@ export default function HomePage() {
             </span>
           </h1>
 
+          {/* NUEVO: Reemplazamos las comillas "sobrevivir" por &quot;sobrevivir&quot; */}
           <p className="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed font-medium">
-            Project-Pulse unifica tareas, equipos y cronogramas. La herramienta definitiva para dejar de "sobrevivir" al trabajo y empezar a liderarlo.
+            Project-Pulse unifica tareas, equipos y cronogramas. La herramienta definitiva para dejar de &quot;sobrevivir&quot; al trabajo y empezar a liderarlo.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
