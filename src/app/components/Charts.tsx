@@ -43,9 +43,18 @@ export default function Charts({ projects }: ChartsProps) {
             }));
     }, [projects]);
 
-    // Tooltip personalizado para el gráfico de barras
-    const CustomTooltip = ({ active, payload }: any) => {
-        if (active && payload && payload.length) {
+    interface CustomTooltipProps {
+        active?: boolean;
+        payload?: Array<{
+            value: number;
+            payload: {
+                nombreCompleto: string;
+            };
+        }>;
+    }
+
+    const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
+        if (active && payload && payload.length > 0) {
             return (
                 <div className="bg-white p-3 rounded-xl shadow-lg border border-slate-100">
                     <p className="font-semibold text-blue-950 mb-1">{payload[0].payload.nombreCompleto}</p>
