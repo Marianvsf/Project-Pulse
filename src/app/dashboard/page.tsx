@@ -10,6 +10,7 @@ import useProjectStore, { Project } from "../../../store/useProjectStore";
 import Image from "next/image";
 import CreateProjectModal from "../views/CreateProjectModal";
 
+type ViewMode = "grid" | "list" | "detailed";
 
 export default function DashboardUser() {
     const { data: session, status } = useSession();
@@ -23,6 +24,9 @@ export default function DashboardUser() {
     const [statusUpdateError, setStatusUpdateError] = useState<string | null>(null);
     const [isMounted, setIsMounted] = useState(false);
     const projectsSectionRef = useRef<HTMLDivElement | null>(null);
+
+    // NUEVO: Estado para controlar el modo de visualización actual
+    const [viewMode, setViewMode] = useState<ViewMode>("grid");
 
     useEffect(() => {
         setIsMounted(true);
@@ -159,7 +163,6 @@ export default function DashboardUser() {
         return filtered;
     }, [projects, searchTerm, statusFilter, normalizeStatus]);
 
-    // Cálculo rápido de estadísticas
     const stats = useMemo(() => {
         const total = projects.length;
         const completados = projects.filter((p: Project) => normalizeStatus(p.estado) === "completado").length;
@@ -190,6 +193,19 @@ export default function DashboardUser() {
         return null;
     }
 
+    // ViewMode
+    const getContainerClasses = () => {
+        switch (viewMode) {
+            case "list":
+                return "flex flex-col gap-4"; // Una lista simple vertical
+            case "detailed":
+                return "grid grid-cols-1 lg:grid-cols-2 gap-6"; // Tarjetas más anchas para detalle
+            case "grid":
+            default:
+                return "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"; // Original
+        }
+    };
+
     return (
         <div className="min-h-screen bg-gray-50 pt-28 pb-12 selection:bg-orange-100 max-w-[1300px] mx-auto selection:text-orange-600">
             <UserNavbar onSearch={handleSearch} />
@@ -212,10 +228,7 @@ export default function DashboardUser() {
                     </div>
                 </div>
 
-                {/* LAYOUT PRINCIPAL: GRID 2 COLUMNAS */}
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-
-                    {/* --- COLUMNA IZQUIERDA (CONTENIDO PRINCIPAL) --- */}
                     <div className="lg:col-span-3 space-y-8">
 
                         {/* TARJETAS DE ESTADÍSTICAS */}
@@ -279,14 +292,42 @@ export default function DashboardUser() {
                         {/* LISTA DE PROYECTOS */}
                         <div ref={projectsSectionRef}>
                             <div className="mb-6">
-                                <div className="flex items-center justify-between gap-3 mb-2">
+                                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-2">
                                     <h2 className="text-2xl font-bold text-blue-950">Galería de Proyectos</h2>
-                                    <button
-                                        onClick={() => setShowCreateModal(true)}
-                                        className="px-4 py-2 rounded-full bg-[#FF7400] text-white text-sm font-semibold hover:bg-[#e46800] transition-colors"
-                                    >
-                                        Nuevo proyecto
-                                    </button>
+                                    <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
+
+                                        {/* Toggle de vistas */}
+                                        <div className="flex bg-gray-200 p-1 rounded-lg">
+                                            <button
+                                                onClick={() => setViewMode('list')}
+                                                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${viewMode === 'list' ? 'bg-white shadow text-blue-950' : 'text-slate-500 hover:text-slate-700'}`}
+                                                title="Lista"
+                                            >
+                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                                            </button>
+                                            <button
+                                                onClick={() => setViewMode('grid')}
+                                                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${viewMode === 'grid' ? 'bg-white shadow text-blue-950' : 'text-slate-500 hover:text-slate-700'}`}
+                                                title="Cuadrícula"
+                                            >
+                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                                            </button>
+                                            <button
+                                                onClick={() => setViewMode('detailed')}
+                                                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${viewMode === 'detailed' ? 'bg-white shadow text-blue-950' : 'text-slate-500 hover:text-slate-700'}`}
+                                                title="Detalle"
+                                            >
+                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
+                                            </button>
+                                        </div>
+
+                                        <button
+                                            onClick={() => setShowCreateModal(true)}
+                                            className="px-4 py-2 rounded-full bg-[#FF7400] text-white text-sm font-semibold hover:bg-[#e46800] transition-colors whitespace-nowrap"
+                                        >
+                                            Nuevo proyecto
+                                        </button>
+                                    </div>
                                 </div>
                                 <p className="text-slate-600 max-w-3xl">
                                     Tus proyectos filtrados por búsqueda.
@@ -306,22 +347,25 @@ export default function DashboardUser() {
                             )}
 
                             {Allprojects.length > 0 ? (
-                                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                                <div className={getContainerClasses()}>
                                     {Allprojects.map((project) => (
-                                        <div key={project.id} className="group relative hover:-translate-y-1 transition-transform duration-300">
-                                            <ProjectCard
-                                                id={project.id}
-                                                nombre={project.nombre}
-                                                estado={project.estado}
-                                                progreso={project.progreso}
-                                                descripcion={project.descripcion}
-                                                fechaFin={project.fechaFin}
-                                            />
+                                        <div key={project.id} className={`group relative hover:-translate-y-1 transition-transform duration-300 ${viewMode === 'list' ? 'flex items-center gap-4' : ''}`}>
+
+                                            <div className="flex-1 w-full">
+                                                <ProjectCard
+                                                    id={project.id}
+                                                    nombre={project.nombre}
+                                                    estado={project.estado}
+                                                    progreso={project.progreso}
+                                                    descripcion={project.descripcion}
+                                                    fechaFin={project.fechaFin}
+                                                />
+                                            </div>
 
                                             <button
                                                 type="button"
                                                 onClick={() => startEditingStatus(project)}
-                                                className="absolute left-5 top-40 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-blue-700 shadow-sm ring-1 ring-blue-100 transition-all hover:bg-blue-50 hover:text-blue-800"
+                                                className={`${viewMode === 'list' ? 'relative mt-0' : 'absolute left-5 top-40'} rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-blue-700 shadow-sm ring-1 ring-blue-100 transition-all hover:bg-blue-50 hover:text-blue-800`}
                                             >
                                                 Cambiar estado
                                             </button>
@@ -363,35 +407,22 @@ export default function DashboardUser() {
                                     {galleryImages.map((img, index) => (
                                         <div
                                             key={index}
-                                            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentSlide ? "opacity-100" : "opacity-0"
-                                                }`}
+                                            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentSlide ? "opacity-100" : "opacity-0"}`}
                                         >
-                                            <Image
-                                                src={img}
-                                                alt={`Arte ${index + 1}`}
-                                                fill
-                                                className="object-cover"
-                                            />
+                                            <Image src={img} alt={`Arte ${index + 1}`} fill className="object-cover" />
                                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                                         </div>
                                     ))}
-
                                     <div className="absolute bottom-0 left-0 w-full p-5 text-white">
                                         <p className="text-xs text-orange-400 font-bold uppercase tracking-wider mb-1">Colección 2024</p>
                                         <h4 className="text-lg font-bold leading-tight">Arte Digital & Creatividad</h4>
                                     </div>
-
                                     <div className="absolute top-4 right-4 flex gap-1.5">
                                         {galleryImages.map((_, idx) => (
-                                            <div
-                                                key={idx}
-                                                className={`h-1.5 w-1.5 rounded-full transition-all ${idx === currentSlide ? "bg-orange-500 scale-125" : "bg-white/50"
-                                                    }`}
-                                            />
+                                            <div key={idx} className={`h-1.5 w-1.5 rounded-full transition-all ${idx === currentSlide ? "bg-orange-500 scale-125" : "bg-white/50"}`} />
                                         ))}
                                     </div>
                                 </div>
-
                                 <div className="p-4 bg-gray-50">
                                     <p className="text-xs text-slate-500 text-center">
                                         &quot;La creatividad es la inteligencia divirtiéndose.&quot;
@@ -410,15 +441,10 @@ export default function DashboardUser() {
 
                         </div>
                     </div>
-
                 </div>
-
             </main>
 
-            {/* Renderizado condicional del modal externo */}
-            {showCreateModal && (
-                <CreateProjectModal onClose={() => setShowCreateModal(false)} />
-            )}
+            {showCreateModal && <CreateProjectModal onClose={() => setShowCreateModal(false)} />}
 
             {currentEditingProject && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 p-4">
@@ -426,15 +452,9 @@ export default function DashboardUser() {
                         <div className="mb-4 flex items-start justify-between gap-3">
                             <div>
                                 <p className="text-sm font-semibold text-slate-900">Editar estado</p>
-                                <p className="mt-1 text-xs text-slate-500">
-                                    {currentEditingProject.nombre}
-                                </p>
+                                <p className="mt-1 text-xs text-slate-500">{currentEditingProject.nombre}</p>
                             </div>
-                            <button
-                                type="button"
-                                onClick={cancelEditingStatus}
-                                className="rounded-lg px-2 py-1 text-xs font-semibold text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-700"
-                            >
+                            <button type="button" onClick={cancelEditingStatus} className="rounded-lg px-2 py-1 text-xs font-semibold text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-700">
                                 Cerrar
                             </button>
                         </div>
@@ -445,9 +465,7 @@ export default function DashboardUser() {
                             className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm outline-none transition-all focus:border-transparent focus:bg-white focus:ring-2 focus:ring-blue-500"
                         >
                             {getStatusOptions(currentEditingProject.estado).map((option) => (
-                                <option key={option} value={option}>
-                                    {option}
-                                </option>
+                                <option key={option} value={option}>{option}</option>
                             ))}
                         </select>
 
@@ -458,17 +476,11 @@ export default function DashboardUser() {
                         )}
 
                         <div className="mt-5 flex items-center justify-end gap-2">
-                            <button
-                                type="button"
-                                onClick={cancelEditingStatus}
-                                className="rounded-xl px-4 py-2 text-sm font-semibold text-slate-600 transition-colors hover:bg-slate-100"
-                            >
+                            <button type="button" onClick={cancelEditingStatus} className="rounded-xl px-4 py-2 text-sm font-semibold text-slate-600 transition-colors hover:bg-slate-100">
                                 Cancelar
                             </button>
                             <button
-                                type="button"
-                                disabled={isSavingStatus}
-                                onClick={() => void saveProjectStatus(currentEditingProject.id)}
+                                type="button" disabled={isSavingStatus} onClick={() => void saveProjectStatus(currentEditingProject.id)}
                                 className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70"
                             >
                                 {isSavingStatus ? "Guardando..." : "Guardar"}
@@ -477,7 +489,6 @@ export default function DashboardUser() {
                     </div>
                 </div>
             )}
-
         </div>
     );
 }
