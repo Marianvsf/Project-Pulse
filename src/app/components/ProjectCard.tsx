@@ -32,6 +32,30 @@ const ProjectCard = ({ id, nombre, estado, progreso, descripcion, fechaFin }: Pr
         return 'bg-emerald-500';
     };
 
+    // Formatea la fecha y añade una etiqueta relativa (hoy / en X días / X días atrás)
+    const formatFecha = (fecha?: string) => {
+        if (!fecha) return null;
+        const parsed = new Date(fecha);
+        if (isNaN(parsed.getTime())) return fecha;
+
+        const formatted = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'short', year: 'numeric' }).format(parsed);
+
+        const now = new Date();
+        const target = new Date(parsed.getFullYear(), parsed.getMonth(), parsed.getDate());
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const diffDays = Math.round((target.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+
+        let relative = '';
+        if (diffDays === 0) relative = 'hoy';
+        else if (diffDays > 0) relative = `en ${diffDays} día${diffDays > 1 ? 's' : ''}`;
+        else {
+            const d = Math.abs(diffDays);
+            relative = `${d} día${d > 1 ? 's' : ''} atrás`;
+        }
+
+        return `${formatted} · ${relative}`;
+    };
+
     return (
         <Link href={`/projects/${id}`} className="block h-full">
             <div className="
@@ -79,7 +103,7 @@ const ProjectCard = ({ id, nombre, estado, progreso, descripcion, fechaFin }: Pr
                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
-                            <span>Entrega: {fechaFin}</span>
+                            <span>Entrega: {formatFecha(fechaFin)}</span>
                         </div>
                     )}
 
