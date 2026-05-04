@@ -310,6 +310,21 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
     }
   };
 
+  const capitalize = (s?: string) => (s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : '');
+
+  const getAvatarGradient = (name: string) => {
+    if (!name) return 'from-slate-400 to-slate-300';
+    const palettes = [
+      'from-indigo-400 to-purple-500',
+      'from-rose-400 to-orange-400',
+      'from-emerald-400 to-teal-500',
+      'from-blue-400 to-cyan-400',
+      'from-amber-400 to-rose-400',
+    ];
+    const idx = name.charCodeAt(0) % palettes.length;
+    return palettes[idx];
+  };
+
   const displayedProgress = (() => {
     const sourceTasks = isEditing && formData ? formData.tareas : project?.tareas ?? [];
     const progressFromTasks = calculateProgressFromTasks(sourceTasks);
@@ -381,7 +396,7 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
             <div className="space-y-3">
               <div className="flex flex-wrap items-center gap-3">
                 <span className={`px-3 py-1 rounded-full text-[11px] font-bold border uppercase tracking-wider ${getPriorityStyle(project.prioridad)}`}>
-                  Prioridad {project.prioridad}
+                  Prioridad {capitalize(project.prioridad)}
                 </span>
                 <div className="flex items-center gap-1.5 text-blue-600 font-bold text-sm bg-blue-50 px-3 py-1 rounded-full">
                   <Target size={14} /> {project.estado}
@@ -619,7 +634,7 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
           <div className="lg:col-span-2 space-y-8">
 
             {/* Tarjeta de Descripción */}
-            <section className="bg-white rounded-[2.5rem] p-8 md:p-10 shadow-sm border border-slate-100">
+            <section className="bg-white rounded-[2.5rem] p-8 md:p-10 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
               <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-3">
                 <div className="p-2 bg-blue-50 rounded-lg text-blue-600">
                   <ClipboardList size={20} />
@@ -627,12 +642,14 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
                 Descripción del Proyecto
               </h2>
               <p className="text-slate-600 leading-relaxed text-lg font-medium">
-                {project.descripcion}
+                {project.descripcion || (
+                  <span className="text-slate-400 italic">Sin descripción del proyecto.</span>
+                )}
               </p>
             </section>
 
             {/* Tarjeta de Tareas */}
-            <section className="bg-white rounded-[2.5rem] p-8 md:p-10 shadow-sm border border-slate-100">
+            <section className="bg-white rounded-[2.5rem] p-8 md:p-10 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
               <div className="flex justify-between items-center mb-8">
                 <h2 className="text-xl font-bold text-slate-800 flex items-center gap-3">
                   <div className="p-2 bg-emerald-50 rounded-lg text-emerald-600">
@@ -667,7 +684,7 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
           </div>
 
           {/* Columna Derecha: Sidebar con Datos */}
-          <aside className="space-y-6">
+          <aside className="space-y-6 lg:sticky lg:top-28">
 
             {/* Card de Tiempo (Negra) */}
             <div className="bg-slate-900 rounded-[2.5rem] p-10 text-white shadow-2xl shadow-blue-900/20 relative overflow-hidden group">
@@ -706,8 +723,8 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
               <div className="space-y-4">
                 {project.equipo.length > 0 ? project.equipo.map((miembro, index) => (
                   <div key={index} className="flex items-center gap-4 p-3 hover:bg-slate-50 rounded-[1.25rem] transition-all group cursor-default">
-                    <div className="w-11 h-11 rounded-full bg-gradient-to-br from-slate-100 to-slate-200 text-slate-600 flex items-center justify-center font-black text-sm border border-white shadow-sm">
-                      {miembro.charAt(0).toUpperCase()}
+                    <div className={`w-11 h-11 rounded-full bg-gradient-to-br ${getAvatarGradient(miembro)} text-white flex items-center justify-center font-black text-sm border border-white shadow-sm`}>
+                      {miembro.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase()}
                     </div>
                     <span className="text-sm font-bold text-slate-700 group-hover:text-blue-600 transition-colors">{miembro}</span>
                     <ChevronRight size={16} className="ml-auto text-slate-300 group-hover:text-blue-400 transition-all" />
