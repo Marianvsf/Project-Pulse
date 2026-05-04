@@ -106,6 +106,8 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
   const [formData, setFormData] = useState<ProjectFormState | null>(null);
+  const [mounted, setMounted] = useState(false);
+  const [pulse, setPulse] = useState(false);
 
   useEffect(() => {
     const loadProject = async () => {
@@ -340,6 +342,17 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
     return project?.progreso ?? 0;
   })();
 
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
+
+  useEffect(() => {
+    setPulse(true);
+    const t = setTimeout(() => setPulse(false), 700);
+    return () => clearTimeout(t);
+  }, [displayedProgress]);
+
   // --- Estados de Carga (Skeleton) ---
   if (loading) {
     return (
@@ -423,7 +436,7 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
                 </div>
               )}
 
-              <div className="bg-white p-5 rounded-[2rem] shadow-sm border border-slate-100 flex items-center gap-5">
+              <div className={`bg-white p-5 rounded-[2rem] shadow-sm border border-slate-100 flex items-center gap-5 transition-transform duration-300 ${pulse ? 'scale-105 shadow-lg' : 'scale-100'}`}>
                 <div className="text-right">
                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Status Actual</p>
                   <p className="text-3xl font-black text-slate-800 leading-none">{displayedProgress}%</p>
@@ -634,7 +647,7 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
           <div className="lg:col-span-2 space-y-8">
 
             {/* Tarjeta de Descripción */}
-            <section className="bg-white rounded-[2.5rem] p-8 md:p-10 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+            <section className={`bg-white rounded-[2.5rem] p-8 md:p-10 shadow-sm border border-slate-100 hover:shadow-md transition-shadow ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'} transition-all duration-500 delay-75`}>
               <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-3">
                 <div className="p-2 bg-blue-50 rounded-lg text-blue-600">
                   <ClipboardList size={20} />
@@ -649,7 +662,7 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
             </section>
 
             {/* Tarjeta de Tareas */}
-            <section className="bg-white rounded-[2.5rem] p-8 md:p-10 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+            <section className={`bg-white rounded-[2.5rem] p-8 md:p-10 shadow-sm border border-slate-100 hover:shadow-md transition-shadow ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'} transition-all duration-500 delay-100`}>
               <div className="flex justify-between items-center mb-8">
                 <h2 className="text-xl font-bold text-slate-800 flex items-center gap-3">
                   <div className="p-2 bg-emerald-50 rounded-lg text-emerald-600">
@@ -664,15 +677,11 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
 
               <div className="grid gap-4">
                 {project.tareas.length > 0 ? project.tareas.map((tarea) => (
-                  <div key={tarea.id} className={`group flex items-center gap-5 p-5 rounded-2xl border transition-all ${tarea.completado
-                    ? 'bg-slate-50 border-transparent'
-                    : 'bg-white border-slate-100 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-500/5'
-                    }`}>
-                    <div className={`w-7 h-7 rounded-xl border-2 flex items-center justify-center shrink-0 transition-colors ${tarea.completado ? 'bg-emerald-500 border-emerald-500' : 'border-slate-200'
-                      }`}>
+                  <div key={tarea.id} className={`group flex items-center gap-5 p-5 rounded-2xl border transform transition-all duration-300 ${tarea.completado ? 'bg-slate-50 border-transparent scale-95 opacity-80' : 'bg-white border-slate-100 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-500/5 hover:scale-105'}`}>
+                    <div className={`w-7 h-7 rounded-xl border-2 flex items-center justify-center shrink-0 transition-colors transition-transform duration-300 ${tarea.completado ? 'bg-emerald-500 border-emerald-500 scale-110' : 'border-slate-200'}`}>
                       {tarea.completado && <CheckCircle2 size={16} className="text-white" />}
                     </div>
-                    <span className={`text-base font-semibold ${tarea.completado ? 'line-through text-slate-400' : 'text-slate-700'}`}>
+                    <span className={`text-base font-semibold transition-colors duration-300 ${tarea.completado ? 'line-through text-slate-400' : 'text-slate-700'}`}>
                       {tarea.nombre}
                     </span>
                   </div>
@@ -722,8 +731,8 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
               </h3>
               <div className="space-y-4">
                 {project.equipo.length > 0 ? project.equipo.map((miembro, index) => (
-                  <div key={index} className="flex items-center gap-4 p-3 hover:bg-slate-50 rounded-[1.25rem] transition-all group cursor-default">
-                    <div className={`w-11 h-11 rounded-full bg-gradient-to-br ${getAvatarGradient(miembro)} text-white flex items-center justify-center font-black text-sm border border-white shadow-sm`}>
+                  <div key={index} className="flex items-center gap-4 p-3 hover:bg-slate-50 rounded-[1.25rem] transition-all group cursor-default transform hover:scale-105">
+                    <div className={`w-11 h-11 rounded-full bg-gradient-to-br ${getAvatarGradient(miembro)} text-white flex items-center justify-center font-black text-sm border border-white shadow-sm transition-transform duration-300`}>
                       {miembro.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase()}
                     </div>
                     <span className="text-sm font-bold text-slate-700 group-hover:text-blue-600 transition-colors">{miembro}</span>
