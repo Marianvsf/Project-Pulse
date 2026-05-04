@@ -108,6 +108,7 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
   const [formData, setFormData] = useState<ProjectFormState | null>(null);
   const [mounted, setMounted] = useState(false);
   const [pulse, setPulse] = useState(false);
+  const [animatedProgress, setAnimatedProgress] = useState(0);
 
   useEffect(() => {
     const loadProject = async () => {
@@ -353,6 +354,27 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
     return () => clearTimeout(t);
   }, [displayedProgress]);
 
+  // Smooth number animation for the progress indicator
+  useEffect(() => {
+    let raf = 0;
+    const duration = 800;
+    const from = animatedProgress;
+    const to = displayedProgress;
+    let start: number | null = null;
+
+    const step = (ts: number) => {
+      if (start === null) start = ts;
+      const t = Math.min(1, (ts - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic
+      setAnimatedProgress(from + (to - from) * eased);
+      if (t < 1) raf = requestAnimationFrame(step);
+    };
+
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [displayedProgress]);
+
   // --- Estados de Carga (Skeleton) ---
   if (loading) {
     return (
@@ -439,14 +461,14 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
               <div className={`bg-white p-5 rounded-[2rem] shadow-sm border border-slate-100 flex items-center gap-5 transition-transform duration-300 ${pulse ? 'scale-105 shadow-lg' : 'scale-100'}`}>
                 <div className="text-right">
                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Status Actual</p>
-                  <p className="text-3xl font-black text-slate-800 leading-none">{displayedProgress}%</p>
+                  <p className="text-3xl font-black text-slate-800 leading-none" aria-live="polite">{Math.round(animatedProgress)}%</p>
                 </div>
                 <div className="w-16 h-16 relative flex items-center justify-center">
                   <svg className="w-full h-full transform -rotate-90">
                     <circle cx="32" cy="32" r="28" stroke="currentColor" strokeWidth="5" fill="transparent" className="text-slate-100" />
                     <circle cx="32" cy="32" r="28" stroke="currentColor" strokeWidth="5" fill="transparent"
-                      strokeDasharray={175.9} strokeDashoffset={175.9 - (175.9 * displayedProgress) / 100}
-                      className="text-blue-600 transition-all duration-1000 ease-in-out" strokeLinecap="round" />
+                      strokeDasharray={175.9} strokeDashoffset={175.9 - (175.9 * Math.min(100, Math.max(0, animatedProgress))) / 100}
+                      className="text-blue-600 transition-all duration-500 ease-out" strokeLinecap="round" />
                   </svg>
                   <div className="absolute w-2 h-2 bg-blue-600 rounded-full" />
                 </div>
