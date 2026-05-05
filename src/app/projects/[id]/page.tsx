@@ -405,7 +405,7 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
           </div>
           <h1 className="text-3xl font-bold text-slate-900 mb-2">Proyecto no encontrado</h1>
           <p className="text-slate-500 mb-8 max-w-md">{error}</p>
-          <Link href="/projects" className="flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-xl font-semibold hover:bg-slate-800 transition-all">
+          <Link href="/dashboard" className="flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-xl font-semibold hover:bg-slate-800 transition-all">
             <ArrowLeft size={18} /> Volver al listado
           </Link>
         </div>
