@@ -1,70 +1,44 @@
-import Image from "next/image"
+import Image from "next/image";
 
 export const Footer = () => {
   return (
-    <footer className="
-      relative 
-      w-full mt-auto 
-      border-t border-white/10 
-      bg-blue-950 
-      text-slate-300 font-sans
-      
-      /* Flexbox para centrar contenido */
-      flex flex-col items-center justify-center 
-      py-6 gap-4
-
-      /* --- LÍNEA BRILLANTE SUPERIOR (Ajustada a Tonos Oscuros) --- */
-      /* Esto crea el efecto de luz sobre el borde superior */
-      before:absolute 
-      before:top-0 
-      before:left-1/2 
-      before:-translate-x-1/2 
-      before:h-[1px] 
-      before:w-1/2 md:before:w-1/3
-      before:bg-gradient-to-r 
-      before:from-transparent 
-      before:via-blue-400/50 
-      before:to-transparent
-      before:shadow-[0_0_15px_rgba(96,165,250,0.6)]
-    ">
-
-      {/* Contenido */}
+    <footer className="relative w-full mt-auto bg-[#0B1120] text-slate-300 font-sans flex flex-col items-center justify-center py-8 pb-10 gap-6 z-10 overflow-hidden">
+      <div className="absolute top-0 inset-x-0 flex justify-center">
+        <div className="w-full h-px bg-white/10 absolute top-0" />
+        <div className="w-1/2 md:w-1/3 h-[1px] bg-gradient-to-r from-transparent via-blue-400/60 to-transparent shadow-[0_0_20px_rgba(96,165,250,0.8)] z-10" />
+      </div>
       <a
-        className="group flex items-center gap-3 transition-all duration-300 hover:text-white"
         href="https://github.com/Marianvsf"
         target="_blank"
         rel="noopener noreferrer"
+        className="group relative inline-flex items-center gap-3 px-5 py-2.5 rounded-full border border-white/5 bg-white/5 backdrop-blur-md transition-all duration-300 hover:bg-white/10 hover:border-white/20 hover:shadow-[0_0_20px_rgba(255,116,0,0.1)] active:scale-95 cursor-pointer"
       >
-        <span className="text-sm font-medium opacity-80 group-hover:opacity-100 transition-opacity">
-          Made by
-        </span>
-
-        {/* Contenedor del logo: Fondo blanco para que el logo negro resalte */}
-
-        <span className="text-sm font-medium tracking-wide group-hover:text-white transition-colors">
-          Marian Suárez
-        </span>
-
-        {/* Flecha con el acento Naranja del Navbar */}
-        <span className="text-[#FF7400] transform translate-x-0 group-hover:translate-x-1 transition-transform duration-300">
+        <div className="flex items-center gap-1.5 text-sm">
+          <span className="font-normal text-white/50 transition-colors group-hover:text-white/70">
+            Made by
+          </span>
+          <span className="font-semibold tracking-wide text-white transition-colors">
+            Marian Suárez
+          </span>
+        </div>
+        <span className="text-[#FF7400] text-lg font-light leading-none transform translate-x-0 group-hover:translate-x-1 transition-transform duration-300">
           →
         </span>
-        <div className="relative overflow-hidden rounded-full bg-white p-[2px] shadow-lg shadow-blue-900/20 group-hover:shadow-blue-500/30 group-hover:scale-110 transition-all duration-300">
+        <div className="relative flex items-center justify-center w-7 h-7 overflow-hidden bg-white rounded-full p-[1.5px] shadow-lg shadow-black/20 transition-transform duration-300 group-hover:scale-110 group-hover:shadow-blue-500/20">
           <Image
-            className="rounded-full"
+            className="object-contain rounded-full"
             src="/github_black.png"
-            alt="GitHub logo"
-            width={32}
-            height={32}
+            alt="GitHub de Marian Suárez"
+            width={24}
+            height={24}
             priority
           />
         </div>
       </a>
-
-      {/* (Opcional) Texto de copyright o secundario muy sutil */}
-      <div className="text-xs text-white/20">
+      <div className="text-xs tracking-wider text-white/30 font-medium uppercase">
         © {new Date().getFullYear()} Project Pulse.
       </div>
+      <div className="absolute bottom-[-50px] left-1/2 -translate-x-1/2 w-[300px] h-[100px] bg-blue-600/10 blur-[60px] rounded-full pointer-events-none" />
     </footer>
-  )
-}
+  );
+};
