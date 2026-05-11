@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, BarChart3, CalendarDays, CheckCircle2, Sparkles, ShieldCheck, Target, Users, Zap } from "lucide-react";
+import Navbar from "../components/navbar/Navbar";
 
 export const metadata = {
     title: "Ventas | Project Pulse",
@@ -49,6 +50,10 @@ const steps = [
 export default function SalesPage() {
     return (
         <main className="min-h-screen bg-[#fafafa] text-slate-900">
+            <div className="relative z-50">
+                <Navbar />
+            </div>
+
             <section className="relative overflow-hidden border-b border-slate-200/70 bg-white">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(99,102,241,0.12),_transparent_34%),radial-gradient(circle_at_top_right,_rgba(14,165,233,0.08),_transparent_28%),linear-gradient(180deg,_#ffffff_0%,_#f8fafc_100%)]" />
                 <div className="absolute -left-20 top-24 h-72 w-72 rounded-full bg-indigo-500/10 blur-3xl" />
