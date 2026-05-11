@@ -389,7 +389,7 @@ export default function HomePage() {
               <button onClick={() => router.push("/register")} className="bg-white text-slate-900 px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition-all shadow-[0_0_30px_rgba(255,255,255,0.2)]">
                 Crear cuenta gratis
               </button>
-              <button onClick={() => router.push("/contact")} className="bg-white/10 backdrop-blur-md border border-white/10 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white/20 transition-all">
+              <button onClick={() => router.push("/ventas")} className="bg-white/10 backdrop-blur-md border border-white/10 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white/20 transition-all">
                 Hablar con ventas
               </button>
             </div>
