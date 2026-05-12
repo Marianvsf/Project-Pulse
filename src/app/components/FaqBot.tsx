@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type FAQEntry = {
     id: number;
@@ -63,6 +63,7 @@ const getFaqResponse = (question: string, faqEntries: FAQEntry[]): string => {
 
 export default function FaqBot({ faqEntries }: FaqBotProps) {
     const [isFaqBotOpen, setIsFaqBotOpen] = useState<boolean>(false);
+    const faqBotContainerRef = useRef<HTMLDivElement | null>(null);
     const messageIdRef = useRef<number>(1);
     const [userQuestion, setUserQuestion] = useState<string>("");
     const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
@@ -77,6 +78,35 @@ export default function FaqBot({ faqEntries }: FaqBotProps) {
         messageIdRef.current += 1;
         return messageIdRef.current;
     };
+
+    useEffect(() => {
+        if (!isFaqBotOpen) {
+            return;
+        }
+
+        const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+            const targetNode = event.target as Node | null;
+
+            if (!targetNode) {
+                return;
+            }
+
+            if (
+                faqBotContainerRef.current &&
+                !faqBotContainerRef.current.contains(targetNode)
+            ) {
+                setIsFaqBotOpen(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        document.addEventListener("touchstart", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener("touchstart", handleClickOutside);
+        };
+    }, [isFaqBotOpen]);
 
     const sendFaqQuestion = (questionOverride?: string) => {
         const question = (questionOverride ?? userQuestion).trim();
@@ -102,7 +132,10 @@ export default function FaqBot({ faqEntries }: FaqBotProps) {
     };
 
     return (
-        <div className="fixed bottom-4 right-3 left-3 sm:bottom-6 sm:left-auto sm:right-6 z-[70] flex flex-col items-end gap-3">
+        <div
+            ref={faqBotContainerRef}
+            className="fixed bottom-4 right-3 left-3 sm:bottom-6 sm:left-auto sm:right-6 z-[70] flex flex-col items-end gap-3"
+        >
             {isFaqBotOpen && (
                 <div className="w-full max-w-sm rounded-3xl border border-slate-200 bg-slate-900 text-white p-4 sm:p-5 shadow-2xl shadow-slate-900/40">
                     <div className="flex items-center justify-between gap-3 mb-4">
