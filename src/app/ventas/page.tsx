@@ -59,7 +59,7 @@ export default function SalesPage() {
                 <div className="absolute -left-20 top-24 h-72 w-72 rounded-full bg-indigo-500/10 blur-3xl" />
                 <div className="absolute right-0 top-10 h-80 w-80 rounded-full bg-cyan-500/10 blur-3xl" />
 
-                <div className="relative mx-auto flex min-h-[88vh] max-w-7xl flex-col justify-center px-4 py-20 sm:px-6 lg:px-8">
+                <div className="relative mt-10 mx-auto flex min-h-[88vh] max-w-7xl flex-col justify-center px-4 py-20 sm:px-6 lg:px-8">
                     <div className="inline-flex w-fit items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-4 py-2 text-sm font-semibold text-indigo-700 backdrop-blur-md shadow-sm">
                         <Sparkles className="h-4 w-4 text-indigo-500" />
                         Página de ventas de Project Pulse
