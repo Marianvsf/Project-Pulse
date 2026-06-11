@@ -232,6 +232,7 @@ export default function HomePage() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Panel de Control */}
+              {/* Panel de Control */}
               <div className="md:col-span-2 bg-white p-8 sm:p-10 rounded-[2.5rem] border border-slate-200 shadow-xl shadow-slate-200/40 hover:-translate-y-1 transition-transform duration-500 flex flex-col justify-between overflow-hidden relative group">
                 <div className="relative z-10">
                   <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 text-blue-600 border border-blue-100">
@@ -240,11 +241,47 @@ export default function HomePage() {
                   <h3 className="text-2xl font-bold mb-3 text-slate-900 tracking-tight">Panel de Control Intuitivo</h3>
                   <p className="text-slate-500 max-w-md leading-relaxed text-lg">Visualiza el progreso con métricas en tiempo real que se adaptan a tu forma de trabajar.</p>
                 </div>
-                <div className="mt-12 bg-slate-50 rounded-2xl border border-slate-200 h-48 w-full group-hover:scale-[1.03] transition-transform duration-700 shadow-inner relative overflow-hidden p-4 flex flex-col gap-3">
-                  <div className="h-6 w-1/3 bg-slate-200 rounded-md animate-pulse" />
-                  <div className="flex-1 flex gap-3">
-                    <div className="w-1/4 h-full bg-blue-100/50 rounded-xl border border-blue-200/50" />
-                    <div className="w-3/4 h-full bg-white rounded-xl border border-slate-200 shadow-sm" />
+
+                {/* --- MINI DASHBOARD UI --- */}
+                <div className="mt-10 bg-slate-50 rounded-2xl border border-slate-200/80 h-56 w-full group-hover:scale-[1.02] transition-transform duration-700 shadow-sm relative overflow-hidden p-5 flex flex-col gap-4">
+
+                  {/* Header del mini dashboard */}
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
+                      <span className="text-sm font-bold text-slate-700">Sprint 42</span>
+                    </div>
+                    <span className="text-xs font-semibold text-emerald-700 bg-emerald-100 px-2.5 py-1 rounded-full border border-emerald-200">
+                      En tiempo
+                    </span>
+                  </div>
+
+                  {/* Tarjetas de KPIs */}
+                  <div className="grid grid-cols-3 gap-3">
+                    <div className="bg-white rounded-xl p-3 border border-slate-100 shadow-sm">
+                      <p className="text-[10px] sm:text-xs text-slate-500 font-medium mb-1 uppercase tracking-wider">Completadas</p>
+                      <p className="text-xl font-black text-slate-900">24</p>
+                    </div>
+                    <div className="bg-white rounded-xl p-3 border border-slate-100 shadow-sm">
+                      <p className="text-[10px] sm:text-xs text-slate-500 font-medium mb-1 uppercase tracking-wider">En proceso</p>
+                      <p className="text-xl font-black text-blue-600">8</p>
+                    </div>
+                    <div className="bg-white rounded-xl p-3 border border-slate-100 shadow-sm">
+                      <p className="text-[10px] sm:text-xs text-slate-500 font-medium mb-1 uppercase tracking-wider">Bloqueadas</p>
+                      <p className="text-xl font-black text-orange-500">2</p>
+                    </div>
+                  </div>
+
+                  {/* Mini Gráfico de Actividad */}
+                  <div className="flex-1 bg-white rounded-xl border border-slate-100 shadow-sm p-3 flex items-end justify-between gap-1.5 sm:gap-2">
+                    {[40, 70, 45, 90, 65, 30, 85].map((height, i) => (
+                      <div key={i} className="w-full bg-slate-50 rounded-t-sm relative h-full group/bar">
+                        <div
+                          className="absolute bottom-0 w-full bg-gradient-to-t from-blue-600 to-blue-400 rounded-t-sm transition-all duration-1000 group-hover/bar:brightness-110"
+                          style={{ height: `${height}%` }}
+                        />
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
