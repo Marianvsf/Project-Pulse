@@ -51,7 +51,7 @@ const Navbar = () => {
   return (
     <header className="fixed top-0 inset-x-0 z-50 flex justify-center p-4 pointer-events-none" ref={menuRef}>
 
-      {/* CONTENEDOR PRINCIPAL */}
+      
       <nav
         className={`pointer-events-auto flex items-center justify-between w-full max-w-5xl transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] rounded-full border border-white/10 backdrop-blur-md
         ${scrolled
@@ -59,7 +59,7 @@ const Navbar = () => {
             : "h-20 bg-[#0B1120]/40 px-7 shadow-none"
           }`}
       >
-        {/* LOGO Y TÍTULO */}
+
         <Link
           href="/"
           onClick={() => setIsMenuOpen(false)}
@@ -80,7 +80,7 @@ const Navbar = () => {
           </span>
         </Link>
 
-        {/* ENLACES DESKTOP */}
+        
         <div className="hidden md:flex items-center gap-3">
           {pathname !== "/login" && (
             <button
@@ -102,7 +102,7 @@ const Navbar = () => {
           )}
         </div>
 
-        {/* BOTÓN HAMBURGUESA PERFECCIONADO */}
+        
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="relative flex items-center justify-center h-9 w-9 text-gray-300 transition-colors rounded-full md:hidden hover:bg-white/5 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-white/30 active:scale-95"
@@ -117,7 +117,7 @@ const Navbar = () => {
         </button>
       </nav>
 
-      {/* MENÚ MÓVIL (Dropdown con Mejor Comportamiento) */}
+      
       <div
         className={`absolute top-full left-4 right-4 mt-2 max-w-5xl mx-auto transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] origin-top md:hidden
         ${isMenuOpen
