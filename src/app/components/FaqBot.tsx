@@ -20,7 +20,7 @@ type FaqBotProps = {
 };
 
 const defaultBotAnswer =
-    "No encontré una respuesta exacta. Puedes preguntar sobre seguridad, planes, precios, integraciones o cancelación.";
+    "No encontré una respuesta exacta. Puedes preguntar sobre seguridad, planes, precios, integraciones, app móvil, soporte, IA, importar datos o cancelación.";
 
 const normalizeText = (text: string) =>
     text
@@ -70,7 +70,7 @@ export default function FaqBot({ faqEntries }: FaqBotProps) {
         {
             id: 1,
             sender: "bot",
-            text: "Hola. Soy tu bot de FAQ de Project Pulse. Pregúntame sobre planes, seguridad, integraciones o precios.",
+            text: "Hola. Soy tu bot de FAQ de Project Pulse. Pregúntame sobre planes, precios, seguridad, integraciones, app móvil, soporte, IA y más.",
         },
     ]);
 
