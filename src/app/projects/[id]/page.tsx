@@ -378,7 +378,8 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
   // --- Estados de Carga (Skeleton) ---
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-50">
+      <div className="relative min-h-screen bg-slate-50">
+        <div className="fixed inset-0 bg-[linear-gradient(to_right,#94a3b815_1px,transparent_1px),linear-gradient(to_bottom,#94a3b815_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none z-0" />
         <UserNavbar onSearch={() => { }} showSearchAndFilter={false} />
         <div className="container mx-auto pt-32 px-4 max-w-7xl animate-pulse">
           <div className="h-8 w-48 bg-slate-200 rounded-lg mb-6" />
@@ -397,7 +398,8 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
   // --- Estado de Error ---
   if (error || !project) {
     return (
-      <div className="min-h-screen bg-slate-50">
+      <div className="relative min-h-screen bg-slate-50">
+        <div className="fixed inset-0 bg-[linear-gradient(to_right,#94a3b815_1px,transparent_1px),linear-gradient(to_bottom,#94a3b815_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none z-0" />
         <UserNavbar onSearch={() => { }} showSearchAndFilter={false} />
         <div className="container mx-auto pt-40 px-4 flex flex-col items-center justify-center text-center">
           <div className="bg-red-100 text-red-600 p-6 rounded-full mb-6">
@@ -415,7 +417,8 @@ function ProjectDetailsClient({ projectId }: { projectId: string }) {
 
   // --- Vista Principal ---
   return (
-    <div className="min-h-screen bg-[#F8FAFC]">
+    <div className="relative min-h-screen bg-[#F8FAFC]">
+      <div className="fixed inset-0 bg-[linear-gradient(to_right,#94a3b815_1px,transparent_1px),linear-gradient(to_bottom,#94a3b815_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none z-0" />
       <UserNavbar onSearch={() => { }} showSearchAndFilter={false} />
 
       <main className="container mx-auto pt-32 pb-12 px-4 max-w-7xl">
