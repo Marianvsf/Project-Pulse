@@ -173,8 +173,8 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
                                     onClick={() => setShowProfileMenu(!showProfileMenu)}
                                     className="flex items-center gap-2 p-1 transition-all border border-transparent rounded-full hover:bg-white/5 hover:border-white/10 active:scale-95"
                                 >
-                                    <div className="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full bg-gradient-to-tr from-blue-600 to-violet-500 border border-white/20 shadow-inner">
-                                        <User size={18} className="text-white" />
+                                    <div className="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full bg-cyan-400/10 border border-cyan-400/30 shadow-[0_0_10px_rgba(34,211,238,0.2)] backdrop-blur-sm">
+                                        <User size={18} className="text-cyan-400" />
                                     </div>
                                     <div className="hidden text-left sm:block pr-2">
                                         <p className="text-xs font-semibold text-white/90 leading-tight truncate max-w-[100px]">
