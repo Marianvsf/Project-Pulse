@@ -58,7 +58,8 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
     }, [searchTerm, filters, onSearch]);
 
     const handleLogout = async () => {
-        await signOut({ callbackUrl: "/login" });
+        await signOut({ redirect: false });
+        router.push("/login");
     };
 
     const handleFilterChange = (key: keyof Filters, value: string) => {
@@ -148,8 +149,8 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
                                         <button
                                             onClick={() => setShowFilterMenu(!showFilterMenu)}
                                             className={`p-2.5 rounded-full border transition-all active:scale-95 ${hasActiveFilters
-                                                    ? "bg-gradient-to-b from-blue-500 to-blue-600 border-blue-400/50 text-white shadow-[0_0_15px_rgba(59,130,246,0.3)]"
-                                                    : "bg-white/5 border-white/10 text-white/70 hover:bg-white/10 hover:text-white"
+                                                ? "bg-gradient-to-b from-blue-500 to-blue-600 border-blue-400/50 text-white shadow-[0_0_15px_rgba(59,130,246,0.3)]"
+                                                : "bg-white/5 border-white/10 text-white/70 hover:bg-white/10 hover:text-white"
                                                 }`}
                                         >
                                             <Filter size={18} />
@@ -185,10 +186,10 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
 
                                 {/* Dropdown Perfil */}
                                 {showProfileMenu && (
-                                    <div className="absolute top-[calc(100%+12px)] right-0 w-52 rounded-[24px] bg-[#0B1120]/95 backdrop-blur-2xl border border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.5)] p-3 animate-in fade-in slide-in-from-top-2 origin-top">
+                                    <div className="absolute top-[calc(100%+12px)] right-0 w-52 rounded-[24px] bg-[#0B1120]/60 backdrop-blur-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)] p-3 animate-in fade-in slide-in-from-top-2 origin-top">
                                         <button
                                             onClick={handleLogout}
-                                            className="flex items-center w-full gap-3 px-4 py-3.5 text-sm font-semibold text-red-400 transition-all rounded-[16px] hover:bg-red-500/10 hover:text-red-300 active:bg-red-500/20"
+                                            className="flex items-center w-full gap-3 px-4 py-3.5 text-sm font-semibold text-white/70 transition-all rounded-[16px] hover:bg-white/5 hover:text-red-400 active:bg-white/10"
                                         >
                                             <LogOut size={18} />
                                             Cerrar sesión
@@ -266,8 +267,8 @@ const FilterContent = ({ filters, onFilterChange, onClear }: FilterContentProps)
                 key={item.id}
                 onClick={() => onFilterChange('status', item.id)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-[16px] text-sm font-medium transition-all active:scale-[0.98] ${filters.status === item.id
-                        ? 'bg-gradient-to-r from-blue-500/20 to-blue-600/20 text-blue-400 border border-blue-500/30'
-                        : 'text-gray-300 border border-transparent hover:bg-white/5 hover:text-white'
+                    ? 'bg-gradient-to-r from-blue-500/20 to-blue-600/20 text-blue-400 border border-blue-500/30'
+                    : 'text-gray-300 border border-transparent hover:bg-white/5 hover:text-white'
                     }`}
             >
                 <item.icon size={18} className={filters.status === item.id ? 'text-blue-400' : item.color} />
