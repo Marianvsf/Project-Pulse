@@ -50,7 +50,7 @@ export default function LoginView() {
     };
 
     return (
-        <div className="flex flex-col md:flex-row min-h-screen">
+        <div className="flex flex-col md:flex-row min-h-screen bg-[#050B14]">
             {/* INYECCIÓN DE CSS PARA ANIMACIONES DE IA */}
             <style dangerouslySetInnerHTML={{
                 __html: `
@@ -78,21 +78,21 @@ export default function LoginView() {
                 <Navbar />
             </div>
 
-            {/* LADO IZQUIERDO: Estilo IA (Panel oscuro animado) */}
-            <div className="w-full md:w-5/12 min-h-[50vh] md:min-h-screen bg-slate-900 flex flex-col items-center justify-center p-10 text-center relative overflow-hidden border-b md:border-b-0 md:border-r border-slate-800 pt-24 md:pt-10">
-                {/* Fondo degradado base */}
-                <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-indigo-900 via-slate-900 to-slate-900 mix-blend-overlay" />
+            {/* LADO IZQUIERDO */}
+            <div className="w-full md:w-5/12 min-h-[50vh] md:min-h-screen bg-[#050B14] flex flex-col items-center justify-center p-10 text-center relative overflow-hidden border-b md:border-b-0 md:border-r border-white/5 pt-24 md:pt-10">
+                {/* Cyber Grid */}
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f10_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f10_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
 
                 {/* Orbes flotantes animados */}
-                <div className="absolute top-1/4 left-1/4 w-48 h-48 bg-indigo-600/20 rounded-full blur-[60px]" style={{ animation: 'ai-pulse-glow 6s ease-in-out infinite' }} />
-                <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-purple-600/20 rounded-full blur-[80px]" style={{ animation: 'ai-pulse-glow 5s ease-in-out infinite alternate' }} />
+                <div className="absolute top-1/4 left-1/4 w-48 h-48 bg-cyan-600/15 rounded-full blur-[60px]" style={{ animation: 'ai-pulse-glow 6s ease-in-out infinite' }} />
+                <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-cyan-400/10 rounded-full blur-[80px]" style={{ animation: 'ai-pulse-glow 5s ease-in-out infinite alternate' }} />
 
                 <div className="relative z-10 flex flex-col items-center" style={{ animation: 'ai-float 6s ease-in-out infinite' }}>
                     {/* Contenedor del Logo con escáner IA */}
-                    <div className="relative w-40 h-40 mb-8 rounded-2xl p-4 bg-white/5 border border-white/10 backdrop-blur-sm shadow-[0_0_30px_rgba(99,102,241,0.15)] group">
+                    <div className="relative w-40 h-40 mb-8 rounded-2xl p-4 bg-white/[0.02] border border-white/10 backdrop-blur-sm shadow-[0_0_30px_rgba(34,211,238,0.1)] group">
                         {/* Línea láser de escaneo */}
                         <div className="absolute inset-0 overflow-hidden rounded-2xl z-20 pointer-events-none">
-                            <div className="w-full h-[2px] bg-indigo-400/80 shadow-[0_0_15px_rgba(129,140,248,1)]" style={{ animation: 'ai-scan 3s linear infinite' }} />
+                            <div className="w-full h-[2px] bg-cyan-400/80 shadow-[0_0_15px_rgba(34,211,238,1)]" style={{ animation: 'ai-scan 3s linear infinite' }} />
                         </div>
 
                         <Image
@@ -105,9 +105,17 @@ export default function LoginView() {
                     </div>
 
                     <h2 className="text-3xl font-black text-white mb-3 tracking-tight">¡Hola de nuevo!</h2>
-                    <p className="text-indigo-200/80 text-sm md:text-base max-w-xs leading-relaxed">
+                    <p className="text-cyan-400/60 text-sm md:text-base max-w-xs leading-relaxed">
                         Ingresa a tu entorno seguro y continúa impulsando el ritmo de tus proyectos.
                     </p>
+
+                    {/* System status igual que footer */}
+                    <div className="flex items-center gap-2 mt-6">
+                        <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
+                        <div className="text-[10px] tracking-[0.3em] text-cyan-400/50 font-mono uppercase">
+                            System Online
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -148,7 +156,6 @@ export default function LoginView() {
                                 <label className="block text-sm font-semibold text-gray-700">
                                     Contraseña
                                 </label>
-                                {/* Opcional: Link de recuperar contraseña */}
                                 <Link href="/forgot-password" className="text-xs text-[#FF7400] hover:underline font-medium">
                                     ¿Olvidaste tu contraseña?
                                 </Link>
