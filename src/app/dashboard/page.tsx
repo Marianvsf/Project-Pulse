@@ -431,12 +431,27 @@ export default function DashboardUser() {
                             </div>
 
                             {/* WIDGET 2: SOPORTE */}
-                            <div className="bg-blue-950 rounded-2xl p-6 text-white shadow-lg">
-                                <h3 className="font-bold text-lg mb-2">¿Necesitas ayuda?</h3>
-                                <p className="text-blue-200 text-sm mb-4">Contacta con soporte técnico si tienes dudas con tu panel.</p>
-                                <button onClick={() => router.push('/support')} className="w-full py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm font-medium transition-colors border border-white/10">
-                                    Contactar Soporte
-                                </button>
+                            <div className="relative bg-[#050B14] rounded-2xl p-6 text-white shadow-lg overflow-hidden border border-white/5">
+                                {/* Cyber Grid */}
+                                <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f10_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f10_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+                                {/* Laser line top */}
+                                <div className="absolute top-0 inset-x-0 flex justify-center pointer-events-none">
+                                    <div className="w-3/4 h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_15px_rgba(34,211,238,0.8),0_0_30px_rgba(34,211,238,0.4)]" />
+                                </div>
+                                {/* Energy glow */}
+                                <div className="absolute bottom-[-20px] left-1/2 -translate-x-1/2 w-[200px] h-[80px] bg-cyan-600/15 blur-[50px] rounded-full pointer-events-none" />
+
+                                <div className="relative z-10">
+                                    <div className="flex items-center gap-2 mb-3">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
+                                        <span className="text-[10px] tracking-[0.3em] text-cyan-400/50 font-mono uppercase">Support</span>
+                                    </div>
+                                    <h3 className="font-bold text-lg mb-2 text-white">¿Necesitas ayuda?</h3>
+                                    <p className="text-slate-400 text-sm mb-4">Contacta con soporte técnico si tienes dudas con tu panel.</p>
+                                    <button onClick={() => router.push('/support')} className="w-full py-2 bg-white/[0.03] hover:bg-cyan-500/10 rounded-lg text-sm font-medium transition-all border border-white/10 hover:border-cyan-500/50 hover:shadow-[0_0_20px_rgba(34,211,238,0.15)] text-slate-300 hover:text-cyan-50">
+                                        Contactar Soporte
+                                    </button>
+                                </div>
                             </div>
 
                         </div>
