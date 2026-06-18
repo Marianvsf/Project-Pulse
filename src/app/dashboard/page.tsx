@@ -207,7 +207,9 @@ export default function DashboardUser() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 pt-28 pb-12 selection:bg-orange-100 max-w-[1300px] mx-auto selection:text-orange-600">
+        <div className="relative min-h-screen bg-gray-50 pt-28 pb-12 selection:bg-orange-100 max-w-[1300px] mx-auto selection:text-orange-600">
+            {/* Cyber Grid — light */}
+            <div className="fixed inset-0 bg-[linear-gradient(to_right,#94a3b815_1px,transparent_1px),linear-gradient(to_bottom,#94a3b815_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none z-0" />
             <UserNavbar onSearch={handleSearch} />
 
             <main className="container mx-auto px-4 lg:px-8 max-w-[1400px]">
