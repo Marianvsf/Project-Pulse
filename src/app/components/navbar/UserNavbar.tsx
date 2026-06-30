@@ -14,12 +14,15 @@ import {
     CheckCircle2,
     Clock,
     Activity,
-    Trash2
+    Trash2,
+    ArrowUp,
+    Minus,
+    ArrowDown
 } from "lucide-react";
 
 interface Filters {
     status?: string;
-    category?: string;
+    prioridad?: string;
 }
 
 interface UserNavbarProps {
@@ -258,6 +261,7 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
 // Componente extraído para reutilizar en Desktop y Móvil
 const FilterContent = ({ filters, onFilterChange, onClear }: FilterContentProps) => (
     <div className="flex flex-col gap-1">
+        <p className="text-[10px] font-bold text-white/30 uppercase tracking-widest px-4 pt-1 pb-0.5">Estado</p>
         {[
             { id: 'En progreso', icon: Activity, label: 'En progreso', color: 'text-amber-400' },
             { id: 'Completado', icon: CheckCircle2, label: 'Completado', color: 'text-emerald-400' },
@@ -272,6 +276,27 @@ const FilterContent = ({ filters, onFilterChange, onClear }: FilterContentProps)
                     }`}
             >
                 <item.icon size={18} className={filters.status === item.id ? 'text-blue-400' : item.color} />
+                {item.label}
+            </button>
+        ))}
+
+        <div className="h-px bg-white/10 my-2 mx-2" />
+
+        <p className="text-[10px] font-bold text-white/30 uppercase tracking-widest px-4 pb-0.5">Prioridad</p>
+        {[
+            { id: 'Alta', icon: ArrowUp, label: 'Alta', color: 'text-red-400' },
+            { id: 'Media', icon: Minus, label: 'Media', color: 'text-amber-400' },
+            { id: 'Baja', icon: ArrowDown, label: 'Baja', color: 'text-sky-400' }
+        ].map((item) => (
+            <button
+                key={item.id}
+                onClick={() => onFilterChange('prioridad', item.id)}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-[16px] text-sm font-medium transition-all active:scale-[0.98] ${filters.prioridad === item.id
+                    ? 'bg-gradient-to-r from-blue-500/20 to-blue-600/20 text-blue-400 border border-blue-500/30'
+                    : 'text-gray-300 border border-transparent hover:bg-white/5 hover:text-white'
+                    }`}
+            >
+                <item.icon size={18} className={filters.prioridad === item.id ? 'text-blue-400' : item.color} />
                 {item.label}
             </button>
         ))}
