@@ -97,10 +97,10 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
             {/* Header actúa como contenedor fijo transparente */}
             <header className="fixed top-0 inset-x-0 z-50 flex justify-center p-4 pointer-events-none">
                 <nav
-                    className={`pointer-events-auto flex items-center w-full max-w-7xl transition-all duration-500 ease-out rounded-full border border-white/10 backdrop-blur-xl shadow-2xl
+                    className={`pointer-events-auto flex items-center w-full max-w-7xl transition-all duration-500 ease-out rounded-full backdrop-blur-xl
                     ${scrolled
-                            ? "h-16 bg-[#0B1120]/80 px-3 sm:px-6 shadow-black/50"
-                            : "h-20 bg-[#0B1120]/40 px-4 sm:px-8"
+                            ? "h-16 bg-[#050B14]/90 border border-cyan-400/15 shadow-lg shadow-[#050B14]/40 px-3 sm:px-6"
+                            : "h-20 bg-[#0B1120]/85 border border-cyan-400/10 shadow-md shadow-[#050B14]/30 px-4 sm:px-8"
                         }`}
                 >
                     <div className="flex items-center justify-between w-full h-full">
@@ -109,12 +109,12 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
                         <div className="flex items-center gap-2 md:gap-4 flex-none lg:w-64">
                             <button
                                 onClick={() => router.back()}
-                                className="p-2.5 text-white/70 bg-white/5 border border-transparent hover:border-white/10 hover:bg-white/10 hover:text-white rounded-full transition-all active:scale-90"
+                                className="p-2.5 text-white/60 bg-white/5 border border-white/10 hover:bg-white/10 hover:text-white rounded-full transition-all active:scale-90"
                             >
                                 <ChevronLeft size={20} strokeWidth={2.5} />
                             </button>
 
-                            <div className="relative hidden w-9 h-9 sm:flex shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/20 bg-white/5 transition-transform duration-300 hover:scale-105 hover:border-white/40">
+                            <div className="relative hidden w-9 h-9 sm:flex shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/15 bg-white/5 transition-transform duration-300 hover:scale-105 hover:border-cyan-400/30">
                                 <Image width={20} height={20} src="/Logo.png" className="object-contain" alt="Logo" />
                             </div>
                         </div>
@@ -122,8 +122,8 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
                         {/* CENTRO: Buscador Desktop */}
                         {showSearchAndFilter && (
                             <div className="hidden lg:flex items-center justify-center flex-1 px-4">
-                                <div className="flex items-center gap-3 bg-white/5 border border-white/10 px-5 py-2.5 rounded-full w-full max-w-md focus-within:bg-white/10 focus-within:border-white/20 focus-within:shadow-[0_0_15px_rgba(255,255,255,0.05)] transition-all duration-300">
-                                    <Search size={18} className="text-white/40" />
+                                <div className="flex items-center gap-3 bg-white/5 border border-white/10 px-5 py-2.5 rounded-full w-full max-w-md focus-within:bg-white/8 focus-within:border-cyan-400/30 focus-within:shadow-[0_0_15px_rgba(34,211,238,0.08)] transition-all duration-300">
+                                    <Search size={18} className="text-white/40 shrink-0" />
                                     <input
                                         type="text"
                                         placeholder="Buscar proyectos..."
@@ -131,6 +131,11 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
                                         onChange={(e) => setSearchTerm(e.target.value)}
                                         className="w-full text-sm text-white bg-transparent outline-none placeholder:text-white/30"
                                     />
+                                    {searchTerm && (
+                                        <button onClick={() => setSearchTerm("")} className="shrink-0 text-white/30 hover:text-white/70 transition-colors">
+                                            <X size={14} />
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                         )}
@@ -142,7 +147,7 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
                                     {/* Lupa Móvil/Tablet */}
                                     <button
                                         onClick={() => setShowMobileSearch(true)}
-                                        className="lg:hidden p-2.5 text-white/70 hover:bg-white/10 hover:text-white rounded-full transition-all active:scale-95"
+                                        className="lg:hidden p-2.5 text-white/60 hover:bg-white/10 hover:text-white rounded-full transition-all active:scale-95"
                                     >
                                         <Search size={20} />
                                     </button>
@@ -152,8 +157,8 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
                                         <button
                                             onClick={() => setShowFilterMenu(!showFilterMenu)}
                                             className={`p-2.5 rounded-full border transition-all active:scale-95 ${hasActiveFilters
-                                                ? "bg-gradient-to-b from-blue-500 to-blue-600 border-blue-400/50 text-white shadow-[0_0_15px_rgba(59,130,246,0.3)]"
-                                                : "bg-white/5 border-white/10 text-white/70 hover:bg-white/10 hover:text-white"
+                                                ? "bg-cyan-400/20 border-cyan-400/40 text-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.2)]"
+                                                : "bg-white/5 border-white/10 text-white/60 hover:bg-white/10 hover:text-white"
                                                 }`}
                                         >
                                             <Filter size={18} />
@@ -161,7 +166,7 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
 
                                         {/* Dropdown Filtros */}
                                         {showFilterMenu && (
-                                            <div className="absolute top-[calc(100%+12px)] right-0 w-64 rounded-[24px] bg-[#0B1120]/95 backdrop-blur-2xl border border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.5)] p-3 animate-in fade-in slide-in-from-top-2 origin-top">
+                                            <div className="absolute top-[calc(100%+12px)] right-0 w-64 rounded-[24px] bg-[#050B14]/95 backdrop-blur-2xl border border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.5)] p-3 animate-in fade-in slide-in-from-top-2 origin-top">
                                                 <FilterContent filters={filters} onFilterChange={handleFilterChange} onClear={clearFilters} />
                                             </div>
                                         )}
@@ -177,11 +182,11 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
                                     onClick={() => setShowProfileMenu(!showProfileMenu)}
                                     className="flex items-center gap-2 p-1 transition-all border border-transparent rounded-full hover:bg-white/5 hover:border-white/10 active:scale-95"
                                 >
-                                    <div className="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full bg-cyan-400/10 border border-cyan-400/30 shadow-[0_0_10px_rgba(34,211,238,0.2)] backdrop-blur-sm">
+                                    <div className="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full bg-cyan-400/10 border border-cyan-400/30 shadow-[0_0_10px_rgba(34,211,238,0.15)]">
                                         <User size={18} className="text-cyan-400" />
                                     </div>
                                     <div className="hidden text-left sm:block pr-2">
-                                        <p className="text-xs font-semibold text-white/90 leading-tight truncate max-w-[100px]">
+                                        <p className="text-xs font-semibold text-white/80 leading-tight truncate max-w-[100px]">
                                             {session?.user?.name || "Usuario"}
                                         </p>
                                     </div>
@@ -189,10 +194,10 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
 
                                 {/* Dropdown Perfil */}
                                 {showProfileMenu && (
-                                    <div className="absolute top-[calc(100%+12px)] right-0 w-52 rounded-[24px] bg-[#0B1120]/60 backdrop-blur-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)] p-3 animate-in fade-in slide-in-from-top-2 origin-top">
+                                    <div className="absolute top-[calc(100%+12px)] right-0 w-52 rounded-[24px] bg-[#050B14]/95 backdrop-blur-2xl border border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.5)] p-3 animate-in fade-in slide-in-from-top-2 origin-top">
                                         <button
                                             onClick={handleLogout}
-                                            className="flex items-center w-full gap-3 px-4 py-3.5 text-sm font-semibold text-white/70 transition-all rounded-[16px] hover:bg-white/5 hover:text-red-400 active:bg-white/10"
+                                            className="flex items-center w-full gap-3 px-4 py-3.5 text-sm font-semibold text-white/60 transition-all rounded-[16px] hover:bg-red-500/10 hover:text-red-400 active:bg-red-500/15"
                                         >
                                             <LogOut size={18} />
                                             Cerrar sesión
@@ -207,7 +212,7 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
 
             {/* BÚSQUEDA Y FILTROS MÓVIL (Overlay) */}
             {showMobileSearch && (
-                <div className="fixed inset-0 z-[70] flex flex-col bg-[#0B1120]/95 backdrop-blur-3xl lg:hidden animate-in fade-in slide-in-from-bottom-5 duration-300">
+                <div className="fixed inset-0 z-[70] flex flex-col bg-[#050B14]/97 backdrop-blur-3xl lg:hidden animate-in fade-in slide-in-from-bottom-5 duration-300">
                     <div className="flex-1 p-4 overflow-y-auto">
                         <div className="flex flex-col gap-6 max-w-2xl mx-auto pt-4">
 
@@ -224,7 +229,7 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
 
                             {/* Input Móvil */}
                             <div className="space-y-6">
-                                <div className="flex items-center gap-3 bg-white/5 border border-white/10 p-4 rounded-[24px] focus-within:bg-white/10 focus-within:border-white/20 transition-all">
+                                <div className="flex items-center gap-3 bg-white/5 border border-white/10 p-4 rounded-[24px] focus-within:border-cyan-400/30 focus-within:shadow-[0_0_15px_rgba(34,211,238,0.08)] transition-all">
                                     <Search className="text-white/40" size={20} />
                                     <input
                                         autoFocus
@@ -238,9 +243,6 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
 
                                 {/* Filtros Móvil */}
                                 <div className="space-y-4 bg-white/5 border border-white/10 p-5 rounded-[24px]">
-                                    <p className="text-[11px] font-bold text-white/40 uppercase tracking-widest ml-1">
-                                        Filtrar por estado
-                                    </p>
                                     <div className="grid grid-cols-1 gap-1">
                                         <FilterContent
                                             filters={filters}
@@ -271,11 +273,11 @@ const FilterContent = ({ filters, onFilterChange, onClear }: FilterContentProps)
                 key={item.id}
                 onClick={() => onFilterChange('status', item.id)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-[16px] text-sm font-medium transition-all active:scale-[0.98] ${filters.status === item.id
-                    ? 'bg-gradient-to-r from-blue-500/20 to-blue-600/20 text-blue-400 border border-blue-500/30'
-                    : 'text-gray-300 border border-transparent hover:bg-white/5 hover:text-white'
+                    ? 'bg-cyan-400/10 text-cyan-400 border border-cyan-400/20'
+                    : 'text-white/60 border border-transparent hover:bg-white/5 hover:text-white'
                     }`}
             >
-                <item.icon size={18} className={filters.status === item.id ? 'text-blue-400' : item.color} />
+                <item.icon size={18} className={filters.status === item.id ? 'text-cyan-400' : item.color} />
                 {item.label}
             </button>
         ))}
@@ -292,11 +294,11 @@ const FilterContent = ({ filters, onFilterChange, onClear }: FilterContentProps)
                 key={item.id}
                 onClick={() => onFilterChange('prioridad', item.id)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-[16px] text-sm font-medium transition-all active:scale-[0.98] ${filters.prioridad === item.id
-                    ? 'bg-gradient-to-r from-blue-500/20 to-blue-600/20 text-blue-400 border border-blue-500/30'
-                    : 'text-gray-300 border border-transparent hover:bg-white/5 hover:text-white'
+                    ? 'bg-cyan-400/10 text-cyan-400 border border-cyan-400/20'
+                    : 'text-white/60 border border-transparent hover:bg-white/5 hover:text-white'
                     }`}
             >
-                <item.icon size={18} className={filters.prioridad === item.id ? 'text-blue-400' : item.color} />
+                <item.icon size={18} className={filters.prioridad === item.id ? 'text-cyan-400' : item.color} />
                 {item.label}
             </button>
         ))}
