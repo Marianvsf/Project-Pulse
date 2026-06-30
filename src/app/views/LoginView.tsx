@@ -79,7 +79,7 @@ export default function LoginView() {
             </div>
 
             {/* LADO IZQUIERDO */}
-            <div className="w-full md:w-5/12 min-h-[50vh] md:min-h-screen bg-[#050B14] flex flex-col items-center justify-center p-10 text-center relative overflow-hidden border-b md:border-b-0 md:border-r border-white/5 pt-24 md:pt-10">
+            <div className="hidden md:flex w-full md:w-5/12 md:min-h-screen bg-[#050B14] flex-col items-center justify-center p-10 text-center relative overflow-hidden md:border-r border-white/5 md:pt-10">
                 {/* Cyber Grid */}
                 <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f10_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f10_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
 
