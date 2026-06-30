@@ -45,8 +45,10 @@ export default function DashboardUser() {
     const projects = useProjectStore((s) => s.projects);
     const searchTerm = useProjectStore((s) => s.searchTerm);
     const statusFilter = useProjectStore((s) => s.statusFilter);
+    const priorityFilter = useProjectStore((s) => s.priorityFilter);
     const setSearchTerm = useProjectStore((s) => s.setSearchTerm);
     const setStatusFilter = useProjectStore((s) => s.setStatusFilter);
+    const setPriorityFilter = useProjectStore((s) => s.setPriorityFilter);
     const setProjects = useProjectStore((s) => s.setProjects);
     const loadProjects = useProjectStore((s) => s.loadProjects);
     const isLoadingProjects = useProjectStore((s) => s.isLoading);
@@ -138,10 +140,11 @@ export default function DashboardUser() {
         [projects, editingProjectId],
     );
 
-    const handleSearch = useCallback((searchTerm: string, filters: { status?: string }) => {
+    const handleSearch = useCallback((searchTerm: string, filters: { status?: string; prioridad?: string }) => {
         setSearchTerm(searchTerm);
         setStatusFilter(filters.status);
-    }, [setSearchTerm, setStatusFilter]);
+        setPriorityFilter(filters.prioridad);
+    }, [setSearchTerm, setStatusFilter, setPriorityFilter]);
 
     const applyStatusAndFocusProjects = useCallback((status?: string) => {
         setSearchTerm("");
@@ -155,13 +158,18 @@ export default function DashboardUser() {
             const normalizedFilter = normalizeStatus(statusFilter);
             filtered = filtered.filter((project) => normalizeStatus(project.estado) === normalizedFilter);
         }
+        if (priorityFilter) {
+            const normalizedFilter = normalizeStatus(priorityFilter);
+            filtered = filtered.filter((project) => normalizeStatus(project.prioridad) === normalizedFilter);
+        }
         if (searchTerm) {
             filtered = filtered.filter((project: Project) =>
-                project.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+                project.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                project.descripcion.toLowerCase().includes(searchTerm.toLowerCase())
             );
         }
         return filtered;
-    }, [projects, searchTerm, statusFilter, normalizeStatus]);
+    }, [projects, searchTerm, statusFilter, priorityFilter, normalizeStatus]);
 
     const stats = useMemo(() => {
         const total = projects.length;
