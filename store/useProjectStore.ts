@@ -45,11 +45,13 @@ type State = {
   projects: Project[];
   searchTerm: string;
   statusFilter?: string;
+  priorityFilter?: string;
   isLoading: boolean;
   error?: string;
   setProjects: (p: Project[]) => void;
   setSearchTerm: (s: string) => void;
   setStatusFilter: (s?: string) => void;
+  setPriorityFilter: (s?: string) => void;
   loadProjects: () => Promise<void>;
   createProject: (input: CreateProjectInput) => Promise<Project>;
 };
@@ -58,11 +60,13 @@ export const useProjectStore = create<State>((set) => ({
   projects: [],
   searchTerm: "",
   statusFilter: undefined,
+  priorityFilter: undefined,
   isLoading: false,
   error: undefined,
   setProjects: (p) => set({ projects: p }),
   setSearchTerm: (s) => set({ searchTerm: s }),
   setStatusFilter: (s) => set({ statusFilter: s }),
+  setPriorityFilter: (s) => set({ priorityFilter: s }),
   loadProjects: async () => {
     set({ isLoading: true, error: undefined });
     try {
