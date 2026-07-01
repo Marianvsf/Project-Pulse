@@ -16,7 +16,8 @@ import {
   XCircle,
   ArrowRight,
   ChevronDown,
-  Bot
+  Bot,
+  Headphones
 } from "lucide-react";
 
 // --- TIPOS Y DATOS ESTÁTICOS ---
@@ -480,6 +481,25 @@ export default function HomePage() {
                   </div>
                 </details>
               ))}
+            </div>
+
+            <div className="mt-10 flex flex-col sm:flex-row items-center justify-between gap-6 bg-slate-50 rounded-2xl border border-slate-200 px-8 py-6">
+              <div className="flex items-center gap-4">
+                <div className="w-11 h-11 bg-white rounded-xl border border-slate-200 shadow-sm flex items-center justify-center text-orange-500 shrink-0">
+                  <Headphones size={22} strokeWidth={1.5} />
+                </div>
+                <div>
+                  <p className="font-bold text-slate-900">¿No encontraste lo que buscabas?</p>
+                  <p className="text-sm text-slate-500 mt-0.5">Nuestro equipo de soporte responde en menos de 24 horas.</p>
+                </div>
+              </div>
+              <button
+                onClick={() => router.push("/support")}
+                className="shrink-0 flex items-center gap-2 px-6 py-3 rounded-full bg-slate-900 text-white text-sm font-semibold hover:bg-slate-700 transition-all hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-slate-400"
+              >
+                Ir a soporte
+                <ArrowRight size={16} />
+              </button>
             </div>
           </div>
         </section>
