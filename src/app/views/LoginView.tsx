@@ -120,7 +120,7 @@ export default function LoginView() {
             </div>
 
             {/* LADO DERECHO: Formulario (Blanco) */}
-            <div className="w-full md:w-7/12 p-8 md:p-12 flex flex-col justify-center bg-white relative pt-12 md:pt-12">
+            <div className="flex-1 w-full md:w-7/12 p-8 md:p-12 flex flex-col justify-center bg-white relative pt-12 md:pt-12">
                 <div className="max-w-sm mx-auto w-full">
 
                     {/* Badge sutil de seguridad IA */}
