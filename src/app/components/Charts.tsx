@@ -76,10 +76,10 @@ export default function Charts({ projects }: ChartsProps) {
     }
 
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 h-[350px]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
             {/* GRÁFICO CIRCULAR: Distribución de Estados */}
-            <div className="h-full flex flex-col">
+            <div className="h-[350px] flex flex-col">
                 <h3 className="text-sm font-semibold text-slate-500 mb-4 text-center">Distribución por Estado</h3>
                 <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
@@ -112,7 +112,7 @@ export default function Charts({ projects }: ChartsProps) {
             </div>
 
             {/* GRÁFICO DE BARRAS: Top Proyectos Activos */}
-            <div className="h-full flex flex-col">
+            <div className="h-[350px] flex flex-col">
                 <h3 className="text-sm font-semibold text-slate-500 mb-4 text-center">Progreso de Proyectos Activos (Top 5)</h3>
                 {progressData.length > 0 ? (
                     <ResponsiveContainer width="100%" height="100%">
