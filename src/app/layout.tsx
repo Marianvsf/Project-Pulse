@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Outfit } from "next/font/google";
 import "./styles/globals.css";
 import Providers from "./Providers";
-import { Footer } from "./components/Footer";
+import { FooterWrapper } from "./components/FooterWrapper";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -38,7 +38,7 @@ export default function RootLayout({
       >
         <Providers>
           <main className="bg-gray-50 flex-1">{children}</main>
-          <Footer />
+          <FooterWrapper />
         </Providers>
       </body>
     </html>
