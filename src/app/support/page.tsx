@@ -1,7 +1,9 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { useSession } from "next-auth/react";
 import UserNavbar from "../components/navbar/UserNavbar";
+import Navbar from "../components/navbar/Navbar";
 import {
     AlertCircle,
     BadgeHelp,
@@ -51,6 +53,7 @@ const supportChannels = [
 type SupportStatus = "idle" | "sending" | "success" | "error";
 
 export default function SupportPage() {
+    const { status: authStatus } = useSession();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [subject, setSubject] = useState("Problema con mi cuenta");
@@ -87,7 +90,11 @@ export default function SupportPage() {
             <div className="pointer-events-none absolute -left-24 top-28 h-72 w-72 rounded-full bg-orange-300/25 blur-3xl" />
             <div className="pointer-events-none absolute right-0 top-44 h-96 w-96 rounded-full bg-blue-300/20 blur-3xl" />
 
-            <UserNavbar onSearch={() => { }} showSearchAndFilter={false} />
+            {authStatus === "authenticated" ? (
+                <UserNavbar onSearch={() => { }} showSearchAndFilter={false} />
+            ) : (
+                <Navbar />
+            )}
 
             <main className="relative mx-auto flex w-full max-w-7xl flex-col gap-10 px-4 pb-16 pt-28 sm:px-6 lg:px-8 lg:pt-32">
                 <section className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
