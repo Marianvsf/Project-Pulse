@@ -49,14 +49,14 @@ const Navbar = () => {
   };
 
   return (
-    <header className="fixed top-0 inset-x-0 z-50 flex justify-center p-4 pointer-events-none" ref={menuRef}>
+    <header className="fixed top-0 inset-x-0 z-50 flex justify-center p-0 sm:p-4 pointer-events-none" ref={menuRef}>
 
-      
+
       <nav
-        className={`pointer-events-auto flex items-center justify-between w-full max-w-5xl transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] rounded-full border border-white/10 backdrop-blur-md
+        className={`pointer-events-auto flex items-center justify-between w-full sm:max-w-5xl transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] rounded-none sm:rounded-full border-x-0 sm:border border-y border-white/10 backdrop-blur-md
         ${scrolled
             ? "h-14 bg-[#0B1120]/75 px-5 shadow-[0_12px_40px_-12px_rgba(0,0,0,0.7)]"
-            : "h-20 bg-[#0B1120]/40 px-7 shadow-none"
+            : "h-16 sm:h-20 bg-[#0B1120]/40 px-5 sm:px-7 shadow-none"
           }`}
       >
 
