@@ -95,12 +95,12 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
     return (
         <>
             {/* Header actúa como contenedor fijo transparente */}
-            <header className="fixed top-0 inset-x-0 z-50 flex justify-center p-4 pointer-events-none">
+            <header className="fixed top-0 inset-x-0 z-50 flex justify-center p-0 sm:p-4 pointer-events-none">
                 <nav
-                    className={`pointer-events-auto flex items-center w-full max-w-7xl transition-all duration-500 ease-out rounded-full backdrop-blur-xl
+                    className={`pointer-events-auto flex items-center w-full sm:max-w-7xl transition-all duration-500 ease-out rounded-none sm:rounded-full border-x-0 sm:border backdrop-blur-xl
                     ${scrolled
-                            ? "h-16 bg-[#050B14]/90 border border-cyan-400/15 shadow-lg shadow-[#050B14]/40 px-3 sm:px-6"
-                            : "h-20 bg-[#0B1120]/85 border border-cyan-400/10 shadow-md shadow-[#050B14]/30 px-4 sm:px-8"
+                            ? "h-14 sm:h-16 bg-[#050B14]/90 border-y border-cyan-400/15 shadow-lg shadow-[#050B14]/40 px-3 sm:px-6"
+                            : "h-16 sm:h-20 bg-[#0B1120]/85 border-y border-cyan-400/10 shadow-md shadow-[#050B14]/30 px-4 sm:px-8"
                         }`}
                 >
                     <div className="flex items-center justify-between w-full h-full">
