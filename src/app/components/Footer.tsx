@@ -25,7 +25,7 @@ export const Footer = () => {
 
         <div className="flex items-center gap-2 text-sm z-10">
           <span className="font-mono text-xs uppercase tracking-widest text-cyan-400/70 transition-colors group-hover:text-cyan-400">
-            Created_By
+            Desarrollado por
           </span>
           <span className="font-semibold tracking-wider text-white transition-all group-hover:text-cyan-50 group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]">
             Marian Suárez
