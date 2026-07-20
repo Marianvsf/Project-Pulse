@@ -17,7 +17,8 @@ import {
     Trash2,
     ArrowUp,
     Minus,
-    ArrowDown
+    ArrowDown,
+    Loader2
 } from "lucide-react";
 
 interface Filters {
@@ -45,6 +46,7 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
     const [filters, setFilters] = useState<Filters>({});
     const [showMobileSearch, setShowMobileSearch] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const [isLoggingOut, setIsLoggingOut] = useState(false);
 
     const menuRef = useRef<HTMLDivElement>(null);
     const filterMenuRef = useRef<HTMLDivElement>(null);
@@ -61,8 +63,14 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
     }, [searchTerm, filters, onSearch]);
 
     const handleLogout = async () => {
-        await signOut({ redirect: false });
-        router.push("/login");
+        setIsLoggingOut(true);
+        setShowProfileMenu(false);
+        try {
+            await signOut({ redirect: false });
+            router.push("/login");
+        } catch {
+            setIsLoggingOut(false);
+        }
     };
 
     const handleFilterChange = (key: keyof Filters, value: string) => {
@@ -197,10 +205,11 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
                                     <div className="absolute top-[calc(100%+12px)] right-0 w-52 rounded-[24px] bg-[#050B14]/95 backdrop-blur-2xl border border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.5)] p-3 animate-in fade-in slide-in-from-top-2 origin-top">
                                         <button
                                             onClick={handleLogout}
-                                            className="flex items-center w-full gap-3 px-4 py-3.5 text-sm font-semibold text-white/60 transition-all rounded-[16px] hover:bg-red-500/10 hover:text-red-400 active:bg-red-500/15"
+                                            disabled={isLoggingOut}
+                                            className="flex items-center w-full gap-3 px-4 py-3.5 text-sm font-semibold text-white/60 transition-all rounded-[16px] hover:bg-red-500/10 hover:text-red-400 active:bg-red-500/15 disabled:cursor-not-allowed disabled:opacity-70"
                                         >
-                                            <LogOut size={18} />
-                                            Cerrar sesión
+                                            {isLoggingOut ? <Loader2 size={18} className="animate-spin" /> : <LogOut size={18} />}
+                                            {isLoggingOut ? "Cerrando sesión..." : "Cerrar sesión"}
                                         </button>
                                     </div>
                                 )}
@@ -254,6 +263,14 @@ const UserNavbar = ({ onSearch, showSearchAndFilter = true }: UserNavbarProps) =
                             </div>
                         </div>
                     </div>
+                </div>
+            )}
+
+            {/* OVERLAY DE CIERRE DE SESIÓN */}
+            {isLoggingOut && (
+                <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center gap-4 bg-[#050B14]/95 backdrop-blur-md">
+                    <Loader2 className="w-10 h-10 text-cyan-400 animate-spin" />
+                    <p className="text-sm font-medium text-white/70">Cerrando sesión...</p>
                 </div>
             )}
         </>
