@@ -1,6 +1,6 @@
 "use client"
 
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import ProjectCard from "../components/ProjectCard";
 import UserNavbar from "../components/navbar/UserNavbar";
@@ -23,6 +23,8 @@ export default function DashboardUser() {
     const [isSavingStatus, setIsSavingStatus] = useState(false);
     const [statusUpdateError, setStatusUpdateError] = useState<string | null>(null);
     const [isMounted, setIsMounted] = useState(false);
+    const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+    const [isLoggingOut, setIsLoggingOut] = useState(false);
     const projectsSectionRef = useRef<HTMLDivElement | null>(null);
 
     // NUEVO: Estado para controlar el modo de visualización actual
@@ -65,6 +67,18 @@ export default function DashboardUser() {
         }, 5000);
         return () => clearInterval(interval);
     }, [galleryImages.length]);
+
+    const confirmLogout = useCallback(() => {
+        setShowLogoutConfirm(false);
+        setIsLoggingOut(true);
+        void signOut({ callbackUrl: "/login" });
+    }, []);
+
+    const dismissLogout = useCallback(() => {
+        // El estado de historial ya se re-fijó en popstate, así que
+        // basta con cerrar el modal para permanecer en el dashboard.
+        setShowLogoutConfirm(false);
+    }, []);
 
     const capitalize = (name?: string | null) => {
         if (!name) return undefined;
@@ -183,6 +197,31 @@ export default function DashboardUser() {
             router.push("/login");
         }
     }, [session, status, router]);
+
+    useEffect(() => {
+        if (status !== "authenticated") {
+            return;
+        }
+
+        const guardHistoryState = () => {
+            window.history.pushState({ dashboardBackGuard: true }, "", window.location.href);
+        };
+
+        guardHistoryState();
+
+        const handlePopState = () => {
+            // Volvemos a fijar el estado de historial para que el usuario
+            // permanezca en el dashboard mientras decide en el modal.
+            guardHistoryState();
+            setShowLogoutConfirm(true);
+        };
+
+        window.addEventListener("popstate", handlePopState);
+
+        return () => {
+            window.removeEventListener("popstate", handlePopState);
+        };
+    }, [status]);
 
     if (status === 'loading') {
         return (
@@ -470,6 +509,49 @@ export default function DashboardUser() {
             </main>
 
             {showCreateModal && <CreateProjectModal onClose={() => setShowCreateModal(false)} />}
+
+            {showLogoutConfirm && (
+                <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/60 p-4">
+                    <div className="w-full max-w-sm rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl">
+                        <div className="mb-2 flex items-center gap-3">
+                            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-50 text-orange-500">
+                                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                </svg>
+                            </div>
+                            <p className="text-base font-semibold text-slate-900">¿Cerrar sesión?</p>
+                        </div>
+                        <p className="mb-5 text-sm text-slate-500">
+                            Si eliges <span className="font-medium text-slate-700">Cancelar</span>, permanecerás en el dashboard.
+                        </p>
+                        <div className="flex items-center justify-end gap-2">
+                            <button
+                                type="button"
+                                onClick={dismissLogout}
+                                className="rounded-xl px-4 py-2 text-sm font-semibold text-slate-600 transition-colors hover:bg-slate-100"
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                type="button"
+                                onClick={confirmLogout}
+                                className="rounded-xl bg-[#FF7400] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#e46800]"
+                            >
+                                Cerrar sesión
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {isLoggingOut && (
+                <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center gap-4 bg-slate-950/70 backdrop-blur-md">
+                    <svg aria-hidden="true" className="w-10 h-10 text-gray-300 animate-spin fill-[#FF7400]" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
+                    </svg>
+                    <p className="text-sm font-medium text-white/80">Cerrando sesión...</p>
+                </div>
+            )}
 
             {currentEditingProject && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 p-4">
