@@ -501,34 +501,11 @@ export default function DashboardUser() {
                                     <p className="text-slate-400 text-sm mb-4">Contacta con soporte técnico si tienes dudas con tu panel.</p>
                                     <button
                                         type="button"
-                                        onClick={() => setShowSupportForm((prev) => !prev)}
-                                        aria-expanded={showSupportForm}
-                                        className="flex w-full items-center justify-center gap-2 py-2 bg-white/[0.03] hover:bg-cyan-500/10 rounded-lg text-sm font-medium transition-all border border-white/10 hover:border-cyan-500/50 hover:shadow-[0_0_20px_rgba(34,211,238,0.15)] text-slate-300 hover:text-cyan-50"
+                                        onClick={() => setShowSupportForm(true)}
+                                        className="w-full py-2 bg-white/[0.03] hover:bg-cyan-500/10 rounded-lg text-sm font-medium transition-all border border-white/10 hover:border-cyan-500/50 hover:shadow-[0_0_20px_rgba(34,211,238,0.15)] text-slate-300 hover:text-cyan-50"
                                     >
                                         Contactar Soporte
-                                        <svg
-                                            className={`h-4 w-4 transition-transform duration-300 ${showSupportForm ? "rotate-180" : ""}`}
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                        </svg>
                                     </button>
-
-                                    <div
-                                        className={`grid transition-all duration-300 ease-in-out ${showSupportForm ? "mt-4 grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
-                                    >
-                                        <div className="overflow-hidden">
-                                            <div className="rounded-xl bg-white p-4 text-slate-900 shadow-lg">
-                                                <SupportForm
-                                                    compact
-                                                    defaultName={session.user?.name ?? ""}
-                                                    defaultEmail={session.user?.email ?? ""}
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
 
@@ -538,6 +515,39 @@ export default function DashboardUser() {
             </main>
 
             {showCreateModal && <CreateProjectModal onClose={() => setShowCreateModal(false)} />}
+
+            {showSupportForm && (
+                <div
+                    className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-950/60 p-4 backdrop-blur-sm"
+                    onClick={() => setShowSupportForm(false)}
+                >
+                    <div
+                        className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl border border-slate-200 bg-white p-6 shadow-2xl sm:p-8"
+                        onClick={(event) => event.stopPropagation()}
+                    >
+                        <div className="mb-6 flex items-start justify-between gap-4">
+                            <div>
+                                <p className="text-sm font-semibold uppercase tracking-[0.25em] text-orange-500">Enviar solicitud</p>
+                                <h2 className="mt-2 text-2xl font-bold tracking-tight text-slate-950">Contacta soporte</h2>
+                                <p className="mt-1 text-sm text-slate-500">Escribe tu caso y abriremos el correo listo para enviar.</p>
+                            </div>
+                            <button
+                                type="button"
+                                onClick={() => setShowSupportForm(false)}
+                                aria-label="Cerrar"
+                                className="rounded-lg px-2 py-1 text-sm font-semibold text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-700"
+                            >
+                                Cerrar
+                            </button>
+                        </div>
+
+                        <SupportForm
+                            defaultName={session.user?.name ?? ""}
+                            defaultEmail={session.user?.email ?? ""}
+                        />
+                    </div>
+                </div>
+            )}
 
             {showLogoutConfirm && (
                 <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/60 p-4">
