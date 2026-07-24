@@ -59,10 +59,15 @@ export default function SupportForm({
         }, 150);
     };
 
-    const twoColGrid = compact ? "grid gap-5" : "grid gap-5 sm:grid-cols-2";
+    const twoColGrid = compact ? "grid gap-4" : "grid gap-5 sm:grid-cols-2";
+    const textareaHeight = compact ? "min-h-[120px]" : "min-h-[180px]";
+    const actionsRow = compact
+        ? "flex flex-col gap-3"
+        : "flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between";
+    const actionButton = compact ? "w-full" : "";
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className={compact ? "space-y-4" : "space-y-5"}>
             <div className={twoColGrid}>
                 <label className="space-y-2">
                     <span className="ml-1 text-sm font-semibold text-slate-700">Nombre completo</span>
@@ -139,7 +144,7 @@ export default function SupportForm({
                         value={message}
                         onChange={(event) => setMessage(event.target.value)}
                         placeholder="Describe lo que pasa, en que proyecto ocurre y si aparece algun error en pantalla."
-                        className="min-h-[180px] w-full rounded-2xl border border-slate-200 bg-slate-50 py-3.5 pl-11 pr-4 text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-orange-300 focus:bg-white focus:ring-4 focus:ring-orange-100"
+                        className={`${textareaHeight} w-full rounded-2xl border border-slate-200 bg-slate-50 py-3.5 pl-11 pr-4 text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-orange-300 focus:bg-white focus:ring-4 focus:ring-orange-100`}
                         required
                     />
                 </div>
@@ -159,11 +164,11 @@ export default function SupportForm({
                 </div>
             )}
 
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className={actionsRow}>
                 <button
                     type="submit"
                     disabled={status === "sending"}
-                    className="inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-950 px-6 py-3.5 text-sm font-semibold text-white shadow-[0_18px_40px_rgba(15,23,42,0.24)] transition-all hover:-translate-y-0.5 hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-70"
+                    className={`${actionButton} inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-950 px-6 py-3.5 text-sm font-semibold text-white shadow-[0_18px_40px_rgba(15,23,42,0.24)] transition-all hover:-translate-y-0.5 hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-70`}
                 >
                     {status === "sending" ? "Abriendo correo..." : "Enviar solicitud"}
                     <Send className="h-4 w-4" />
@@ -171,7 +176,7 @@ export default function SupportForm({
 
                 <a
                     href={`mailto:${supportEmail}`}
-                    className="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-6 py-3.5 text-sm font-semibold text-slate-700 transition-all hover:border-orange-200 hover:text-orange-700"
+                    className={`${actionButton} inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-6 py-3.5 text-sm font-semibold text-slate-700 transition-all hover:border-orange-200 hover:text-orange-700`}
                 >
                     <ExternalLink className="h-4 w-4" />
                     Abrir correo directo
