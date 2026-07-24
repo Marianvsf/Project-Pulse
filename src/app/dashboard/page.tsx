@@ -9,6 +9,7 @@ import Charts from "../components/Charts";
 import useProjectStore, { Project } from "../../../store/useProjectStore";
 import Image from "next/image";
 import CreateProjectModal from "../views/CreateProjectModal";
+import SupportForm from "../components/SupportForm";
 
 type ViewMode = "grid" | "list" | "detailed";
 
@@ -25,6 +26,7 @@ export default function DashboardUser() {
     const [isMounted, setIsMounted] = useState(false);
     const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
     const [isLoggingOut, setIsLoggingOut] = useState(false);
+    const [showSupportForm, setShowSupportForm] = useState(false);
     const projectsSectionRef = useRef<HTMLDivElement | null>(null);
 
     // NUEVO: Estado para controlar el modo de visualización actual
@@ -497,9 +499,36 @@ export default function DashboardUser() {
                                     </div>
                                     <h3 className="font-bold text-lg mb-2 text-white">¿Necesitas ayuda?</h3>
                                     <p className="text-slate-400 text-sm mb-4">Contacta con soporte técnico si tienes dudas con tu panel.</p>
-                                    <button onClick={() => router.push('/support')} className="w-full py-2 bg-white/[0.03] hover:bg-cyan-500/10 rounded-lg text-sm font-medium transition-all border border-white/10 hover:border-cyan-500/50 hover:shadow-[0_0_20px_rgba(34,211,238,0.15)] text-slate-300 hover:text-cyan-50">
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowSupportForm((prev) => !prev)}
+                                        aria-expanded={showSupportForm}
+                                        className="flex w-full items-center justify-center gap-2 py-2 bg-white/[0.03] hover:bg-cyan-500/10 rounded-lg text-sm font-medium transition-all border border-white/10 hover:border-cyan-500/50 hover:shadow-[0_0_20px_rgba(34,211,238,0.15)] text-slate-300 hover:text-cyan-50"
+                                    >
                                         Contactar Soporte
+                                        <svg
+                                            className={`h-4 w-4 transition-transform duration-300 ${showSupportForm ? "rotate-180" : ""}`}
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                        </svg>
                                     </button>
+
+                                    <div
+                                        className={`grid transition-all duration-300 ease-in-out ${showSupportForm ? "mt-4 grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
+                                    >
+                                        <div className="overflow-hidden">
+                                            <div className="rounded-xl bg-white p-4 text-slate-900 shadow-lg">
+                                                <SupportForm
+                                                    compact
+                                                    defaultName={session.user?.name ?? ""}
+                                                    defaultEmail={session.user?.email ?? ""}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
